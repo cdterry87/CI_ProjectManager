@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/customers_navigation'); ?>
+<?php $this->load->view('admin/customers/customers_navigation'); ?>
 
 <?php if(empty($customers)){ ?>
 

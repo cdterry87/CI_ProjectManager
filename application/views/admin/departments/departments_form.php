@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/departments_navigation'); ?>
+<?php $this->load->view('admin/departments/departments_navigation'); ?>
 
 <?php echo form_open('admin/departments/action'); ?>
 <?php echo form_hidden('department_id'); ?>

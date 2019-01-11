@@ -14,7 +14,7 @@
 
 <div id="department-employees" class="tab-panel tab-panel-init">
     <h2 class="title is-4">Employees</h2>
-    <?php $this->load->view('admin/employees_list'); ?>
+    <?php $this->load->view('admin/employees/employees_list'); ?>
 </div>
 
 <div id="department-projects" class="tab-panel">

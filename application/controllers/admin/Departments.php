@@ -10,7 +10,7 @@ class Departments extends PROJECTS_Controller {
 	}
 	
 	public function index(){
-		$this->data['page']='admin/departments';
+		$this->data['page']='admin/departments/departments';
 		
 		//Get all departments.
 		$this->data['departments']=$this->Department_model->get_all();
@@ -21,7 +21,7 @@ class Departments extends PROJECTS_Controller {
 	public function form($id=''){
 		$this->data['department_id']=$id;
 		
-		$this->data['page']='admin/departments_form';
+		$this->data['page']='admin/departments/departments_form';
 		
 		//If an id is set, get record in order to populate the screen.
 		if($id!=''){
@@ -34,7 +34,7 @@ class Departments extends PROJECTS_Controller {
 	}
 	
 	public function view($id){
-		$this->data['page']='admin/departments_view';
+		$this->data['page']='admin/departments/departments_view';
 		
 		//Get department information.
 		$this->data['department']=$this->Department_model->get($id);

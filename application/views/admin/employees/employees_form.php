@@ -1,3 +1,5 @@
+<?php $this->load->view('admin/employees/employees_navigation'); ?>
+
 <?php echo form_open('admin/employees/action'); ?>
 <?php echo form_hidden('employee_id'); ?>
 
@@ -45,7 +47,7 @@ if ($employee_id!='') {
 
 <div class="field">
     <div class="control">
-        <?php echo form_label('Employee Department(s):', '');  ?>
+        <?php echo form_label('Employee Department(s):', '', 'class="label"');  ?>
         <?php echo form_checkbox('all_departments'); ?>
         <?php echo form_label('All Departments', 'all_departments'); ?>
     </div>

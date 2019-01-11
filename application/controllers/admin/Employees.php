@@ -10,7 +10,7 @@ class Employees extends PROJECTS_Controller {
 	}
 	
 	public function index(){
-		$this->data['page']='admin/employees';
+		$this->data['page']='admin/employees/employees';
 		
 		//Get all employees.
 		$this->data['employees']=$this->Employee_model->get_all();
@@ -19,7 +19,7 @@ class Employees extends PROJECTS_Controller {
 	}
 	
 	public function form($id=''){
-		$this->data['page']='admin/employees_form';
+		$this->data['page']='admin/employees/employees_form';
 		
 		$this->data['employee_id']=$id;
 		
@@ -49,7 +49,7 @@ class Employees extends PROJECTS_Controller {
 	}
 	
 	public function view($id){
-		$this->data['page']='admin/employees_view';
+		$this->data['page']='admin/employees/employees_view';
 		
 		//Get employee information.
 		$this->data['employee']=$this->Employee_model->get($id);
@@ -141,8 +141,5 @@ class Employees extends PROJECTS_Controller {
 				redirect('admin/employees');
 				break;
 		}
-		
-		
 	}
-	
 }

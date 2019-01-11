@@ -9,7 +9,7 @@ class Systems extends PROJECTS_Controller {
 	}
 	
 	public function index(){
-		$this->data['page']='admin/systems';
+		$this->data['page']='admin/systems/systems';
 		
 		//Get all departments.
 		$this->data['systems']=$this->System_model->get_all();
@@ -20,7 +20,7 @@ class Systems extends PROJECTS_Controller {
 	public function form($id=''){
 		$this->data['system_id']=$id;
 		
-		$this->data['page']='admin/systems_form';
+		$this->data['page']='admin/systems/systems_form';
 		
 		//If an id is set, get record in order to populate the screen.
 		if($id!=''){
@@ -33,7 +33,7 @@ class Systems extends PROJECTS_Controller {
 	}
 	
 	public function view($id){
-		$this->data['page']='admin/systems_view';
+		$this->data['page']='admin/systems/systems_view';
 		
 		//Get system information.
 		$this->data['system']=$this->System_model->get($id);

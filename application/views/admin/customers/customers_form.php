@@ -1,3 +1,5 @@
+<?php $this->load->view('admin/customers/customers_navigation'); ?>
+
 <?php echo form_open('admin/customers/action'); ?>
 <?php echo form_hidden('customer_id'); ?>
 
@@ -11,8 +13,8 @@
 <div class="field">
     <?php echo form_label('Customer Status:', 'customer_status', 'class="label"'); ?>
     <div class="control">
-        <div class="select is-fullwidth">
-            <?php echo form_dropdown('customer_status', ['' => '', 'prospect' => 'Prospect', 'pending' => 'Pending', 'live' => 'Live', 'archive' => 'Archive'], '', 'class="input is-small" data-required data-label="Customer Status"'); ?>
+        <div class="select is-small is-fullwidth">
+            <?php echo form_dropdown('customer_status', ['' => '', 'prospect' => 'Prospect', 'pending' => 'Pending', 'live' => 'Live', 'archive' => 'Archive'], '', 'data-required data-label="Customer Status"'); ?>
         </div>
     </div>
 </div>
@@ -20,8 +22,8 @@
 <div class="field">
     <?php echo form_label('Project Manager:', 'customer_adsi_project_manager', 'class="label"'); ?>
     <div class="control">
-        <div class="select is-fullwidth">
-            <?php echo form_dropdown('customer_adsi_project_manager', $employees, '', 'class="input is-small" data-required data-label="Project Manager"'); ?>
+        <div class="select is-small is-fullwidth">
+            <?php echo form_dropdown('customer_adsi_project_manager', $employees, '', 'data-required data-label="Project Manager"'); ?>
         </div>
     </div>
 </div>
@@ -39,8 +41,8 @@
         <div class="field">
             <?php echo form_label('State:', 'customer_state', 'class="label"'); ?>
             <div class="control">
-                <div class="select is-fullwidth">
-                    <?php echo form_dropdown('customer_state', $states, '', 'class="input is-small" data-required data-label="Customer State"'); ?>
+                <div class="select is-small is-fullwidth">
+                    <?php echo form_dropdown('customer_state', $states, '', 'data-required data-label="Customer State"'); ?>
                 </div>
             </div>
         </div>
@@ -67,7 +69,7 @@
 
 <div class="field">
     <div class="control">
-        <?php echo form_label('Systems Owned:', 'class="label"');  ?>
+        <?php echo form_label('Systems Owned:', '', 'class="label"');  ?>
         <?php echo form_checkbox('all_systems'); ?>
         <?php echo form_label('All Systems', 'all_systems'); ?>
     </div>
@@ -78,12 +80,7 @@
     if (!empty($systems)) {
         foreach ($systems as $row) {
             $checked="";
-            // if(isset($_SESSION['employee_departments'][$row['department_id']])){
-            //  if($_SESSION['employee_departments'][$row['department_id']]==$row['department_name']){
-            //      $checked="CHECKED";
-            //  }
-            // }
-            ?>
+    ?>
     <div class="column is-one-quarter all_systems">
             <?php echo form_checkbox('system['.$row['system_id'].']', $row['system_id'], $checked); ?>
             <?php echo form_label($row['system_name'], 'system['.$row['system_id'].']'); ?>

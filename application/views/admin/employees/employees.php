@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/employees_navigation'); ?>
+<?php $this->load->view('admin/employees/employees_navigation'); ?>
 
 <?php if(empty($employees)){ ?>
 
@@ -7,7 +7,7 @@
 <?php
 
 } else {
-    $this->load->view('admin/employees_list');
+    $this->load->view('admin/employees/employees_list');
 }
 
 ?>

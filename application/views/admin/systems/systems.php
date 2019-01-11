@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/systems_navigation'); ?>
+<?php $this->load->view('admin/systems/systems_navigation'); ?>
 
 <?php if(empty($systems)){ ?>
 

@@ -14,7 +14,7 @@ class Customers extends PROJECTS_Controller
     
     public function index()
     {
-        $this->data['page']='admin/customers';
+        $this->data['page']='admin/customers/customers';
         
         //Get all customers.
         $this->data['customers']=$this->Customer_model->get_all();
@@ -24,7 +24,7 @@ class Customers extends PROJECTS_Controller
     
     public function form($id = '')
     {
-        $this->data['page']='admin/customers_form';
+        $this->data['page']='admin/customers/customers_form';
         
         $this->data['employees'] = $this->Employee_model->get_dropdown();
         $this->data['systems'] = $this->System_model->get_all();
@@ -110,7 +110,7 @@ class Customers extends PROJECTS_Controller
         
     public function view($id)
     {
-        $this->data['page']='admin/customers_view';
+        $this->data['page']='admin/customers/customers_view';
         
         //Get customer information.
         $this->data['customer']=$this->Customer_model->get($id);
