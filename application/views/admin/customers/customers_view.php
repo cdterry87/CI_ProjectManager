@@ -1,6 +1,3 @@
-<?php echo form_open('admin/customers/action'); ?>
-<?php echo form_hidden('customer_id', $customer['customer_id']); ?>
-
 <h1 class="title is-3">
     <?php echo $customer['customer_name']; ?>
     <?php echo anchor('admin/customers/form/'.$customer['customer_id'], '<i class="fas fa-edit"></i> Edit Customer', 'class="button is-info is-small"'); ?>
@@ -84,6 +81,8 @@
 </div>
 
 <div id="customer-contacts" class="tab-panel">
+    <?php echo form_open('admin/customers/action', 'id="contacts-form"'); ?>
+    <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
     <h2 class="title is-4">Add Contacts</h2>
     
     <div class="field">
@@ -114,25 +113,25 @@
 
     <div class="columns">
         <div class="column is-half">
-            <?php echo form_label('Phone #1:', 'customer_phone_1', 'class="label"'); ?>
+            <?php echo form_label('Phone #1:', 'contact_phone_1', 'class="label"'); ?>
             <div class="field is-grouped">
-                <p class="control"><?php echo form_input('customer_phone_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
-                <p class="control"><?php echo form_input('customer_phone_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type"'); ?></p>
             </div>
         </div>
         <div class="column is-half">
-            <?php echo form_label('Phone #2:', 'customer_phone2_1', 'class="label"'); ?>
+            <?php echo form_label('Phone #2:', 'contact_phone2_1', 'class="label"'); ?>
             <div class="field is-grouped">
-                <p class="control"><?php echo form_input('customer_phone2_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone2_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone2_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone2_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone2_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
-                <p class="control"><?php echo form_input('customer_phone2_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone2_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone2_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type"'); ?></p>
             </div>
         </div>
     </div>
@@ -140,6 +139,7 @@
     <div class="field is-grouped is-grouped-centered">
         <p class="control"><?php echo form_submit('action', 'Add Contact', 'class="button is-info"'); ?></p>
     </div>
+    <?php echo form_close(); ?>
 
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>
@@ -149,24 +149,43 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Phone</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            
+            <?php
+            foreach ($contacts as $key=>$contact) {
+            ?>
+            <tr>
+                <td><?php echo $contact['contact_name']; ?></td>
+                <td><?php echo $contact['contact_title']; ?></td>
+                <td><?php echo $contact['contact_email']; ?></td>
+                <td><?php echo $contact['contact_phone']; ?></td>
+                <td><?php echo $contact['contact_phone2']; ?></td>
+                <td>
+                    <?php echo anchor('admin/customers/delete_contact/' . $customer['customer_id'] . '/' . $contact['customer_contact_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                </td>
+            </tr>
+            <?php
+                }
+            ?>
         </tbody>
     </table>
 </div>
 
 <div id="customer-notes" class="tab-panel">
+    <?php echo form_open('admin/customers/action', 'id="notes-form"'); ?>
+    <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
     <h2 class="title is-4">Add Notes</h2>
     <div class="field is-grouped">
         <div class="control is-expanded">
-            <?php echo form_textarea('note', '', 'class="textarea" placeholder="Enter notes here" rows="3"'); ?>
+            <?php echo form_textarea('note', '', 'class="textarea" placeholder="Enter notes here" data-required rows="3"'); ?>
         </div>
         <div class="control">
             <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
         </div>
     </div>
+    <?php echo form_close(); ?>
 
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>
@@ -174,16 +193,35 @@
                 <th>Note</th>
                 <th>Date</th>
                 <th>Employee</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            
+            <?php
+                foreach ($notes as $key=>$note) {
+                    $employee = $this->Employee_model->get_by_employee_id($note['employee_id']);
+            ?>
+            <tr>
+                <td><?php echo $note['note']; ?></td>
+                <td><?php echo $note['datetime']; ?></td>
+                <td><?php echo $employee['employee_name']; ?></td>
+                <td>
+                    <?php echo anchor('admin/customers/delete_note/' . $customer['customer_id'] . '/' . $note['customer_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                </td>
+            </tr>
+            <?php
+                }
+            ?>
         </tbody>
     </table>
 </div>
 
 <div id="customer-reminders" class="tab-panel">
+    <?php echo form_open('admin/customers/action', 'id="reminders-form"'); ?>
+    <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
     <h2 class="title is-4">Reminders</h2>
+
+    <?php echo form_close(); ?>
 </div>
 
 <?php echo form_close(); ?>

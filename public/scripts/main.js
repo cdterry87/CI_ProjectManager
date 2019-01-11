@@ -134,6 +134,9 @@ $(function(){
     * -------------------------------------------------------------------------------- */
    form.on('submit', function(e){
       console.log('form_submit()');
+
+      // Setting the form the specific form that was submitted.
+      form = $(this);
       
 	  //Validate form submission.
       validate();

@@ -128,17 +128,50 @@ class Customers extends PROJECTS_Controller
         
         //Get customer's owned systems
         $this->data['systems'] = $this->Customer_model->get_systems($id);
+
+        //Get a list of the customer's contacts
+        $this->data['contacts'] = $this->Customer_model->get_contacts($id);
+
+        //Get a list of the customer's notes
+        $this->data['notes'] = $this->Customer_model->get_notes($id);
+
+        //Get a list of the customer's reminders
+        $this->data['reminders'] = $this->Customer_model->get_reminders($id);
         
         $this->load->view('template', $this->data);
     }
-    
+
+    public function delete_contact($customer_id, $contact_id)
+    {
+        $this->Customer_model->delete_contact($contact_id);
+
+        $this->set_message('Contact deleted successfully', 'danger');
+        redirect('admin/customers/view/'.$customer_id);
+    }
+
+    public function delete_note($customer_id, $note_id)
+    {
+        $this->Customer_model->delete_note($contact_id);
+
+        $this->set_message('Note deleted successfully', 'danger');
+        redirect('admin/customers/view/'.$customer_id);
+    }
+
+    public function delete_reminder($customer_id, $reminder_id)
+    {
+        $this->Customer_model->delete_reminder($contact_id);
+
+        $this->set_message('Reminder deleted successfully', 'danger');
+        redirect('admin/customers/view/'.$customer_id);
+    }
+
     public function validate()
     {
         $pass=$this->get_validations();
         
         return $pass;
     }
-    
+
     public function action()
     {
         //Retrieve the record's id if it exists in the form.
@@ -166,6 +199,8 @@ class Customers extends PROJECTS_Controller
                 if ($this->validate()) {
                     $this->Customer_model->add_contact($id);
                     $this->set_message('Contact added successfully.', 'success');
+                } else {
+                    $this->populate_screen($this->input->post());
                 }
                 redirect('admin/customers/view/'.$id);
                 break;

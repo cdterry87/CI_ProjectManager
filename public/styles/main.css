@@ -26,6 +26,10 @@ html, body {
     color: #3273DC !important;
 }
 
+#messages {
+    margin-top: 10px;
+}
+
 aside {
     min-height: 100vh;
     height: 100%;

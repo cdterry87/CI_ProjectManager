@@ -248,7 +248,7 @@ class Customer_model extends PROJECTS_Model
     }
     
     /* --------------------------------------------------------------------------------
-     * Add a contact to a customer.
+     * Customer Contacts.
      * -------------------------------------------------------------------------------- */
     public function add_contact($id)
     {
@@ -263,19 +263,25 @@ class Customer_model extends PROJECTS_Model
         
         return $this->db->insert_id();
     }
+
+    public function get_contacts($id) {
+        $this->db->select('*');
+        $this->db->from('customers_contacts');
+        $this->db->where('customer_id', $id);
+        $this->db->order_by('contact_name');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
     
-    /* --------------------------------------------------------------------------------
-     * Delete a contact.
-     * -------------------------------------------------------------------------------- */
-    public function delete_contact($customer_id, $contact_id)
+    public function delete_contact($contact_id)
     {
-        $this->db->where('customer_id', $customer_id);
-        $this->db->where('contact_id', $contact_id);
-        $this->db->delete('projects_tasks');
+        $this->db->where('customer_contact_id', $contact_id);
+        $this->db->delete('customers_contacts');
     }
 
     /* --------------------------------------------------------------------------------
-     * Add a note to a customer.
+     * Customer Notes.
      * -------------------------------------------------------------------------------- */
     public function add_note($id)
     {
@@ -293,8 +299,24 @@ class Customer_model extends PROJECTS_Model
         return $this->db->insert_id();
     }
 
+    public function get_notes($id) {
+        $this->db->select('*');
+        $this->db->from('customers_notes');
+        $this->db->where('customer_id', $id);
+        $this->db->order_by('datetime', 'desc');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
+    public function delete_notes($id)
+    {
+        $this->db->where('customer_note_id', $id);
+        $this->db->delete('customers_notes');
+    }
+
     /* --------------------------------------------------------------------------------
-     * Add a note to a customer.
+     * Customer Reminders
      * -------------------------------------------------------------------------------- */
     public function add_reminder($id)
     {
@@ -310,4 +332,21 @@ class Customer_model extends PROJECTS_Model
         
         return $this->db->insert_id();
     }
+
+    public function get_reminders($id) {
+        $this->db->select('*');
+        $this->db->from('customers_reminders');
+        $this->db->where('customer_id', $id);
+        $this->db->order_by('reminder_date', 'desc');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
+    public function delete_reminder($id)
+    {
+        $this->db->where('customer_reminder_id', $id);
+        $this->db->delete('customers_reminders');
+    }
+
 }
