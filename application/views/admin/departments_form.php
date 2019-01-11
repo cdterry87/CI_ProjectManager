@@ -6,7 +6,7 @@
 <div class="field">
     <?php echo form_label('Department Name:','department_name', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('department_name','','class="input" maxlength="50" data-required'); ?>
+        <?php echo form_input('department_name','','class="input is-small" maxlength="50" data-required'); ?>
     </div>
 </div>
 

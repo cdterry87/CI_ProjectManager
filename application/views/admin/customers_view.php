@@ -89,7 +89,7 @@
     <div class="field">
         <?php echo form_label('Contact Name:', 'contact_name', 'class="label"'); ?>
         <div class="control">
-            <?php echo form_input('contact_name', '', 'class="input" maxlength="100" data-required'); ?>
+            <?php echo form_input('contact_name', '', 'class="input is-small" maxlength="100" data-required'); ?>
         </div>
     </div>
 
@@ -98,7 +98,7 @@
             <div class="field">
                 <?php echo form_label('Contact Title:', 'contact_title', 'class="label"'); ?>
                 <div class="control">
-                    <?php echo form_input('contact_title', '', 'class="input" maxlength="100" data-required'); ?>
+                    <?php echo form_input('contact_title', '', 'class="input is-small" maxlength="100" data-required'); ?>
                 </div>
              </div>
         </div>
@@ -106,7 +106,7 @@
             <div class="field">
                 <?php echo form_label('Contact Email:', 'contact_email', 'class="label"'); ?>
                 <div class="control">
-                    <?php echo form_input('contact_email', '', 'class="input" maxlength="250" data-required'); ?>
+                    <?php echo form_input('contact_email', '', 'class="input is-small" maxlength="250" data-required'); ?>
                 </div>
             </div>
         </div>
@@ -116,23 +116,23 @@
         <div class="column is-half">
             <?php echo form_label('Phone #1:', 'customer_phone_1', 'class="label"'); ?>
             <div class="field is-grouped">
-                <p class="control"><?php echo form_input('customer_phone_1', '', 'class="input" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone_2', '', 'class="input" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone_3', '', 'class="input" maxlength="4" size="4" data-numeric'); ?></p>
-                <p class="control"><?php echo form_input('customer_phone_type', '', 'class="input" maxlength="15" size="10" placeholder="Phone Type" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type" data-numeric'); ?></p>
             </div>
         </div>
         <div class="column is-half">
             <?php echo form_label('Phone #2:', 'customer_phone2_1', 'class="label"'); ?>
             <div class="field is-grouped">
-                <p class="control"><?php echo form_input('customer_phone2_1', '', 'class="input" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone2_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone2_2', '', 'class="input" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone2_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('customer_phone2_3', '', 'class="input" maxlength="4" size="4" data-numeric'); ?></p>
-                <p class="control"><?php echo form_input('customer_phone2_type', '', 'class="input" maxlength="15" size="10" placeholder="Phone Type" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone2_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('customer_phone2_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type" data-numeric'); ?></p>
             </div>
         </div>
     </div>

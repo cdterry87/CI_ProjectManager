@@ -6,7 +6,7 @@
 <div class="field">
     <?php echo form_label('System Name:', 'system_name', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('system_name', '', 'class="input" maxlength="100" data-required'); ?>
+        <?php echo form_input('system_name', '', 'class="input is-small" maxlength="100" data-required'); ?>
     </div>
 </div>
 

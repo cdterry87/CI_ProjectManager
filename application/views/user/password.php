@@ -3,16 +3,16 @@
 <?php echo form_open('user/action'); ?>
 
 <div class="field">
-    <?php echo form_label('Password:','employee_password'); ?>
+    <?php echo form_label('Password:','employee_password', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_password('employee_password','','class="input" data-required'); ?>
+        <?php echo form_password('employee_password','','class="input is-small" data-required'); ?>
     </div>
 </div>
 
 <div class="field">
-    <?php echo form_label('Password Confirm:','employee_password_confirm'); ?>
+    <?php echo form_label('Password Confirm:','employee_password_confirm', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_password('employee_password_confirm','','class="input" data-required'); ?>
+        <?php echo form_password('employee_password_confirm','','class="input is-small" data-required'); ?>
     </div>
 </div>
 

@@ -12,21 +12,21 @@ if ($employee_id!='') {
 <div class="field">
     <?php echo form_label('Employee Name:', 'employee_name', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('employee_name', '', 'class="input" maxlength="100" data-required'); ?>
+        <?php echo form_input('employee_name', '', 'class="input is-small" maxlength="100" data-required'); ?>
     </div>
 </div>
 
 <div class="field">
     <?php echo form_label('Username:', 'employee_username', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('employee_username', '', 'class="input" maxlength="20" data-required'); ?>
+        <?php echo form_input('employee_username', '', 'class="input is-small" maxlength="20" data-required'); ?>
     </div>
 </div>
 
 <div class="field">
     <?php echo form_label('Email:', 'employee_email', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('employee_email', '', 'class="input" maxlength="100" data-required'); ?>
+        <?php echo form_input('employee_email', '', 'class="input is-small" maxlength="100" data-required'); ?>
     </div>
 </div>
 

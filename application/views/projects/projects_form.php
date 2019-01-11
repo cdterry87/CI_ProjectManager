@@ -4,15 +4,15 @@
 <div class="field">
     <?php echo form_label('Project Name:', 'project_name', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('project_name', '', 'class="input" maxlength="100" data-required'); ?>
+        <?php echo form_input('project_name', '', 'class="input is-small" maxlength="100" data-required'); ?>
     </div>
 </div>
 
 <div class="field">
     <?php echo form_label('Requesting Customer:', 'customer_id', 'class="label"'); ?>
     <div class="control">
-        <div class="select is-fullwidth">
-            <?php echo form_dropdown('customer_id', $customers, '', 'class="input" data-required data-label="Requesting Customer"'); ?>
+        <div class="select is-small is-fullwidth">
+            <?php echo form_dropdown('customer_id', $customers, '', 'data-required data-label="Requesting Customer"'); ?>
         </div>
     </div>
 </div>
@@ -20,8 +20,8 @@
 <div class="field">
     <?php echo form_label('Project Status:', 'project_status', 'class="label"'); ?>
     <div class="control">
-        <div class="select is-fullwidth">
-            <?php echo form_dropdown('project_status', ['I' => 'Incomplete', 'C' => 'Complete'], '', 'class="input" data-required data-label="Support Status"'); ?>
+        <div class="select is-small is-fullwidth">
+            <?php echo form_dropdown('project_status', ['I' => 'Incomplete', 'C' => 'Complete'], '', 'data-required data-label="Support Status"'); ?>
         </div>
     </div>
 </div>
@@ -38,15 +38,15 @@
         <?php echo form_label('Project Date:', 'project_date_mo', 'class="label"'); ?>
         <div class="field is-grouped">
             <p class="control">
-                <?php echo form_input('project_date_mo', '', 'class="input" maxlength="2" size="2" data-required data-month data-autotab data-label="Project Date Month"'); ?>
+                <?php echo form_input('project_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Project Date Month"'); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('project_date_day', '', 'class="input" maxlength="2" size="2" data-required data-day data-autotab data-label="Project Date Day"'); ?>
+                <?php echo form_input('project_date_day', '', 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Project Date Day"'); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('project_date_yr', date('Y'), 'class="input" maxlength="4" size="4" data-required data-year data-label="Project Date Year"'); ?>
+                <?php echo form_input('project_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Project Date Year"'); ?>
             </p>
         </div>
     </div>
@@ -55,15 +55,15 @@
         <?php echo form_label('Project Completed Date:', 'project_completed_date_mo', 'class="label"'); ?>
         <div class="field is-grouped">
             <p class="control">
-                <?php echo form_input('project_completed_date_mo', '', 'class="input" maxlength="2" size="2" data-month data-autotab'); ?>
+                <?php echo form_input('project_completed_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-month data-autotab'); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('project_completed_date_day', '', 'class="input" maxlength="2" size="2" data-day data-autotab'); ?>
+                <?php echo form_input('project_completed_date_day', '', 'class="input is-small" maxlength="2" size="2" data-day data-autotab'); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('project_completed_date_yr', '', 'class="input" maxlength="4" size="4" data-year'); ?>
+                <?php echo form_input('project_completed_date_yr', '', 'class="input is-small" maxlength="4" size="4" data-year'); ?>
             </p>
         </div>
     </div>
@@ -73,7 +73,7 @@
 
 <div class="field">
     <div class="control">
-        <?php echo form_label('Assigned Department(s):', 'class="label"');  ?>
+        <?php echo form_label('Assigned Department(s):', '', 'class="label"');  ?>
         <?php echo form_checkbox('all_departments'); ?>
         <?php echo form_label('All Departments', 'all_departments'); ?>
     </div>
@@ -108,7 +108,7 @@
 
 <div class="field">
     <div class="control">
-        <?php echo form_label('Assigned Employee(s):', 'class="label"');  ?>
+        <?php echo form_label('Assigned Employee(s):', '', 'class="label"');  ?>
         <?php echo form_checkbox('all_employees'); ?>
         <?php echo form_label('All Employees', 'all_employees'); ?>
     </div>

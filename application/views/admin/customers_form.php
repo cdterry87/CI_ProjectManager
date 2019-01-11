@@ -4,7 +4,7 @@
 <div class="field">
     <?php echo form_label('Customer Name:', 'customer_name', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('customer_name', '', 'class="input" maxlength="100" data-required'); ?>
+        <?php echo form_input('customer_name', '', 'class="input is-small" maxlength="100" data-required'); ?>
     </div>
 </div>
 
@@ -12,7 +12,7 @@
     <?php echo form_label('Customer Status:', 'customer_status', 'class="label"'); ?>
     <div class="control">
         <div class="select is-fullwidth">
-            <?php echo form_dropdown('customer_status', ['' => '', 'prospect' => 'Prospect', 'pending' => 'Pending', 'live' => 'Live', 'archive' => 'Archive'], '', 'class="input" data-required data-label="Customer Status"'); ?>
+            <?php echo form_dropdown('customer_status', ['' => '', 'prospect' => 'Prospect', 'pending' => 'Pending', 'live' => 'Live', 'archive' => 'Archive'], '', 'class="input is-small" data-required data-label="Customer Status"'); ?>
         </div>
     </div>
 </div>
@@ -21,7 +21,7 @@
     <?php echo form_label('Project Manager:', 'customer_adsi_project_manager', 'class="label"'); ?>
     <div class="control">
         <div class="select is-fullwidth">
-            <?php echo form_dropdown('customer_adsi_project_manager', $employees, '', 'class="input" data-required data-label="Project Manager"'); ?>
+            <?php echo form_dropdown('customer_adsi_project_manager', $employees, '', 'class="input is-small" data-required data-label="Project Manager"'); ?>
         </div>
     </div>
 </div>
@@ -31,7 +31,7 @@
         <div class="field">
             <?php echo form_label('City:', 'customer_city', 'class="label"'); ?>
             <div class="control">
-                <?php echo form_input('customer_city', '', 'class="input" maxlength="30" data-required'); ?>
+                <?php echo form_input('customer_city', '', 'class="input is-small" maxlength="30" data-required'); ?>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
             <?php echo form_label('State:', 'customer_state', 'class="label"'); ?>
             <div class="control">
                 <div class="select is-fullwidth">
-                    <?php echo form_dropdown('customer_state', $states, '', 'class="input" data-required data-label="Customer State"'); ?>
+                    <?php echo form_dropdown('customer_state', $states, '', 'class="input is-small" data-required data-label="Customer State"'); ?>
                 </div>
             </div>
         </div>
@@ -49,15 +49,15 @@
 
 <?php echo form_label('Phone:', 'customer_phone_1', 'class="label"'); ?>
 <div class="field is-grouped">
-    <p class="control"><?php echo form_input('customer_phone_1', '', 'class="input" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+    <p class="control"><?php echo form_input('customer_phone_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
     <p class="control slash">-</p>
-    <p class="control"><?php echo form_input('customer_phone_2', '', 'class="input" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+    <p class="control"><?php echo form_input('customer_phone_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
     <p class="control slash">-</p>
-    <p class="control"><?php echo form_input('customer_phone_3', '', 'class="input" maxlength="4" size="4" data-numeric'); ?></p>
+    <p class="control"><?php echo form_input('customer_phone_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
 </div>
 
 <div class="field">
-    <?php echo form_label('Customer Details:', 'customer_details'); ?>
+    <?php echo form_label('Customer Details:', 'customer_details', 'class="label"'); ?>
     <div class="control">
         <?php echo form_textarea('customer_details', '', 'class="tinymce"'); ?>
     </div>

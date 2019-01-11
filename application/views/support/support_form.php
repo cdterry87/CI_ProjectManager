@@ -2,32 +2,32 @@
 <?php echo form_hidden('support_id'); ?>
 
 <div class="field">
-    <?php echo form_label('Support Name:','support_name'); ?>
+    <?php echo form_label('Support Name:','support_name', 'class="label"'); ?>
     <div class="control">
-        <?php echo form_input('support_name','','class="input" maxlength="100" data-required'); ?>
+        <?php echo form_input('support_name','','class="input is-small" maxlength="100" data-required'); ?>
     </div>
 </div>
 
 <div class="field">
-    <?php echo form_label('Customer:','customer_id'); ?>
+    <?php echo form_label('Customer:','customer_id', 'class="label"'); ?>
     <div class="control">
-        <div class="select is-fullwidth">
-            <?php echo form_dropdown('customer_id',$customers,'','class="input" data-required data-label="Requesting Customer"'); ?>
+        <div class="select is-small is-fullwidth">
+            <?php echo form_dropdown('customer_id',$customers,'','data-required data-label="Requesting Customer"'); ?>
         </div>
     </div>
 </div>
 
 <div class="field">
-    <?php echo form_label('Support Status:','support_status'); ?>
+    <?php echo form_label('Support Status:','support_status', 'class="label"'); ?>
     <div class="control">
-        <div class="select is-fullwidth">
-            <?php echo form_dropdown('support_status',['O' => 'Open', 'C' => 'Closed'],'','class="input" data-required data-label="Support Status"'); ?>
+        <div class="select is-small is-fullwidth">
+            <?php echo form_dropdown('support_status',['O' => 'Open', 'C' => 'Closed'],'','data-required data-label="Support Status"'); ?>
         </div>
     </div>
 </div>
 
 <div class="field">
-    <?php echo form_label('Support Details:','support_details'); ?>
+    <?php echo form_label('Support Details:','support_details', 'class="label"'); ?>
     <div class="control">
         <?php echo form_textarea('support_details', '', 'class="tinymce"'); ?>
     </div>
@@ -35,62 +35,62 @@
 
 <div class="columns">
     <div class="column is-half">
-        <?php echo form_label('Support Date/Time:','support_date_mo'); ?>
+        <?php echo form_label('Support Date/Time:','support_date_mo', 'class="label"'); ?>
         <div class="field is-grouped">
             <p class="control">
-                <?php echo form_input('support_date_mo','','class="input" maxlength="2" size="2" data-required data-month data-autotab data-label="Support Date Month"'); ?>
+                <?php echo form_input('support_date_mo','','class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Support Date Month"'); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('support_date_day','','class="input" maxlength="2" size="2" data-required data-day data-autotab data-label="Support Date Day"'); ?>
+                <?php echo form_input('support_date_day','','class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Support Date Day"'); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('support_date_yr',date('Y'),'class="input" maxlength="4" size="4" data-required data-year data-label="Support Date Year"'); ?>
+                <?php echo form_input('support_date_yr',date('Y'),'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Support Date Year"'); ?>
             </p>
             <p class="control">
-                <?php echo form_input('support_time_hr','','class="input" maxlength="2" size="2" data-required data-hour data-autotab'); ?> 
+                <?php echo form_input('support_time_hr','','class="input is-small" maxlength="2" size="2" data-required data-hour data-autotab'); ?> 
             </p>
             <p class="control slash">:</p>
             <p class="control">
-                <?php echo form_input('support_time_mn','','class="input" maxlength="2" size="2" data-required data-minutes'); ?> 
+                <?php echo form_input('support_time_mn','','class="input is-small" maxlength="2" size="2" data-required data-minutes'); ?> 
             </p>
         </div>
     </div>
     <div class="column is-half">
-        <?php echo form_label('Completed Date/Time:','support_complete_date_mo'); ?>
+        <?php echo form_label('Completed Date/Time:','support_complete_date_mo', 'class="label"'); ?>
         <div class="field is-grouped">
             <p class="control">
-                <?php echo form_input('support_complete_date_mo','','class="input" maxlength="2" size="2" data-month data-autotab'); ?>
+                <?php echo form_input('support_complete_date_mo','','class="input is-small" maxlength="2" size="2" data-month data-autotab'); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('support_complete_date_day','','class="input" maxlength="2" size="2" data-day data-autotab '); ?>
+                <?php echo form_input('support_complete_date_day','','class="input is-small" maxlength="2" size="2" data-day data-autotab '); ?>
             </p>
             <p class="control slash">/</p>
             <p class="control">
-                <?php echo form_input('support_complete_date_yr','','class="input" maxlength="4" size="4" data-year'); ?>
+                <?php echo form_input('support_complete_date_yr','','class="input is-small" maxlength="4" size="4" data-year'); ?>
             </p>
             <p class="control">
-                <?php echo form_input('support_complete_time_hr','','class="input" maxlength="2" size="2" data-hour data-autotab'); ?>
+                <?php echo form_input('support_complete_time_hr','','class="input is-small" maxlength="2" size="2" data-hour data-autotab'); ?>
             </p>
             <p class="control slash">:</p>
             <p class="control">
-                <?php echo form_input('support_complete_time_mn','','class="input" maxlength="2" size="2" data-minutes'); ?> 
+                <?php echo form_input('support_complete_time_mn','','class="input is-small" maxlength="2" size="2" data-minutes'); ?> 
             </p>
         </div>
     </div>
 </div>
 
-<div><?php echo form_label('Support Duration:'); ?></div>
+<div><?php echo form_label('Support Duration:', 'support_duration_days', 'class="label"'); ?></div>
 <div class="columns">
     <div class="column is-one-third">
         <div class="field has-addons is-fullwidth">
             <div class="control is-expanded">
-                <?php echo form_input('support_duration_days','','class="input" maxlength="2" size="3" data-numeric data-autotab'); ?>
+                <?php echo form_input('support_duration_days','','class="input is-small" maxlength="2" size="3" data-numeric data-autotab'); ?>
             </div>
             <div class="control">
-                <a class="button is-static">Days</a>
+                <a class="button is-small is-static">Days</a>
             </div>
         </div>
     </div>
@@ -98,10 +98,10 @@
     <div class="column is-one-third">
         <div class="field has-addons is-fullwidth">
             <div class="control is-expanded">
-                <?php echo form_input('support_duration_hours','','class="input" maxlength="2" size="3" data-numeric data-autotab'); ?>
+                <?php echo form_input('support_duration_hours','','class="input is-small" maxlength="2" size="3" data-numeric data-autotab'); ?>
             </div>
             <div class="control">
-                <a class="button is-static">Hours</a>
+                <a class="button is-small is-static">Hours</a>
             </div>
         </div>
     </div>
@@ -109,10 +109,10 @@
     <div class="column is-one-third">
         <div class="field has-addons is-fullwidth">
             <div class="control is-expanded">
-                <?php echo form_input('support_duration_minutes','','class="input" maxlength="2" size="3" data-numeric data-autotab'); ?>
+                <?php echo form_input('support_duration_minutes','','class="input is-small" maxlength="2" size="3" data-numeric data-autotab'); ?>
             </div>
             <div class="control">
-                <a class="button is-static">Minutes</a>
+                <a class="button is-small is-static">Minutes</a>
             </div>
         </div>
     </div>
@@ -123,7 +123,7 @@
 
 <div class="field">
 	<div class="control">
-		<?php echo form_label('Assigned Department(s):','class="label"');  ?>
+		<?php echo form_label('Assigned Department(s):', '', 'class="label"');  ?>
 		<?php echo form_checkbox('all_departments'); ?>
 		<?php echo form_label('All Departments','all_departments'); ?>
 	</div>
@@ -158,7 +158,7 @@
 
 <div class="field">
 	<div class="control">
-		<?php echo form_label('Assigned Employee(s):','class="label"');  ?>
+		<?php echo form_label('Assigned Employee(s):', '', 'class="label"');  ?>
 		<?php echo form_checkbox('all_employees'); ?>
 		<?php echo form_label('All Employees','all_employees'); ?>
 	</div>
