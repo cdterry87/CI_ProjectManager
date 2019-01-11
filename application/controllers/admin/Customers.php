@@ -162,6 +162,27 @@ class Customers extends PROJECTS_Controller
                 $this->set_message('Customer deleted successfully!', 'danger');
                 redirect('admin/customers');
                 break;
+            case "add contact":
+                if ($this->validate()) {
+                    $this->Customer_model->add_contact($id);
+                    $this->set_message('Contact added successfully.', 'success');
+                }
+                redirect('admin/customers/view/'.$id);
+                break;
+            case "add note":
+                if ($this->validate()) {
+                    $this->Customer_model->add_note($id);
+                    $this->set_message('Note added successfully.', 'success');
+                }
+                redirect('admin/customers/view/'.$id);
+                break;
+            case "add reminder":
+                if ($this->validate()) {
+                    $this->Customer_model->add_reminder($id);
+                    $this->set_message('Reminder added successfully.', 'success');
+                }
+                redirect('admin/customers/view/'.$id);
+                break;
         }
     }
 }

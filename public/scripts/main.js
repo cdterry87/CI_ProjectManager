@@ -474,6 +474,8 @@ $(function(){
     });
 
     // New tabs
+    $('.tab-init').addClass('is-active');
+    $('.tab-panel-init').show();
     $('.tab').on('click', function() {
         $('.tab-panel').hide();
         $('.tab').removeClass('is-active');

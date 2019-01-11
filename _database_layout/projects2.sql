@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 11, 2019 at 04:16 AM
+-- Generation Time: Jan 11, 2019 at 06:41 AM
 -- Server version: 5.7.17
 -- PHP Version: 7.1.4
 
@@ -47,6 +47,7 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `customers_contacts` (
   `customer_contact_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
   `contact_name` varchar(100) NOT NULL,
   `contact_title` varchar(100) NOT NULL,
   `contact_phone` varchar(15) NOT NULL,
@@ -78,8 +79,9 @@ CREATE TABLE `customers_notes` (
 
 CREATE TABLE `customers_reminders` (
   `customer_reminder_id` int(11) NOT NULL,
-  `reminder_title` varchar(250) NOT NULL,
+  `customer_id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
+  `reminder_title` varchar(250) NOT NULL,
   `reminder_description` text NOT NULL,
   `reminder_date` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -277,14 +279,6 @@ CREATE TABLE `sessions` (
   `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `data` blob NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `sessions`
---
-
-INSERT INTO `sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('278he4261ec5qaqc4j4l6ecs97d89dgb', '::1', 1547176321, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373137363332313b63757272656e745f7572697c733a303a22223b),
-('072ej6uo7kfrvi738vorir8h98v33se7', '::1', 1547176572, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373137363332313b63757272656e745f7572697c733a303a22223b656d706c6f7965655f69647c733a313a2232223b656d706c6f7965655f757365726e616d657c733a353a2261646d696e223b656d706c6f7965655f656d61696c7c733a31373a2261646d696e406578616d706c652e636f6d223b656d706c6f7965655f6e616d657c733a31333a2241646d696e204163636f756e74223b656d706c6f7965655f61646d696e7c733a373a22434845434b4544223b656d706c6f7965655f73616c65737c733a303a22223b656d706c6f7965655f6465706172746d656e74737c613a303a7b7d);
 
 -- --------------------------------------------------------
 
@@ -521,7 +515,7 @@ ALTER TABLE `systems`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `customers_contacts`
 --
@@ -546,12 +540,12 @@ ALTER TABLE `customers_reminders_employees`
 -- AUTO_INCREMENT for table `customers_systems`
 --
 ALTER TABLE `customers_systems`
-  MODIFY `customer_system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `customer_system_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `departments_employees`
 --
@@ -621,7 +615,7 @@ ALTER TABLE `support_tasks`
 -- AUTO_INCREMENT for table `systems`
 --
 ALTER TABLE `systems`
-  MODIFY `system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `system_id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
