@@ -1,0 +1,98 @@
+html, body {
+    height: 100%;
+    margin: 0px;
+}
+
+/* 
+#wrapper {
+    display: table;
+    width: 100%;
+}
+
+#aside, #main {
+    display: table-cell;
+} */
+
+.tab-panel {
+    display: none;
+}
+
+.navbar a {
+    font-size: 18px !important;
+}
+
+.navbar a:hover, aside .menu-list a:hover {
+    background-color: #272E36 !important;
+    color: #3273DC !important;
+}
+
+aside {
+    min-height: 100vh;
+    height: 100%;
+}
+
+aside, .navbar, .navbar-dropdown, .navbar-menu {
+    background-color: #272E36;
+    color: #fefefe !important;
+}
+
+aside .menu-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 4px !important;
+}
+
+.menu-list a{
+    font-size: 16px;
+}
+
+.navbar a, aside a, aside .menu-label {
+    color: #fefefe !important;
+}
+
+.navbar-dropdown {
+    border-top: none !important;
+}
+
+.navbar-dropdown .navbar-divider {
+    background-color: #3273DC;
+}
+
+.navbar-item.is-active {
+    /* background-color: #3273DC !important; */
+    color: #3263DC !important;
+}
+
+.navbar-item.is-active:hover {
+    color: #209CEE !important;
+}
+
+.fas {
+    margin-right: 5px;
+}
+
+main {
+    margin-top: 10px;
+}
+
+a.tag:hover {
+    text-decoration: none;
+}
+
+table td a:not(table td a.tag){display: block; width: 100%; padding: 5px;}
+
+input[data-required],select[data-required]{border-color: #ffa4a4 !important;}
+input[data-required]:focus,select[data-required]:focus{box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 132, 132, 0.6) !important;}
+input.form-control[size]{width: auto; display: inline;}
+
+.clear{clear: both; height: 5px;}
+
+.center{text-align: center;}
+.align-right{text-align: right;}
+
+.text-green{color: green;}
+.text-red{color: red;}
+
+@media screen and (max-width: 800px){
+	
+}

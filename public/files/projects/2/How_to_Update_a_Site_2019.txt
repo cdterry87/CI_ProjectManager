@@ -1,0 +1,56 @@
+Create update tar.gz file
+1. Open putty and go to 199.242.210.* (.27 [old], .18 [new])
+2. cd /adsi/php/htdocs/dfweb
+3. tar -zcvf update[yyyymmdd].tar.gz api batch css images jquery lib prod screens
+4. 'ls' or 'ls -li' to make sure your update.tar.gz was created successfully
+
+Create the pdf tar.gz file
+1. cd /adsi/php
+2. tar -zcvf pdf[yyyymmdd].tar.gz pdf
+3. 'ls' or 'ls -li' to make sure your pdf.tar.gz was created successfully
+
+Copy the update.tar.gz and pdf.tar.gz files to the site's server
+1. Open WinSCP (or another SSH program) and connect to the site to be updated
+2. Navigate to the directory where the 'pdf' directory is located (usually /adsi/php)
+3. Copy over the pdf.tar.gz file from our development server to their site
+4. Navigate to the 'dfweb' directory
+5. Copy over the update.tar.gz from our development serer to their site
+
+Extract and run DBTOOLS
+1. Go to our development server in the web browser and login (.27 [old], .18 [new])
+2. Go to System Maintenance -> Database Tools
+3. Make sure Export Database Layout is selected and click "Go"
+4. Download the file, and it should be located in your Downloads folder as database_layout.txt
+
+Run DBTOOLS in the site to be updated
+1. Go to their site in the web browser and login
+2. Go to System Maintenance -> Database Tools
+3. Click "Import Data Base Layout" and browse for the database_layout.txt file and click "Go"
+4. It may take a few minutes to run depending on when the last time DBTOOLS was run
+5. A list of SQL statements will appear.  Scroll to the bottom and click "Here" to perform the inserts
+6. A list of inserted queries will appear once it has completed.
+7. If you aren't confident that it fully ran, repeat this process and run DBTOOLS twice
+
+Back up site's current code set
+1. Open a new putty window and connect to the site to be updated
+2. cd /adsi/php/htdocs
+3. mkdir dfweb_backup[yyyymmdd]
+4. cd dfweb_backup[yyyymmdd]
+5. cp -R ../dfweb/api .
+6. cp -R ../dfweb/batch .
+7. cp -R ../dfweb/css .
+8. cp -R ../dfweb/images .
+9. cp -R ../dfweb/jquery .
+10. cp -R ../dfweb/lib .
+11. cp -R ../dfweb/prod .
+12. cp -R ../dfweb/screens .
+13. cp -R ../dfweb/conf .
+14. 'ls' or 'ls -li' to make sure your backup files are present
+
+Update the site
+1. Open a new putty window and connect to the site to be updated
+2. cd /adsi/php (or wherever the pdf directory is located)
+3. tar -zxvf pdf[yyyymmdd].tar.gz
+4. cd /adsi/php/htdocs/dfweb
+5. tar -zxvf update[yyyymmdd].tar.gz
+6. Congratulations! The site is updated!
