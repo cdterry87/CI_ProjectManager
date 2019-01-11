@@ -4,45 +4,25 @@
     <?php echo anchor('admin/departments/form/'.$department['department_id'],'<i class="fas fa-edit"></i> Edit Department','class="button is-info is-small"'); ?>
 </h1>
 
-
-<div class="panel">
-	<div class="panel-heading has-background-warning has-text-dark">
-		<h2><i class="fas fa-user-tie"></i>Employees</h2>
-    </div>
-    <?php
-        if(empty($employees)){
-    ?>
-    <div class="panel-block">
-        There are currently no employees in this department.
-	</div>
-    <?php
-        }else{
-            foreach($employees as $row){
-                $link='admin/employees/form/'.$row['employee_id'];
-    ?>
-    <div class="panel-block">
-        <?php echo anchor($link, $row['employee_name']); ?>
-	</div>
-    <?php
-            }
-        }
-    ?>
+<div class="tabs is-centered">
+    <ul>
+        <li class="tab tab-init" data-target="department-employees"><a><i class="fas fa-user-tie"></i>Employees</a></li>
+        <li class="tab" data-target="department-projects"><a><i class="fas fa-project-diagram"></i>Projects</a></li>
+        <li class="tab" data-target="department-support"><a><i class="fas fa-bug"></i> Support</a></li>
+    </ul>
 </div>
 
-<div class="panel">
-	<div class="panel-heading has-background-info has-text-white">
-		<h2><i class="fa fa-project-diagram"></i> Incomplete Projects</h2>
-    </div>
-    <div class="panel-block">
-        <?php $this->load->view('projects/projects_incomplete'); ?>
-    </div>
+<div id="department-employees" class="tab-panel tab-panel-init">
+    <h2 class="title is-4">Employees</h2>
+    <?php $this->load->view('admin/employees_list'); ?>
 </div>
 
-<div class="panel">
-	<div class="panel-heading has-background-danger has-text-white">
-		<h2><i class="fas fa-bug"></i> Open Support</h2>
-    </div>
-    <div class="panel-block">
-        <?php $this->load->view('support/support_open'); ?>
-    </div>
+<div id="department-projects" class="tab-panel">
+    <h2 class="title is-4">Incomplete Projects</h2>
+    <?php $this->load->view('projects/projects_incomplete'); ?>
+</div>
+
+<div id="department-support" class="tab-panel">
+    <h2 class="title is-4">Open Support</h2>
+    <?php $this->load->view('support/support_open'); ?>
 </div>
