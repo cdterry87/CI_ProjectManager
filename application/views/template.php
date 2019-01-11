@@ -34,7 +34,7 @@
                     </div>
                     <div class="navbar-end">
                         <a href="<?php echo base_url('projects/form'); ?>" class="navbar-item <?php echo ($this->current_system == "projects" && $this->current_page == "form" ? 'is-active' : '') ?>"><i class="fas fa-plus-square"></i> New Project</a>
-                        <a href="<?php echo base_url('support/form'); ?>" class="navbar-item <?php echo ($this->current_system == "projects" && $this->current_page == "form" ? 'is-active' : '') ?>"><i class="fas fa-plus-square"></i> New Support</a>
+                        <a href="<?php echo base_url('support/form'); ?>" class="navbar-item <?php echo ($this->current_system == "support" && $this->current_page == "form" ? 'is-active' : '') ?>"><i class="fas fa-plus-square"></i> New Support</a>
                         <div class="navbar-item">
                             <div class="navbar-item has-dropdown is-hoverable">
                                 <a class="navbar-link"><i class="fas fa-cogs"></i> Settings</a>
