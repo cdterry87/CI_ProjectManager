@@ -66,7 +66,7 @@ class Project_model extends PROJECTS_Model
         $where='';
         if (!empty($departments)) {
             foreach ($departments as $code => $desc) {
-                $where.="department_id='".$code."' OR ";
+                $where.="departments_projects.department_id='".$code."' OR ";
             }
             $where="(".substr($where, 0, -4).")";
         }
@@ -82,7 +82,7 @@ class Project_model extends PROJECTS_Model
         $this->db->where("(project_type='P')");
         $this->db->where('project_status', 'I');
         $this->db->order_by('project_date desc, project_name');
-        $this->db->group_by('projects.project_id');
+        $this->db->group_by('projects.project_id, departments_projects.department_project_id');
         $query=$this->db->get();
         
         return $query->result_array();
@@ -113,7 +113,7 @@ class Project_model extends PROJECTS_Model
         $this->db->where('project_type', 'P');
         $this->db->where('project_status', 'C');
         $this->db->order_by('project_date desc, project_name');
-        $this->db->group_by('projects.project_id');
+        $this->db->group_by('projects.project_id, departments_projects.department_project_id');
         $query=$this->db->get();
         
         return $query->result_array();
@@ -143,7 +143,7 @@ class Project_model extends PROJECTS_Model
         }
         $this->db->where('project_status', 'A');
         $this->db->order_by('project_date desc, project_name');
-        $this->db->group_by('projects.project_id');
+        $this->db->group_by('projects.project_id, departments_projects.department_project_id');
         $query=$this->db->get();
         
         return $query->result_array();

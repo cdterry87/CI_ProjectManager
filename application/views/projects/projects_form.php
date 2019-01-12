@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<div class="columns is-multiline">
+<div class="columns is-multiline is-gapless">
     <?php
     if (!empty($departments)) {
         foreach ($departments as $row) {
@@ -114,7 +114,7 @@
     </div>
 </div>
 
-<div class="columns is-multiline">
+<div class="columns is-multiline is-gapless">
     <?php
     if (!empty($employees)) {
         foreach ($employees as $row) {
