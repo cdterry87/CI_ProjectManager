@@ -54,7 +54,7 @@ if ($employee_id!='') {
 </div>
 
 
-<div class="columns is-multiline">
+<div class="columns is-multiline is-gapless">
     <?php
     if (!empty($departments)) {
         foreach ($departments as $row) {
