@@ -25,7 +25,7 @@
                     <?php $this->load->view('sidebar'); ?>
                 </aside>
                 <main id="main" class="column is-two-thirds-mobile is-three-quarters-tablet is-four-fifths-desktop">
-                    <div class="container is-fluid">
+                    <div class="">
                         <div id="messages"></div>
                         <br>
                         <?php $this->load->view($page); ?>
