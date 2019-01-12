@@ -51,7 +51,7 @@ class Support_model extends PROJECTS_Model
         }
         $this->db->where('support_status', 'O');
         $this->db->order_by('support_date desc, support_time desc, support_name');
-        $this->db->group_by('support.support_id');
+        $this->db->group_by('support.support_id, departments_support.department_support_id');
         $query=$this->db->get();
         
         return $query->result_array();
@@ -81,7 +81,7 @@ class Support_model extends PROJECTS_Model
         }
         $this->db->where('support_status', 'C');
         $this->db->order_by('support_date desc, support_time desc, support_name');
-        $this->db->group_by('support.support_id');
+        $this->db->group_by('support.support_id, departments_support.department_support_id');
         $query=$this->db->get();
         
         return $query->result_array();
@@ -111,7 +111,7 @@ class Support_model extends PROJECTS_Model
         }
         $this->db->where('support_status', 'A');
         $this->db->order_by('support_date desc, support_time desc, support_name');
-        $this->db->group_by('support.support_id');
+        $this->db->group_by('support.support_id, departments_support.department_support_id');
         $query=$this->db->get();
         
         return $query->result_array();
