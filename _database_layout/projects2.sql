@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 11, 2019 at 06:41 AM
+-- Generation Time: Jan 12, 2019 at 02:35 AM
 -- Server version: 5.7.17
 -- PHP Version: 7.1.4
 
@@ -64,10 +64,10 @@ CREATE TABLE `customers_contacts` (
 --
 
 CREATE TABLE `customers_notes` (
-  `note_id` int(11) NOT NULL,
+  `customer_note_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
-  `note` int(11) NOT NULL,
+  `note` text NOT NULL,
   `datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -179,7 +179,7 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`employee_id`, `employee_name`, `employee_username`, `employee_password`, `employee_email`, `employee_admin`, `employee_info`, `employee_sales`) VALUES
-(2, 'Admin Account', 'admin', '$2y$10$i3SKdxlOMw40V70nhqk/1.PuY7kcLEVCxZZIAyPihjWuABSGH4RR6', 'admin@example.com', 'CHECKED', '', '');
+(1, 'Admin Account', 'admin', '$2y$10$i3SKdxlOMw40V70nhqk/1.PuY7kcLEVCxZZIAyPihjWuABSGH4RR6', 'admin@example.com', 'CHECKED', '', '');
 
 -- --------------------------------------------------------
 
@@ -363,7 +363,7 @@ ALTER TABLE `customers_contacts`
 -- Indexes for table `customers_notes`
 --
 ALTER TABLE `customers_notes`
-  ADD PRIMARY KEY (`note_id`);
+  ADD PRIMARY KEY (`customer_note_id`);
 
 --
 -- Indexes for table `customers_reminders`
@@ -525,7 +525,7 @@ ALTER TABLE `customers_contacts`
 -- AUTO_INCREMENT for table `customers_notes`
 --
 ALTER TABLE `customers_notes`
-  MODIFY `note_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_note_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `customers_reminders`
 --
