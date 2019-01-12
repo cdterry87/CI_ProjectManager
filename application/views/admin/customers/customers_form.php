@@ -75,12 +75,12 @@
     </div>
 </div>
 
-<div class="columns is-multiline is-gapless">
+<div class="columns is-multiline">
     <?php
     if (!empty($systems)) {
         foreach ($systems as $row) {
             $checked="";
-            ?>
+    ?>
     <div class="column is-one-quarter all_systems">
             <?php echo form_checkbox('system['.$row['system_id'].']', $row['system_id'], $checked); ?>
             <?php echo form_label($row['system_name'], 'system['.$row['system_id'].']'); ?>
