@@ -488,6 +488,19 @@ $(function(){
         $('#' + target).show();
     });
 
+    // New modals
+    $('[data-modal]').on('click', function() {
+        console.log('modal click');
+        var modal = $(this).data('modal');
+        $('#' + modal).addClass('is-active');
+    });
+
+    $('.modal-close, .modal-background').on('click', function() {
+        console.log('closing modal');
+        var modal = $(this).data('modal');
+        $('#' + modal).removeClass('is-active');
+    });
+
 
    /* --------------------------------------------------------------------------------
 	 * When a "remove" icon is hovered over, change to a success icon.
@@ -516,9 +529,12 @@ $(function(){
 
    // Used to display the file attachment name in the file attachment box
    var file = document.getElementById("file-attachment");
-   file.onchange = function() {
-      if(file.files.length > 0) {
-         document.getElementById('file-name').innerHTML = file.files[0].name;
-      }
-   };
+   if (file !== null) {
+    file.onchange = function() {
+        if(file.files.length > 0) {
+           document.getElementById('file-name').innerHTML = file.files[0].name;
+        }
+     };
+   }
+   
 });
