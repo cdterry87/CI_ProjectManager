@@ -176,7 +176,7 @@ class Customers extends PROJECTS_Controller
     {
         //Retrieve the record's id if it exists in the form.
         $id=$this->input->post('customer_id');
-        
+
         switch ($this->action) {
             case "save":
                 //Validate the form submission.
@@ -195,7 +195,7 @@ class Customers extends PROJECTS_Controller
                 $this->set_message('Customer deleted successfully!', 'danger');
                 redirect('admin/customers');
                 break;
-            case "add contact":
+            case "save contact":
                 if ($this->validate()) {
                     $this->Customer_model->add_contact($id);
                     $this->set_message('Contact added successfully.', 'success');
