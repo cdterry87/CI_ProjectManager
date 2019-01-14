@@ -92,38 +92,38 @@
         </p>
     </div>
 
-    <div class="field">
-        <table class="table is-striped is-narrow is-fullwidth">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Phone</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($contacts as $key => $contact) {
-                    ?>
-                <tr>
-                    <td><?php echo $contact['contact_name']; ?></td>
-                    <td><?php echo $contact['contact_title']; ?></td>
-                    <td><?php echo $contact['contact_email']; ?></td>
-                    <td><?php echo $contact['contact_phone']; ?></td>
-                    <td><?php echo $contact['contact_phone2']; ?></td>
-                    <td>
-                        <?php echo anchor('admin/customers/delete_contact/' . $customer['customer_id'] . '/' . $contact['customer_contact_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
-                    </td>
-                </tr>
-                    <?php
-                }
+    <br>
+
+    <table class="table is-striped is-narrow is-fullwidth">
+        <thead>
+            <tr>
+                <th width="20%">Name</th>
+                <th width="20%">Title</th>
+                <th width="20%">Email</th>
+                <th width="15%">Phone</th>
+                <th width="15%">Phone</th>
+                <th width="10%">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($contacts as $key => $contact) {
                 ?>
-            </tbody>
-        </table>
-    </div>
+            <tr>
+                <td><?php echo $contact['contact_name']; ?></td>
+                <td><?php echo $contact['contact_title']; ?></td>
+                <td><?php echo $contact['contact_email']; ?></td>
+                <td><?php echo $this->format->phone($contact['contact_phone']); ?></td>
+                <td><?php echo $this->format->phone($contact['contact_phone_alt']); ?></td>
+                <td>
+                    <?php echo anchor('admin/customers/delete_contact/' . $customer['customer_id'] . '/' . $contact['customer_contact_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                </td>
+            </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
 </div>
 
 <div id="customer-notes" class="tab-panel">
@@ -140,13 +140,15 @@
     </div>
     <?php echo form_close(); ?>
 
+    <br>
+
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>
             <tr>
                 <th>Note</th>
-                <th>Date</th>
-                <th>Employee</th>
-                <th>Delete</th>
+                <th width="20%">Date</th>
+                <th width="20%">Employee</th>
+                <th width="10%">Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -174,7 +176,88 @@
     <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
     <h2 class="title is-4">Reminders</h2>
 
+    <?php echo form_label('Reminder Date:', 'reminder_date_mo', 'class="label"'); ?>
+    <div class="field is-grouped">
+        <p class="control">
+            <?php echo form_input('reminder_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Reminder Date Month"'); ?>
+        </p>
+        <p class="control slash">/</p>
+        <p class="control">
+            <?php echo form_input('reminder_date_day', '', 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Reminder Date Day"'); ?>
+        </p>
+        <p class="control slash">/</p>
+        <p class="control">
+            <?php echo form_input('reminder_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Reminder Date Year"'); ?>
+        </p>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control is-expanded">
+            <?php echo form_textarea('reminder', '', 'class="textarea" placeholder="Enter reminder here" data-required rows="3"'); ?>
+        </div>
+        <div class="control">
+            <?php echo form_submit('action', 'Add Reminder', 'class="button is-info is-fullwidth"'); ?>
+        </div>
+    </div>
+    
+    <div class="field">
+        <div class="control">
+            <?php echo form_label('Remind Employee(s):', '', 'class="label"');  ?>
+            <?php echo form_checkbox('all_employees'); ?>
+            <?php echo form_label('All Employees', 'all_employees'); ?>
+        </div>
+    </div>
+
+    <div class="columns is-multiline is-gapless">
+        <?php
+        if (!empty($employees)) {
+            foreach ($employees as $row) {
+                $checked="";
+                if ($_SESSION['employee_id']==$row['employee_id']) {
+                    $checked="CHECKED";
+                }
+                ?>
+        <div class="column is-one-quarter assigned_employees">
+                <?php echo form_checkbox('employee['.$row['employee_id'].']', $row['employee_id'], $checked); ?>
+                <?php echo form_label($row['employee_name'], 'employee['.$row['employee_id'].']'); ?>
+        </div>
+                <?php
+            }
+        } else {
+            ?>
+        There are currently no employees in the system.  <?php echo anchor('admin/employees/form', 'Click here to add one.'); ?>
+            <?php
+        }
+        ?>
+    </div>
     <?php echo form_close(); ?>
+
+    <br>
+
+    <table class="table is-striped is-narrow is-fullwidth">
+        <thead>
+            <tr>
+                <th>Reminder</th>
+                <th width="20%">Reminder Date</th>
+                <th width="10%">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($reminders as $key => $reminder) {
+                ?>
+            <tr>
+                <td><?php echo $reminder['reminder']; ?></td>
+                <td><?php echo $this->format->date($reminder['reminder_date']); ?></td>
+                <td>
+                <?php echo anchor('admin/customers/delete_reminder/' . $customer['customer_id'] . '/' . $reminder['customer_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                </td>
+            </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
 </div>
 
 <?php echo form_close(); ?>

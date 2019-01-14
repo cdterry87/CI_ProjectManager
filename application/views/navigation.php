@@ -10,7 +10,7 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a href="<?php echo base_url('projects'); ?>" class="navbar-item <?php echo ($this->current_system == "projects" ? 'is-active' : '') ?>"><i class="fas fa-project-diagram"></i> Project</a>
+            <a href="<?php echo base_url('projects'); ?>" class="navbar-item <?php echo ($this->current_system == "projects" ? 'is-active' : '') ?>"><i class="fas fa-project-diagram"></i> Projects</a>
             <a href="<?php echo base_url('support'); ?>" class="navbar-item <?php echo ($this->current_system == "support" ? 'is-active' : '') ?>"><i class="fas fa-bug"></i> Support</a>
             <a href="<?php echo base_url('reports'); ?>" class="navbar-item <?php echo ($this->current_system == "reports" ? 'is-active' : '') ?>"><i class="fas fa-chart-pie"></i> Reports</a>
         </div>

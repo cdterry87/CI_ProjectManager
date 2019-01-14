@@ -121,6 +121,7 @@ class Customers extends PROJECTS_Controller
         //Get customer support - open.
         $this->data['support_open']=$this->Customer_model->get_support_open($id);
         
+        //Get project manager name
         $project_manager = $this->Employee_model->get_by_employee_id($this->data['customer']['customer_adsi_project_manager']);
         if (!empty($project_manager)) {
             $this->data['project_manager'] = $project_manager['employee_name'];
@@ -134,6 +135,9 @@ class Customers extends PROJECTS_Controller
 
         //Get a list of the customer's notes
         $this->data['notes'] = $this->Customer_model->get_notes($id);
+
+        //Get list of employees
+        $this->data['employees']=$this->Employee_model->get_all();
 
         //Get a list of the customer's reminders
         $this->data['reminders'] = $this->Customer_model->get_reminders($id);
@@ -159,7 +163,7 @@ class Customers extends PROJECTS_Controller
 
     public function delete_reminder($customer_id, $reminder_id)
     {
-        $this->Customer_model->delete_reminder($contact_id);
+        $this->Customer_model->delete_reminder($reminder_id);
 
         $this->set_message('Reminder deleted successfully', 'danger');
         redirect('admin/customers/view/'.$customer_id);

@@ -45,12 +45,12 @@
 
             <?php echo form_label('Phone #2:', 'contact_phone2_1', 'class="label"'); ?>
             <div class="field is-grouped">
-                <p class="control"><?php echo form_input('contact_phone2_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_alt_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('contact_phone2_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_alt_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
                 <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('contact_phone2_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
-                <p class="control"><?php echo form_input('contact_phone2_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type"'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_alt_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
+                <p class="control"><?php echo form_input('contact_phone_alt_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type"'); ?></p>
             </div>
         </div>
     </div>
