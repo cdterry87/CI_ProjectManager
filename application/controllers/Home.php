@@ -42,9 +42,10 @@ class Home extends PROJECTS_Controller
         $this->data['customers_prospect_count']=$this->Home_model->get_counts('customer_id', 'customers', ['customer_status' => 'prospect']);
         $this->data['customers_pending_count']=$this->Home_model->get_counts('customer_id', 'customers', ['customer_status' => 'pending']);
 
-        $this->data['completed_total'] = 0;
+        // Get completed counts
         $this->data['completed_projects'] = $this->Home_model->get_counts('project_id', 'projects', ['project_status' => 'C'], "project_completed_date >= '" . date('Ymd', strtotime('-7 days')) . "'");
         $this->data['completed_support'] = $this->Home_model->get_counts('support_id', 'support', ['support_status' => 'C'], "support_closed_date >= '" . date('Ymd', strtotime('-7 days')) . "'");
+        $this->data['completed_total'] = intval($this->data['completed_projects']) + intval($this->data['completed_support']);
         
         $this->load->view('template', $this->data);
     }
