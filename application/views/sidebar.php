@@ -8,10 +8,18 @@ if ($this->session->userdata('employee_admin') == "CHECKED") {
 <ul class="menu-list">
     <li><a class="<?php echo ($this->current_page == "departments" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/departments'); ?>"><i class="fas fa-building"></i> Departments</a></li>
     <li><a class="<?php echo ($this->current_page == "employees" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/employees'); ?>"><i class="fas fa-user-tie"></i> Employees</a></li>
-    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
     <li><a class="<?php echo ($this->current_page == "systems" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/systems'); ?>"><i class="fas fa-cogs"></i> Systems</a></li>
 </ul>
 <?php
+}
+
+if ($this->session->userdata('employee_admin') == "CHECKED" or $this->session->userdata('employee_sales') == "CHECKED") {
+?>
+<p class="menu-label">Sales</p>
+<ul class="menu-list">
+    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
+</ul>
+<?php   
 }
 ?>
 
