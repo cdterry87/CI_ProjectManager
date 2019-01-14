@@ -17,14 +17,51 @@
     </div>
 </div>
 
-<div class="field">
-    <?php echo form_label('Project Status:', 'project_status', 'class="label"'); ?>
-    <div class="control">
-        <div class="select is-small is-fullwidth">
-            <?php echo form_dropdown('project_status', ['I' => 'Incomplete', 'C' => 'Complete'], '', 'data-required data-label="Support Status"'); ?>
+<div class="columns">
+    <div class="column is-half">
+        <div class="field">
+            <?php echo form_label('Project Status:', 'project_status', 'class="label"'); ?>
+            <div class="control">
+                <div class="select is-small is-fullwidth">
+                    <?php echo form_dropdown('project_status', ['I' => 'Incomplete', 'C' => 'Complete'], '', 'data-required data-label="Support Status"'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column is-half">
+        <div class="field">
+            <?php echo form_label('Percentage Completed:', 'project_percentage_completed', 'class="label"'); ?>
+            <div class="control">
+                <div class="select is-small is-fullwidth">
+                    <?php echo form_dropdown('project_percentage_completed', [
+                        '0' => '0%', 
+                        '5' => '5%', 
+                        '10' => '10%', 
+                        '15' => '15%', 
+                        '20' => '20%', 
+                        '25' => '25%', 
+                        '30' => '30%', 
+                        '35' => '35%', 
+                        '40' => '40%', 
+                        '45' => '45%', 
+                        '50' => '50%', 
+                        '55' => '55%', 
+                        '60' => '60%', 
+                        '65' => '65%', 
+                        '70' => '70%', 
+                        '75' => '75%', 
+                        '80' => '80%', 
+                        '85' => '85%', 
+                        '90' => '90%', 
+                        '95' => '95%', 
+                        '100' => '100%'
+                    ], '', 'data-required data-label="Support Status"'); ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 <div class="field">
     <?php echo form_label('Project Details:', 'project_details', 'class="label"'); ?>
@@ -34,7 +71,7 @@
 </div>
 
 <div class="columns">
-    <div class="column is-half">
+    <div class="column is-one-third">
         <?php echo form_label('Project Date:', 'project_date_mo', 'class="label"'); ?>
         <div class="field is-grouped">
             <p class="control">
@@ -51,7 +88,24 @@
         </div>
     </div>
 
-    <div class="column is-half">
+    <div class="column is-one-third">
+        <?php echo form_label('Estimated Completion Date:', 'project_estimated_completion_date_mo', 'class="label"'); ?>
+        <div class="field is-grouped">
+            <p class="control">
+                <?php echo form_input('project_estimated_completion_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Estimated Completion Date Month"'); ?>
+            </p>
+            <p class="control slash">/</p>
+            <p class="control">
+                <?php echo form_input('project_estimated_completion_date_day', '', 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Estimated Completion Date Day"'); ?>
+            </p>
+            <p class="control slash">/</p>
+            <p class="control">
+                <?php echo form_input('project_estimated_completion_date_yr', '', 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Estimated Completion Date Year"'); ?>
+            </p>
+        </div>
+    </div>
+
+    <div class="column is-one-third">
         <?php echo form_label('Project Completed Date:', 'project_completed_date_mo', 'class="label"'); ?>
         <div class="field is-grouped">
             <p class="control">
