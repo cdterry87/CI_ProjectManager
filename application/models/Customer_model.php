@@ -28,7 +28,21 @@ class Customer_model extends PROJECTS_Model
     }
 
     /* --------------------------------------------------------------------------------
-     * Get all records.
+     * Get only live records.
+     * -------------------------------------------------------------------------------- */
+    public function get_live()
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->where('customer_status', 'live');
+        $this->db->order_by('customer_name');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Get a customer name by id
      * -------------------------------------------------------------------------------- */
     public function get_customer_name($id)
     {
@@ -68,6 +82,30 @@ class Customer_model extends PROJECTS_Model
         
         $this->db->select($dropdown_key.','.$dropdown_val);
         $this->db->from($this->table);
+        $this->db->order_by($dropdown_val);
+        $query=$this->db->get();
+        $result=$query->result_array();
+        
+        $dropdown=array(''=>'');
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                $dropdown[$row[$dropdown_key]]=$row[$dropdown_val];
+            }
+        }
+        return $dropdown;
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Get a record formatted for dropdowns as a key/value pair (live only)
+     * -------------------------------------------------------------------------------- */
+    public function get_dropdown_live()
+    {
+        $dropdown_key       = 'customer_id';
+        $dropdown_val       = 'customer_name';
+        
+        $this->db->select($dropdown_key.','.$dropdown_val);
+        $this->db->from($this->table);
+        $this->db->where('customer_status', 'live');
         $this->db->order_by($dropdown_val);
         $query=$this->db->get();
         $result=$query->result_array();
@@ -264,7 +302,8 @@ class Customer_model extends PROJECTS_Model
         return $this->db->insert_id();
     }
 
-    public function get_contacts($id) {
+    public function get_contacts($id)
+    {
         $this->db->select('*');
         $this->db->from('customers_contacts');
         $this->db->where('customer_id', $id);
@@ -299,7 +338,8 @@ class Customer_model extends PROJECTS_Model
         return $this->db->insert_id();
     }
 
-    public function get_notes($id) {
+    public function get_notes($id)
+    {
         $this->db->select('*');
         $this->db->from('customers_notes');
         $this->db->where('customer_id', $id);
@@ -333,7 +373,8 @@ class Customer_model extends PROJECTS_Model
         return $this->db->insert_id();
     }
 
-    public function get_reminders($id) {
+    public function get_reminders($id)
+    {
         $this->db->select('*');
         $this->db->from('customers_reminders');
         $this->db->where('customer_id', $id);
@@ -348,5 +389,4 @@ class Customer_model extends PROJECTS_Model
         $this->db->where('customer_reminder_id', $id);
         $this->db->delete('customers_reminders');
     }
-
 }

@@ -80,7 +80,7 @@ class Projects extends PROJECTS_Controller
         
         //Get customers dropdown.
         $this->load->model('Customer_model');
-        $this->data['customers']=$this->Customer_model->get_dropdown();
+        $this->data['customers']=$this->Customer_model->get_dropdown_live();
         
         //Get departments.
         $this->load->model('Department_model');
