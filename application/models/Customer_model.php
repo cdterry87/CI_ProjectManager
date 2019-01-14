@@ -370,7 +370,39 @@ class Customer_model extends PROJECTS_Model
         //Insert the record into the database.
         $this->db->insert('customers_reminders', $data);
         
-        return $this->db->insert_id();
+        $id = $this->db->insert_id();
+
+        //Set employees.
+        $this->set_reminders_employees($id);
+
+        return $id;
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Set associated employees.
+     * -------------------------------------------------------------------------------- */
+    public function set_reminders_employees($id)
+    {
+        //First, delete the related departments that are already out there.
+        $this->db->where('customer_reminder_id', $id);
+        $this->db->delete('customers_reminders_employees');
+        
+        //Get data from the department checkbox(es).
+        $employees=$this->input->post('employee');
+        
+        //Then insert the new departments for this employee.
+        if (!empty($employees) and is_array($employees)) {
+            foreach ($employees as $key => $val) {
+                $insert=array();
+                if (trim($val)!="") {
+                    $insert['customer_reminder_id']=$id;
+                    $insert['employee_id']=$val;
+                    $this->db->insert('customers_reminders_employees', $insert);
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     public function get_reminders($id)
