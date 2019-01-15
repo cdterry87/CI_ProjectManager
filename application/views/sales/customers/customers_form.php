@@ -1,6 +1,6 @@
-<?php $this->load->view('admin/customers/customers_navigation'); ?>
+<?php $this->load->view('sales/customers/customers_navigation'); ?>
 
-<?php echo form_open('admin/customers/action'); ?>
+<?php echo form_open('sales/customers/action'); ?>
 <?php echo form_hidden('customer_id'); ?>
 
 <div class="field">
@@ -89,7 +89,7 @@
         }
     } else {
         ?>
-    There are currently no systems available.  <?php echo anchor('admin/systems/form', 'Click here to add one.'); ?>
+    There are currently no systems available.  <?php echo anchor('sales/systems/form', 'Click here to add one.'); ?>
         <?php
     }
     ?>
@@ -106,7 +106,7 @@
         <?php
     }
     ?>
-    <p class="control"><?php echo anchor('admin/customers', 'Cancel', 'class="button is-warning"'); ?></p>
+    <p class="control"><?php echo anchor('sales/customers', 'Cancel', 'class="button is-warning"'); ?></p>
 </div>
 
 <?php echo form_close(); ?>

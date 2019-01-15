@@ -1,4 +1,4 @@
-<?php echo form_open('admin/customers/action', 'id="contacts-form"'); ?>
+<?php echo form_open('sales/customers/action', 'id="contacts-form"'); ?>
 <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
 <div class="modal-background" data-modal="contact-form" ></div>
 <div class="modal-card">

@@ -14,7 +14,7 @@ class Customers extends PROJECTS_Controller
     
     public function index()
     {
-        $this->data['page']='admin/customers/customers';
+        $this->data['page']='sales/customers/customers';
         
         //Get all customers.
         $this->data['customers']=$this->Customer_model->get_all();
@@ -24,7 +24,7 @@ class Customers extends PROJECTS_Controller
     
     public function form($id = '')
     {
-        $this->data['page']='admin/customers/customers_form';
+        $this->data['page']='sales/customers/customers_form';
         
         $this->data['employees'] = $this->Employee_model->get_dropdown();
         $this->data['systems'] = $this->System_model->get_all();
@@ -110,7 +110,7 @@ class Customers extends PROJECTS_Controller
         
     public function view($id)
     {
-        $this->data['page']='admin/customers/customers_view';
+        $this->data['page']='sales/customers/customers_view';
         
         //Get customer information.
         $this->data['customer']=$this->Customer_model->get($id);
@@ -150,7 +150,7 @@ class Customers extends PROJECTS_Controller
         $this->Customer_model->delete_contact($contact_id);
 
         $this->set_message('Contact deleted successfully', 'danger');
-        redirect('admin/customers/view/'.$customer_id);
+        redirect('sales/customers/view/'.$customer_id);
     }
 
     public function delete_note($customer_id, $note_id)
@@ -158,7 +158,7 @@ class Customers extends PROJECTS_Controller
         $this->Customer_model->delete_note($contact_id);
 
         $this->set_message('Note deleted successfully', 'danger');
-        redirect('admin/customers/view/'.$customer_id);
+        redirect('sales/customers/view/'.$customer_id);
     }
 
     public function delete_reminder($customer_id, $reminder_id)
@@ -166,7 +166,7 @@ class Customers extends PROJECTS_Controller
         $this->Customer_model->delete_reminder($reminder_id);
 
         $this->set_message('Reminder deleted successfully', 'danger');
-        redirect('admin/customers/view/'.$customer_id);
+        redirect('sales/customers/view/'.$customer_id);
     }
 
     public function validate()
@@ -187,17 +187,17 @@ class Customers extends PROJECTS_Controller
                 if ($this->validate()) {
                     $this->Customer_model->save($id);
                     $this->set_message('Customer information saved successfully', 'success');
-                    redirect('admin/customers');
+                    redirect('sales/customers');
                 }
                 
                 //The validation failed so retrieve POST data and reload the page.
                 $this->populate_screen($this->input->post());
-                redirect('admin/customers/form/'.$id);
+                redirect('sales/customers/form/'.$id);
                 break;
             case "delete":
                 $this->Customer_model->delete($id);
                 $this->set_message('Customer deleted successfully!', 'danger');
-                redirect('admin/customers');
+                redirect('sales/customers');
                 break;
             case "save contact":
                 if ($this->validate()) {
@@ -206,21 +206,21 @@ class Customers extends PROJECTS_Controller
                 } else {
                     $this->populate_screen($this->input->post());
                 }
-                redirect('admin/customers/view/'.$id);
+                redirect('sales/customers/view/'.$id);
                 break;
             case "add note":
                 if ($this->validate()) {
                     $this->Customer_model->add_note($id);
                     $this->set_message('Note added successfully.', 'success');
                 }
-                redirect('admin/customers/view/'.$id);
+                redirect('sales/customers/view/'.$id);
                 break;
             case "add reminder":
                 if ($this->validate()) {
                     $this->Customer_model->add_reminder($id);
                     $this->set_message('Reminder added successfully.', 'success');
                 }
-                redirect('admin/customers/view/'.$id);
+                redirect('sales/customers/view/'.$id);
                 break;
         }
     }

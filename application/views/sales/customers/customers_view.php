@@ -1,6 +1,6 @@
 <h1 class="title is-3">
     <?php echo $customer['customer_name']; ?>
-    <?php echo anchor('admin/customers/form/'.$customer['customer_id'], '<i class="fas fa-edit"></i> Edit Customer', 'class="button is-info is-small"'); ?>
+    <?php echo anchor('sales/customers/form/'.$customer['customer_id'], '<i class="fas fa-edit"></i> Edit Customer', 'class="button is-info is-small"'); ?>
 </h1>
 
 <div class="tabs is-centered">
@@ -82,7 +82,7 @@
 
 <div id="customer-contacts" class="tab-panel">
     <div id="contact-form" class="modal">
-        <?php $this->load->view('admin/customers/customers_contacts_form'); ?>
+        <?php $this->load->view('sales/customers/customers_contacts_form'); ?>
         <button class="modal-close is-large" data-modal="contact-form" aria-label="close"></button>
     </div>
 
@@ -116,7 +116,7 @@
                 <td><?php echo $this->format->phone($contact['contact_phone']); ?></td>
                 <td><?php echo $this->format->phone($contact['contact_phone_alt']); ?></td>
                 <td>
-                    <?php echo anchor('admin/customers/delete_contact/' . $customer['customer_id'] . '/' . $contact['customer_contact_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                    <?php echo anchor('sales/customers/delete_contact/' . $customer['customer_id'] . '/' . $contact['customer_contact_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
                 </td>
             </tr>
                 <?php
@@ -127,7 +127,7 @@
 </div>
 
 <div id="customer-notes" class="tab-panel">
-    <?php echo form_open('admin/customers/action', 'id="notes-form"'); ?>
+    <?php echo form_open('sales/customers/action', 'id="notes-form"'); ?>
     <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
     <h2 class="title is-4">Add Notes</h2>
     <div class="field is-grouped">
@@ -161,7 +161,7 @@
                 <td><?php echo $note['datetime']; ?></td>
                 <td><?php echo $employee['employee_name']; ?></td>
                 <td>
-                <?php echo anchor('admin/customers/delete_note/' . $customer['customer_id'] . '/' . $note['customer_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                <?php echo anchor('sales/customers/delete_note/' . $customer['customer_id'] . '/' . $note['customer_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
                 </td>
             </tr>
                 <?php
@@ -172,7 +172,7 @@
 </div>
 
 <div id="customer-reminders" class="tab-panel">
-    <?php echo form_open('admin/customers/action', 'id="reminders-form"'); ?>
+    <?php echo form_open('sales/customers/action', 'id="reminders-form"'); ?>
     <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
     <h2 class="title is-4">Reminders</h2>
 
@@ -225,7 +225,7 @@
             }
         } else {
             ?>
-        There are currently no employees in the system.  <?php echo anchor('admin/employees/form', 'Click here to add one.'); ?>
+        There are currently no employees in the system.  <?php echo anchor('sales/employees/form', 'Click here to add one.'); ?>
             <?php
         }
         ?>
@@ -250,7 +250,7 @@
                 <td><?php echo $reminder['reminder']; ?></td>
                 <td><?php echo $this->format->date($reminder['reminder_date']); ?></td>
                 <td>
-                <?php echo anchor('admin/customers/delete_reminder/' . $customer['customer_id'] . '/' . $reminder['customer_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                <?php echo anchor('sales/customers/delete_reminder/' . $customer['customer_id'] . '/' . $reminder['customer_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
                 </td>
             </tr>
                 <?php

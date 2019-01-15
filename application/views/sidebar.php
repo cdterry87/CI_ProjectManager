@@ -17,7 +17,7 @@ if ($this->session->userdata('employee_admin') == "CHECKED" or $this->session->u
 ?>
 <p class="menu-label">Sales</p>
 <ul class="menu-list">
-    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
+    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('sales/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
 </ul>
 <?php   
 }
