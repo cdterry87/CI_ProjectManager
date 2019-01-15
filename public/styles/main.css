@@ -34,6 +34,7 @@ html, body {
 aside {
     min-height: 100vh;
     height: 100%;
+    vertical-align: top;
 }
 
 aside, .navbar, .navbar-dropdown, .navbar-menu {

@@ -1,6 +1,3 @@
-<ul class="menu-list">
-    <li><a class="<?php echo ($this->current_uri == "" ? 'is-active' : '') ?>" href="<?php echo base_url('/'); ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-</ul>
 <?php
 if ($this->session->userdata('employee_admin') == "CHECKED") {
 ?>
@@ -12,17 +9,15 @@ if ($this->session->userdata('employee_admin') == "CHECKED") {
 </ul>
 <?php
 }
-
 if ($this->session->userdata('employee_admin') == "CHECKED" or $this->session->userdata('employee_sales') == "CHECKED") {
 ?>
 <p class="menu-label">Sales</p>
 <ul class="menu-list">
-    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('sales/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
+    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
 </ul>
 <?php   
 }
 ?>
-
 <p class="menu-label">Projects</p>
 <ul class="menu-list">
     <li><a class="<?php echo ($this->current_system == "projects" && $this->current_page == "" ? 'is-active' : '')  ?>" href="<?php echo base_url('projects'); ?>"><i class="fas fa-exclamation-circle"></i> Incomplete</a></li>
@@ -30,7 +25,6 @@ if ($this->session->userdata('employee_admin') == "CHECKED" or $this->session->u
     <li><a class="<?php echo ($this->current_system == "projects" && $this->current_page == "archive" ? 'is-active' : '')  ?>" href="<?php echo base_url('projects/archive'); ?>"><i class="fas fa-archive"></i> Archived</a></li>
     <li><a class="<?php echo ($this->current_system == "projects" && $this->current_page == "all" ? 'is-active' : '')  ?>" href="<?php echo base_url('projects/all'); ?>"><i class="fas fa-list"></i> All Projects</a></li>
 </ul>
-
 <?php
 if ($this->session->userdata('employee_sales') != "CHECKED") {
 ?>
@@ -44,7 +38,6 @@ if ($this->session->userdata('employee_sales') != "CHECKED") {
 <?php
 }
 ?>
-
 <p class="menu-label">Reports</p>
 <ul class="menu-list">
     <li><a href="<?php echo base_url('reports/open_projects_support'); ?>"><i class="fas fa-list"></i> Full List</a></li>
