@@ -6,183 +6,330 @@
     <?php echo anchor('projects/form/'.$project['project_id'], '<i class="fas fa-edit"></i> Edit Project', 'class="button is-info is-small"'); ?>
 </h1>
 
-<div>
-    <strong>Project Date: </strong>
-    <?php echo $this->format->date($project['project_date']); ?>
+<div class="tabs is-centered">
+    <ul>
+        <li class="tab tab-init" data-target="project-details"><a><i class="fas fa-clipboard-list "></i>Details</a></li>
+        <li class="tab" data-target="project-tasks"><a><i class="fas fa-tasks"></i>Tasks</a></li>
+        <li class="tab" data-target="project-files"><a><i class="fas fa-paperclip"></i>Files</a></li>
+        <li class="tab" data-target="project-notes"><a><i class="fas fa-edit"></i> Notes</a></li>
+        <li class="tab" data-target="project-reminders"><a><i class="fas fa-clock"></i> Reminders</a></li>
+    </ul>
 </div>
 
-<div>
-    <strong>Project Details:</strong>
-</div>
+<div id="project-details" class="tab-panel tab-panel-init">
+    <div>
+        <strong>Project Date: </strong>
+        <?php echo $this->format->date($project['project_date']); ?>
+    </div>
 
-<div>
-    <?php echo $project['project_details']; ?>  
-</div>
+    <?php if ($project['project_details'] != '') { ?>
+    <div>
+        <strong>Project Details:</strong>
+    </div>
 
-<hr/>
+    <div>
+        <?php echo $project['project_details']; ?>  
+    </div>
+    <?php } ?>
 
-<div class="columns">
-    <div class="column is-one-third">
-        <div class="box notification is-warning has-text-dark">
-            <div class="heading">Customer</div>
+    <hr/>
+
+    <div class="columns">
+        <div class="column is-one-third">
+            <div class="box notification is-warning has-text-dark">
+                <div class="heading">Customer</div>
+                <?php
+                if (empty($customer)) {
+                    ?>
+                <div class="title is-5">N/A</div>
+                    <?php
+                } else {
+                    $list_customers='';
+                    foreach ($customer as $row) {
+                        $list_customers.=$row['customer_name'].", ";
+                    }
+                    $list_customers=substr($list_customers, 0, -2);
+                    ?>
+                <div class="title is-5"><?php echo $list_customers; ?></div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <div class="column is-one-third">
+            <div class="box notification is-danger has-text-white">
+            <div class="heading">Assigned Department(s)</div>
             <?php
-            if (empty($customer)) {
+            if (empty($departments)) {
                 ?>
             <div class="title is-5">N/A</div>
                 <?php
             } else {
-                $list_customers='';
-                foreach ($customer as $row) {
-                    $list_customers.=$row['customer_name'].", ";
+                $list_departments='';
+                foreach ($departments as $row) {
+                    $list_departments.=$row['department_name'].", ";
                 }
-                $list_customers=substr($list_customers, 0, -2);
+                $list_departments=substr($list_departments, 0, -2);
                 ?>
-            <div class="title is-5"><?php echo $list_customers; ?></div>
+            <div class="title is-5"><?php echo $list_departments; ?></div>
                 <?php
             }
             ?>
+            </div>
         </div>
-    </div>
-    <div class="column is-one-third">
-        <div class="box notification is-danger has-text-white">
-        <div class="heading">Assigned Department(s)</div>
-        <?php
-        if (empty($departments)) {
-            ?>
-        <div class="title is-5">N/A</div>
-            <?php
-        } else {
-            $list_departments='';
-            foreach ($departments as $row) {
-                $list_departments.=$row['department_name'].", ";
-            }
-            $list_departments=substr($list_departments, 0, -2);
-            ?>
-        <div class="title is-5"><?php echo $list_departments; ?></div>
-            <?php
-        }
-        ?>
-        </div>
-    </div>
-    <div class="column is-one-third">
-        <div class="box notification is-info has-text-white">
-            <div class="heading">Assigned Employee(s)</div>
-            <?php
-            if (empty($employees)) {
+        <div class="column is-one-third">
+            <div class="box notification is-info has-text-white">
+                <div class="heading">Assigned Employee(s)</div>
+                <?php
+                if (empty($employees)) {
+                    ?>
+                <div class="title is-5">N/A</div>
+                    <?php
+                } else {
+                    $list_employees='';
+                    foreach ($employees as $row) {
+                        $list_employees.=$row['employee_name'].", ";
+                    }
+                    $list_employees=substr($list_employees, 0, -2);
+                    ?>
+                <div class="title is-5"><?php echo $list_employees; ?></div>
+                    <?php
+                }
                 ?>
-            <div class="title is-5">N/A</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="project-tasks" class="tab-panel">
+    <div class="field is-grouped">
+        <p class="control">
+            <?php echo form_label('Date:', 'task_date_mo'); ?>
+        </p>
+        <p class="control">
+            <?php echo form_input('task_date_mo', '', 'class="input" maxlength="2" size="2" data-required data-month data-autotab data-label="Date Month"'); ?>
+        </p>
+        <p class="control slash">/</p>
+        <p class="control">
+            <?php echo form_input('task_date_day', '', 'class="input" maxlength="2" size="2" data-required data-day data-autotab data-label="Date Day"'); ?>
+        </p>
+        <p class="control slash">/</p>
+        <p class="control">
+            <?php echo form_input('task_date_yr', date('Y'), 'class="input" maxlength="4" size="4" data-required data-year data-label="Date Year"'); ?>
+        </p>
+        <div class="control is-expanded">
+            <?php echo form_input('task', '', 'placeholder="Enter notes here..." class="input" maxlength="250" data-required'); ?>
+        </div>
+        <div class="control">
+            <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
+        </div>
+    </div>
+
+    <table class="table is-striped is-narrow is-fullwidth">
+        <tbody>
+            <?php
+            if (empty($tasks)) {
+                ?>
+            <tr>
+                <td colspan="3">Project does not currently have any tasks.</td>
+            </tr>
                 <?php
             } else {
-                $list_employees='';
-                foreach ($employees as $row) {
-                    $list_employees.=$row['employee_name'].", ";
+                $task_num=0;
+                foreach ($tasks as $row) {
+                    $task_num++;
+                    ?>
+            <tr>
+                <td><?php echo $task_num.". ".$this->format->date($row['task_date'])." - ".$row['task']; ?></td>
+                <td width="10%"><?php echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['task_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
+            </tr>
+                    <?php
                 }
-                $list_employees=substr($list_employees, 0, -2);
-                ?>
-            <div class="title is-5"><?php echo $list_employees; ?></div>
-                <?php
             }
             ?>
+        </tbody>
+    </table>
+</div>
+
+<div id="project-files" class="tab-panel">
+    <h3 class="title is-4">Attached Files</h3>
+    <div class="field is-grouped">
+        <div class="control is-expanded">
+            <div class="file has-name is-fullwidth">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="userfile" id="file-attachment">
+                    <span class="file-cta">
+                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                        <span class="file-label">Choose a file…</span>
+                    </span>
+                    <span id="file-name" class="file-name"></span>
+                </label>
+            </div>
+        </div>
+        <div class="control">
+            <?php echo form_submit('action', 'Add File', 'class="button is-info is-fullwidth"'); ?>
         </div>
     </div>
-</div>
 
-<hr/>
-
-<h3 class="title is-4">Project Notes</h3>
-<div class="field is-grouped">
-    <p class="control">
-        <?php echo form_label('Date:', 'task_date_mo'); ?>
-    </p>
-    <p class="control">
-        <?php echo form_input('task_date_mo', '', 'class="input" maxlength="2" size="2" data-required data-month data-autotab data-label="Date Month"'); ?>
-    </p>
-    <p class="control slash">/</p>
-    <p class="control">
-        <?php echo form_input('task_date_day', '', 'class="input" maxlength="2" size="2" data-required data-day data-autotab data-label="Date Day"'); ?>
-    </p>
-    <p class="control slash">/</p>
-    <p class="control">
-        <?php echo form_input('task_date_yr', date('Y'), 'class="input" maxlength="4" size="4" data-required data-year data-label="Date Year"'); ?>
-    </p>
-    <div class="control is-expanded">
-        <?php echo form_input('task', '', 'placeholder="Enter notes here..." class="input" maxlength="250" data-required'); ?>
-    </div>
-    <div class="control">
-        <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
-    </div>
-</div>
-
-<table class="table is-striped is-narrow is-fullwidth">
-    <tbody>
-        <?php
-        if (empty($tasks)) {
-            ?>
-        <tr>
-            <td colspan="3">Project does not currently have any notes.</td>
-        </tr>
+    <table class="table is-narrow is-fullwidth">
+        <tbody>
             <?php
-        } else {
-            $task_num=0;
-            foreach ($tasks as $row) {
-                $task_num++;
+                $file_num=0;
+            if (empty($files)) {
                 ?>
-        <tr>
-            <td><?php echo $task_num.". ".$this->format->date($row['task_date'])." - ".$row['task']; ?></td>
-            <td width="10%"><?php echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['task_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-        </tr>
+            <tr>
+                <td colspan="2">Project does not currently have any attached files.</td>
+            </tr>
                 <?php
+            } else {
+                foreach ($files as $row) {
+                    $file_num++;
+                    ?>
+            <tr>
+                <td><?php echo anchor('public/files/projects/'.$row['project_id']."/".$row['file_name'], $file_num.". ".$row['file_name'], 'target="_blank"'); ?></td>
+                <td width="10%"><?php echo anchor('projects/delete_file/'.$row['project_id'].'/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
+            </tr>
+                    <?php
+                }
             }
-        }
-        ?>
-    </tbody>
-</table>
+            ?>
+        </tbody>
+    </table>
+</div>
 
-<hr/>
-
-<h3 class="title is-4">Attached Files</h3>
-<div class="field is-grouped">
-    <div class="control is-expanded">
-        <div class="file has-name is-fullwidth">
-            <label class="file-label">
-                <input class="file-input" type="file" name="userfile" id="file-attachment">
-                <span class="file-cta">
-                    <span class="file-icon"><i class="fas fa-upload"></i></span>
-                    <span class="file-label">Choose a file…</span>
-                </span>
-                <span id="file-name" class="file-name"></span>
-            </label>
+<div id="project-notes" class="tab-panel">
+    <?php echo form_open('projects/action', 'id="notes-form"'); ?>
+    <?php echo form_hidden('project_id', $project['project_id']); ?>
+    <div class="field is-grouped">
+        <div class="control is-expanded">
+            <?php echo form_textarea('note', '', 'class="textarea" placeholder="Enter notes here" data-required rows="3"'); ?>
+        </div>
+        <div class="control">
+            <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
         </div>
     </div>
-    <div class="control">
-        <?php echo form_submit('action', 'Add File', 'class="button is-info is-fullwidth"'); ?>
-    </div>
-</div>
+    <?php echo form_close(); ?>
 
-<table class="table is-narrow is-fullwidth">
-    <tbody>
-        <?php
-            $file_num=0;
-        if (empty($files)) {
-            ?>
-        <tr>
-            <td colspan="2">Project does not currently have any attached files.</td>
-        </tr>
+    <br>
+
+    <table class="table is-striped is-narrow is-fullwidth">
+        <thead>
+            <tr>
+                <th>Note</th>
+                <th width="20%">Date</th>
+                <th width="20%">Employee</th>
+                <th width="10%">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
             <?php
-        } else {
-            foreach ($files as $row) {
-                $file_num++;
+            foreach ($notes as $key => $note) {
+                $employee = $this->Employee_model->get_by_employee_id($note['employee_id']);
                 ?>
-        <tr>
-            <td><?php echo anchor('public/files/projects/'.$row['project_id']."/".$row['file_name'], $file_num.". ".$row['file_name'], 'target="_blank"'); ?></td>
-            <td width="10%"><?php echo anchor('projects/delete_file/'.$row['project_id'].'/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-        </tr>
+            <tr>
+                <td><?php echo $note['note']; ?></td>
+                <td><?php echo $note['datetime']; ?></td>
+                <td><?php echo $employee['employee_name']; ?></td>
+                <td>
+                <?php echo anchor('sales/customers/delete_note/' . $customer['customer_id'] . '/' . $note['customer_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                </td>
+            </tr>
                 <?php
             }
+            ?>
+        </tbody>
+    </table>
+</div>
+
+<div id="project-reminders" class="tab-panel">
+    <?php echo form_open('projects/action', 'id="reminders-form"'); ?>
+    <?php echo form_hidden('project_id', $project['project_id']); ?>   
+    
+    <?php echo form_label('Reminder Date:', 'reminder_date_mo', 'class="label"'); ?>
+    <div class="field is-grouped">
+        <p class="control">
+            <?php echo form_input('reminder_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Reminder Date Month"'); ?>
+        </p>
+        <p class="control slash">/</p>
+        <p class="control">
+            <?php echo form_input('reminder_date_day', '', 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Reminder Date Day"'); ?>
+        </p>
+        <p class="control slash">/</p>
+        <p class="control">
+            <?php echo form_input('reminder_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Reminder Date Year"'); ?>
+        </p>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control is-expanded">
+            <?php echo form_textarea('reminder', '', 'class="textarea" placeholder="Enter reminder here" data-required rows="3"'); ?>
+        </div>
+        <div class="control">
+            <?php echo form_submit('action', 'Add Reminder', 'class="button is-info is-fullwidth"'); ?>
+        </div>
+    </div>
+    
+    <div class="field">
+        <div class="control">
+            <?php echo form_label('Remind Employee(s):', '', 'class="label"');  ?>
+            <?php echo form_checkbox('all_employees'); ?>
+            <?php echo form_label('All Employees', 'all_employees'); ?>
+        </div>
+    </div>
+
+    <div class="columns is-multiline is-gapless">
+        <?php
+        if (!empty($employees)) {
+            foreach ($employees as $row) {
+                $checked="";
+                if ($_SESSION['employee_id']==$row['employee_id']) {
+                    $checked="CHECKED";
+                }
+                ?>
+        <div class="column is-one-quarter assigned_employees">
+                <?php echo form_checkbox('employee['.$row['employee_id'].']', $row['employee_id'], $checked); ?>
+                <?php echo form_label($row['employee_name'], 'employee['.$row['employee_id'].']'); ?>
+        </div>
+                <?php
+            }
+        } else {
+            ?>
+        There are currently no employees in the system.  <?php echo anchor('sales/employees/form', 'Click here to add one.'); ?>
+            <?php
         }
         ?>
-    </tbody>
-</table>
+    </div>
+    <?php echo form_close(); ?>
+
+    <br>
+
+    <table class="table is-striped is-narrow is-fullwidth">
+        <thead>
+            <tr>
+                <th>Reminder</th>
+                <th width="20%">Reminder Date</th>
+                <th width="10%">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($reminders as $key => $reminder) {
+                ?>
+            <tr>
+                <td><?php echo $reminder['reminder']; ?></td>
+                <td><?php echo $this->format->date($reminder['reminder_date']); ?></td>
+                <td>
+                <?php echo anchor('projects/delete_reminder/' . $project['project_id'] . '/' . $reminder['project_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                </td>
+            </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
+<br>
 
 <div class="field is-grouped is-grouped-centered">
 <?php
