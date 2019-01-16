@@ -150,7 +150,37 @@ $(function(){
    /* --------------------------------------------------------------------------------
     * Form submit.
     * -------------------------------------------------------------------------------- */
-   form.on('submit', function(e){
+    // AJAX form
+    $('form.ajax').on('submit', function(e) {
+        console.log('ajax form submit');
+        e.preventDefault();
+        form = $(this);
+        action = $(this).val().toLowerCase();
+
+        if (validate()) {
+            $.ajax({
+                async: 		false,
+                method: 	"POST",
+                type:		"JSON",
+                data: 		form.serialize()+'&action='+action,
+                url: 		form.attr('action'),
+            })
+            
+            //The .done method will be executed if the AJAX request successfully receives a response.
+            .done(function(data){
+                console.log('form submitted to: ' + form.attr('action') + ' | with: ' + form.serialize() + '&action=' + action);
+            })
+    
+            //The .fail method will be executed if the AJAX request fails to receive a response.
+            .fail(function(xhr, status, error){
+                console.log('Form Submit Error: '+xhr.responseText);
+            })
+        }
+        get_messages();
+    });
+
+   // Standard form
+   form.not('.ajax').on('submit', function(e){
       console.log('form_submit()');
 
       // Setting the specific form that was submitted.
@@ -159,6 +189,7 @@ $(function(){
 	  //Validate form submission.
       validate();
    });
+
    
    /* --------------------------------------------------------------------------------
     * Run server-side validations to validate form submission.
@@ -177,8 +208,8 @@ $(function(){
       .done(function(data){
          //If data was returned, there are errors so set validated to false; otherwise set validated to true.
          if (data!='') {
-            console.log('Validations failed!');
-            validated=false;
+            // console.log('Validations failed!');
+            // validated=false;
          }
       })
       .fail(function(xhr, status, error){

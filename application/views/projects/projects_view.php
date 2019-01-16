@@ -5,16 +5,20 @@
 
 <div class="tabs is-centered">
     <ul>
-        <li class="tab tab-init" data-target="project-details"><a><i class="fas fa-clipboard-list "></i>Details</a></li>
-        <li class="tab" data-target="project-tasks"><a><i class="fas fa-tasks"></i>Tasks</a></li>
+        <li class="tab tab-init" data-target="project-details"><a><i class="fas fa-clipboard-list "></i> Details</a></li>
+        <li class="tab" data-target="project-tasks"><a><i class="fas fa-tasks"></i> Tasks</a></li>
         <li class="tab" data-target="project-notes"><a><i class="fas fa-edit"></i> Notes</a></li>
         <li class="tab" data-target="project-reminders"><a><i class="fas fa-clock"></i> Reminders</a></li>
-        <li class="tab" data-target="project-files"><a><i class="fas fa-paperclip"></i>Files</a></li>
+        <li class="tab" data-target="project-files"><a><i class="fas fa-paperclip"></i> Files</a></li>
     </ul>
 </div>
 
 <div id="project-details" class="tab-panel tab-panel-init">
     <progress class="progress is-primary" value="<?php echo $project['project_percentage_completed']; ?>" max="100"><?php echo $project['project_percentage_completed']; ?>% Complete</progress>
+    <div>
+        <strong>Project Lead: </strong>
+        <?php echo $this->Employee_model->get_by_employee_id($project['project_lead'])['employee_name']; ?>
+    </div>
     <div class="columns">
         <div class="column is-one-third">
             <strong>Project Date: </strong>
@@ -204,6 +208,7 @@
 <div id="project-reminders" class="tab-panel">
     <?php echo form_open('projects/action', 'id="reminders-form"'); ?>
     <?php echo form_hidden('project_id', $project['project_id']); ?>   
+    <?php echo form_hidden('tab_target', '#project-reminders'); ?>   
     
     <?php echo form_label('Reminder Date:', 'reminder_date_mo', 'class="label"'); ?>
     <div class="field is-grouped">
@@ -290,6 +295,8 @@
 </div>
 
 <div id="project-files" class="tab-panel">
+    <?php echo form_open_multipart('projects/action', 'id="notes-form"'); ?>
+    <?php echo form_hidden('project_id', $project['project_id']); ?>
     <h3 class="title is-4">Attached Files</h3>
     <div class="field is-grouped">
         <div class="control is-expanded">
@@ -308,6 +315,7 @@
             <?php echo form_submit('action', 'Add File', 'class="button is-info is-fullwidth"'); ?>
         </div>
     </div>
+    <?php echo form_close(); ?>
 
     <hr>
 
@@ -339,6 +347,8 @@
 
 <br>
 
+<?php echo form_open('projects/action', 'id="notes-form"'); ?>
+<?php echo form_hidden('project_id', $project['project_id']); ?>
 <div class="field is-grouped is-grouped-centered">
 <?php
 switch ($project['project_status']) {
@@ -359,3 +369,4 @@ switch ($project['project_status']) {
 }
 ?>
 </div>
+<?php echo form_close(); ?>

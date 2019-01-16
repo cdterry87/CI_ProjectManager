@@ -17,6 +17,15 @@
     </div>
 </div>
 
+<div class="field">
+    <?php echo form_label('Project Lead:', 'project_lead', 'class="label"'); ?>
+    <div class="control">
+        <div class="select is-small is-fullwidth">
+            <?php echo form_dropdown('project_lead', $employees_dropdown, '', 'data-required data-label="Project Lead"'); ?>
+        </div>
+    </div>
+</div>
+
 <div class="columns">
     <div class="column is-half">
         <div class="field">
