@@ -368,14 +368,18 @@ if ($project['project_approved'] != 'Y') {
             echo '<div class="control">'.form_submit('action', 'Restore Project', 'class="button is-success" data-confirm="Are you sure you want to restore this project?"').'</div>';
             break;
         case "C":
+            if ($_SESSION['employee_admin'] == "CHECKED") {
+                echo '<div class="control">'.form_submit('action', 'Approve Project', 'class="button is-success" data-confirm="Are you sure you want to approve this project?"').'</div>';
+            }
             echo '<div class="control">'.form_submit('action', 'Incomplete Project', 'class="button is-danger" data-confirm="Are you sure you want to incomplete this project?"').'</div>';
             echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
             break;
         case "I":
             if ($_SESSION['employee_admin'] == "CHECKED") {
                 echo '<div class="control">'.form_submit('action', 'Approve Project', 'class="button is-success" data-confirm="Are you sure you want to approve this project?"').'</div>';
+            } else {
+                echo '<div class="control">'.form_submit('action', 'Complete Project', 'class="button is-info" data-confirm="Are you sure you want to complete this project?"').'</div>';
             }
-            echo '<div class="control">'.form_submit('action', 'Complete Project', 'class="button is-info" data-confirm="Are you sure you want to complete this project?"').'</div>';
             echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
             break;
     }
