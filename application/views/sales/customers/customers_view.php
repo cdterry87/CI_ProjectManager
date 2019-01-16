@@ -92,7 +92,7 @@
         </p>
     </div>
 
-    <br>
+    <hr>
 
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>
@@ -140,7 +140,7 @@
     </div>
     <?php echo form_close(); ?>
 
-    <br>
+    <hr>
 
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>

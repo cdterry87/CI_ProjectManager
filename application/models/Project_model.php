@@ -388,13 +388,44 @@ class Project_model extends PROJECTS_Model
         //Prepare the data from the screen.
         $data=$this->prepare('projects_tasks');
         
-        //Set status to "I" (Incomplete) by default.
-        $data['task_status']="I";
+        $data['task_assigned_by']=$_SESSION['employee_id'];
+        $data['task_date']=date('Ymd');
         
         //Insert the record into the database.
         $this->db->insert('projects_tasks', $data);
         
-        return $this->db->insert_id();
+        $id =  $this->db->insert_id();
+
+        $this->set_tasks_employees($id);
+
+        return $id;
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Set assigned employees.
+     * -------------------------------------------------------------------------------- */
+    public function set_tasks_employees($id)
+    {
+        //First, delete the related departments that are already out there.
+        $this->db->where('project_task_id', $id);
+        $this->db->delete('projects_tasks_employees');
+        
+        //Get data from the department checkbox(es).
+        $employees=$this->input->post('employee');
+        
+        //Then insert the new departments for this employee.
+        if (!empty($employees) and is_array($employees)) {
+            foreach ($employees as $key => $val) {
+                $insert=array();
+                if (trim($val)!="") {
+                    $insert['project_task_id']=$id;
+                    $insert['employee_id']=$val;
+                    $this->db->insert('projects_tasks_employees', $insert);
+                }
+            }
+            return true;
+        }
+        return false;
     }
     
     /* --------------------------------------------------------------------------------

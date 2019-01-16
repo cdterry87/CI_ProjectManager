@@ -112,30 +112,25 @@
 </div>
 
 <div id="project-tasks" class="tab-panel">
-    <div class="field is-grouped">
-        <p class="control">
-            <?php echo form_label('Date:', 'task_date_mo'); ?>
-        </p>
-        <p class="control">
-            <?php echo form_input('task_date_mo', '', 'class="input" maxlength="2" size="2" data-required data-month data-autotab data-label="Date Month"'); ?>
-        </p>
-        <p class="control slash">/</p>
-        <p class="control">
-            <?php echo form_input('task_date_day', '', 'class="input" maxlength="2" size="2" data-required data-day data-autotab data-label="Date Day"'); ?>
-        </p>
-        <p class="control slash">/</p>
-        <p class="control">
-            <?php echo form_input('task_date_yr', date('Y'), 'class="input" maxlength="4" size="4" data-required data-year data-label="Date Year"'); ?>
-        </p>
-        <div class="control is-expanded">
-            <?php echo form_input('task', '', 'placeholder="Enter notes here..." class="input" maxlength="250" data-required'); ?>
-        </div>
-        <div class="control">
-            <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
-        </div>
+    <div id="task-form" class="modal">
+        <?php $this->load->view('projects/projects_tasks_form'); ?>
+        <button class="modal-close is-large" data-modal="task-form" aria-label="close"></button>
     </div>
 
+    <div class="field is-grouped is-grouped-centered">
+        <p class="control">
+            <a data-modal="task-form" class="button is-info">Add Task</a>    
+        </p>
+    </div>
+
+    <hr>
+
     <table class="table is-striped is-narrow is-fullwidth">
+        <tr>
+            <th>Task</th>
+            <th width="15%">Date</th>
+            <th width="10%">Delete</th>
+        </tr>
         <tbody>
             <?php
             if (empty($tasks)) {
@@ -150,8 +145,9 @@
                     $task_num++;
                     ?>
             <tr>
-                <td><?php echo $task_num.". ".$this->format->date($row['task_date'])." - ".$row['task']; ?></td>
-                <td width="10%"><?php echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['task_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
+                <td><?php echo $row['task']; ?></td>
+                <td><?php echo $this->format->date($row['task_date']); ?></td>
+                <td width="10%"><?php echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
             </tr>
                     <?php
                 }

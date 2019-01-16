@@ -223,7 +223,7 @@ class Projects extends PROJECTS_Controller
                 }
                 redirect('projects/view/'.$id);
                 break;
-            case "add task":
+            case "save task":
                 if ($this->validate()) {
                     $this->Project_model->add_task($id);
                     $this->set_message('Task added successfully.', 'success');
