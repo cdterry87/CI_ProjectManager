@@ -32,11 +32,29 @@ $(function(){
     * Initialize Datatables.
     * -------------------------------------------------------------------------------- */
     $('.datatable').DataTable({
-    dom: 'lfrtBip',
-    "order": [[1, "desc"]],
-    iDisplayLength: 50,
-    buttons: ['copy', 'print', 'excel', 'pdf']
+        dom: 'lfrtBip',
+        "order": [[1, "desc"]],
+        iDisplayLength: 50,
+        "language": {
+            "search": "",
+            "lengthMenu": "_MENU_"
+        },
+        // buttons: ['copy', 'print', 'excel', 'pdf']
+        buttons: {
+            buttons: [
+                { extend: 'copy', className: 'button is-warning' },
+                { extend: 'print', className: 'button is-info' },
+                { extend: 'excel', className: 'button is-success' },
+                { extend: 'pdf', className: 'button is-danger' }
+            ]
+        },
+        initComplete: function (settings, json) {
+            $(".dt-button").removeClass("dt-button");
+        }
     });
+    $('.dataTables_length label').addClass('select');
+    $('.dataTables_filter input').addClass('input');
+    $('.dataTables_filter input').attr('placeholder', 'Search...');
    
    /* --------------------------------------------------------------------------------
     * Populate screen with data from JSON.
