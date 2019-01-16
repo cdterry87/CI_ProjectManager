@@ -10,19 +10,25 @@ class Report_model extends PROJECTS_Model
     public function get_my_departments_where()
     {
         $departments = $_SESSION['employee_departments'];
+
         $where='';
-        foreach ($departments as $code => $desc) {
-            $where.="department_id='".$code."' OR ";
+        if (!empty($departments)) {
+            foreach ($departments as $code => $desc) {
+                $where.="department_id='".$code."' OR ";
+            }
+            $where="(".substr($where, 0, -4).")";
+
+            return $where;
         }
-        $where="(".substr($where, 0, -4).")";
-        
-        return $where;
+
+        return false;
     }
 
     public function get_customers()
     {
         $this->db->select('*');
         $this->db->from('customers');
+        $this->db->where('customer_status', 'live');
         $this->db->order_by('customer_name');
         $query=$this->db->get();
 
