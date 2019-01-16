@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 14, 2019 at 01:53 PM
--- Server version: 10.2.13-MariaDB
--- PHP Version: 7.2.2
+-- Generation Time: Jan 16, 2019 at 06:17 AM
+-- Server version: 5.7.17
+-- PHP Version: 7.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -181,7 +179,8 @@ CREATE TABLE `employees` (
 
 INSERT INTO `employees` (`employee_id`, `employee_name`, `employee_username`, `employee_password`, `employee_email`, `employee_admin`, `employee_info`, `employee_sales`) VALUES
 (1, 'Admin Account', 'admin', '$2y$10$i3SKdxlOMw40V70nhqk/1.PuY7kcLEVCxZZIAyPihjWuABSGH4RR6', 'admin@example.com', 'CHECKED', '', ''),
-(2, 'Sales Account', 'sales', '$2y$10$PmMjHGiSw4JA75RLwqO1ZuQWwkx.3ugzuDrYQDBM4jCfODVCvEu/K', 'sales@example.com', '', '', 'CHECKED');
+(2, 'Sales Account', 'sales', '$2y$10$PmMjHGiSw4JA75RLwqO1ZuQWwkx.3ugzuDrYQDBM4jCfODVCvEu/K', 'sales@example.com', '', '', 'CHECKED'),
+(3, 'User Account', 'user', '$2y$10$SU9IU0EZygaI1g1fz.n8PuNJM7ohu5E/69Ft6egy9g0grfNbPYeeC', 'user@example.com', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -233,7 +232,6 @@ CREATE TABLE `projects` (
   `project_details` text NOT NULL,
   `project_date` varchar(8) NOT NULL,
   `project_due_date` varchar(8) NOT NULL,
-  `project_approved_date` varchar(8) NOT NULL,
   `project_start_date` varchar(8) NOT NULL,
   `project_completed_date` varchar(8) NOT NULL,
   `project_archived_date` varchar(8) NOT NULL,
@@ -242,7 +240,11 @@ CREATE TABLE `projects` (
   `project_status` char(1) NOT NULL,
   `project_tags` varchar(100) NOT NULL,
   `project_estimated_completion_date` varchar(8) NOT NULL,
-  `project_percentage_completed` varchar(3) NOT NULL
+  `project_lead` int(11) NOT NULL,
+  `project_percentage_completed` varchar(3) NOT NULL,
+  `project_approved` varchar(1) NOT NULL,
+  `project_approved_by` int(11) NOT NULL,
+  `project_approved_date` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -260,15 +262,71 @@ CREATE TABLE `projects_files` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `projects_notes`
+--
+
+CREATE TABLE `projects_notes` (
+  `project_note_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `note` text NOT NULL,
+  `datetime` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects_reminders`
+--
+
+CREATE TABLE `projects_reminders` (
+  `project_reminder_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `reminder` text NOT NULL,
+  `reminder_date` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects_reminders_employees`
+--
+
+CREATE TABLE `projects_reminders_employees` (
+  `project_reminder_employee_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `project_reminder_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `projects_tasks`
 --
 
 CREATE TABLE `projects_tasks` (
-  `task_id` int(11) NOT NULL,
+  `project_task_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  `task` varchar(250) NOT NULL,
-  `task_status` char(1) NOT NULL,
-  `task_date` varchar(8) NOT NULL
+  `task` text NOT NULL,
+  `task_date` varchar(8) NOT NULL,
+  `task_assigned_by` int(11) NOT NULL,
+  `task_assigned_date` varchar(8) NOT NULL,
+  `task_start_date` varchar(8) NOT NULL,
+  `task_due_date` varchar(8) NOT NULL,
+  `task_completed_date` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects_tasks_employees`
+--
+
+CREATE TABLE `projects_tasks_employees` (
+  `project_task_employee_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `project_task_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -280,7 +338,7 @@ CREATE TABLE `projects_tasks` (
 CREATE TABLE `sessions` (
   `id` varchar(128) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `data` blob NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -468,11 +526,35 @@ ALTER TABLE `projects_files`
   ADD KEY `file_name` (`file_name`);
 
 --
+-- Indexes for table `projects_notes`
+--
+ALTER TABLE `projects_notes`
+  ADD PRIMARY KEY (`project_note_id`);
+
+--
+-- Indexes for table `projects_reminders`
+--
+ALTER TABLE `projects_reminders`
+  ADD PRIMARY KEY (`project_reminder_id`);
+
+--
+-- Indexes for table `projects_reminders_employees`
+--
+ALTER TABLE `projects_reminders_employees`
+  ADD PRIMARY KEY (`project_reminder_employee_id`);
+
+--
 -- Indexes for table `projects_tasks`
 --
 ALTER TABLE `projects_tasks`
-  ADD PRIMARY KEY (`task_id`),
+  ADD PRIMARY KEY (`project_task_id`) USING BTREE,
   ADD KEY `project_id` (`project_id`);
+
+--
+-- Indexes for table `projects_tasks_employees`
+--
+ALTER TABLE `projects_tasks_employees`
+  ADD PRIMARY KEY (`project_task_employee_id`);
 
 --
 -- Indexes for table `sessions`
@@ -519,129 +601,127 @@ ALTER TABLE `systems`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `customers_contacts`
 --
 ALTER TABLE `customers_contacts`
-  MODIFY `customer_contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
+  MODIFY `customer_contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `customers_notes`
 --
 ALTER TABLE `customers_notes`
-  MODIFY `customer_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `customer_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `customers_reminders`
 --
 ALTER TABLE `customers_reminders`
-  MODIFY `customer_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `customer_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `customers_reminders_employees`
 --
 ALTER TABLE `customers_reminders_employees`
-  MODIFY `customer_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `customer_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `customers_systems`
 --
 ALTER TABLE `customers_systems`
-  MODIFY `customer_system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
+  MODIFY `customer_system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `departments_employees`
 --
 ALTER TABLE `departments_employees`
   MODIFY `department_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
 --
 -- AUTO_INCREMENT for table `departments_projects`
 --
 ALTER TABLE `departments_projects`
-  MODIFY `department_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
+  MODIFY `department_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `departments_support`
 --
 ALTER TABLE `departments_support`
-  MODIFY `department_support_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `department_support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `employees_projects`
 --
 ALTER TABLE `employees_projects`
-  MODIFY `employee_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
+  MODIFY `employee_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `employees_reminders`
 --
 ALTER TABLE `employees_reminders`
   MODIFY `employee_reminder_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `employees_support`
 --
 ALTER TABLE `employees_support`
-  MODIFY `employee_support_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `employee_support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `projects_files`
 --
 ALTER TABLE `projects_files`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `projects_notes`
+--
+ALTER TABLE `projects_notes`
+  MODIFY `project_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `projects_reminders`
+--
+ALTER TABLE `projects_reminders`
+  MODIFY `project_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `projects_reminders_employees`
+--
+ALTER TABLE `projects_reminders_employees`
+  MODIFY `project_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `projects_tasks`
 --
 ALTER TABLE `projects_tasks`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `project_task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `projects_tasks_employees`
+--
+ALTER TABLE `projects_tasks_employees`
+  MODIFY `project_task_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `support`
 --
 ALTER TABLE `support`
-  MODIFY `support_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `support_files`
 --
 ALTER TABLE `support_files`
   MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `support_tasks`
 --
 ALTER TABLE `support_tasks`
   MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `systems`
 --
 ALTER TABLE `systems`
-  MODIFY `system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-COMMIT;
-
+  MODIFY `system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
