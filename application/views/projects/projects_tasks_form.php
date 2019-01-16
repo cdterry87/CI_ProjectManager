@@ -1,4 +1,4 @@
-<?php echo form_open('projects/action', 'id="tasks-form" class="ajax"'); ?>
+<?php echo form_open('projects/action', 'id="tasks-form"'); ?>
 <?php echo form_hidden('project_id', $project['project_id']); ?>
 <div class="modal-background" data-modal="task-form" ></div>
 <div class="modal-card">

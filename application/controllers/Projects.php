@@ -242,12 +242,12 @@ class Projects extends PROJECTS_Controller
             case "approve project":
                 $this->Project_model->approve_project($id);
                 $this->set_message('This project is now approved!', 'success');
-                redirect('projects');
+                redirect('projects/view/'.$id);
                 break;
             case "complete project":
                 $this->Project_model->complete_project($id);
                 $this->set_message('This project is now complete!', 'success');
-                redirect('projects');
+                redirect('projects/view/'.$id);
                 break;
             case "incomplete project":
                 $this->Project_model->incomplete_project($id);
@@ -257,8 +257,7 @@ class Projects extends PROJECTS_Controller
             case "archive project":
                 $this->Project_model->archive_project($id);
                 $this->set_message('This project is now archived!', 'warning');
-                //redirect('projects/view/'.$id);
-                redirect('projects');
+                redirect('projects/view/'.$id);
                 break;
             case "restore project":
                 $this->Project_model->restore_project($id);

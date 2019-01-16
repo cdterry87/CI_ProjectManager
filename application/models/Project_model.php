@@ -221,9 +221,13 @@ class Project_model extends PROJECTS_Model
      * -------------------------------------------------------------------------------- */
     public function approve_project($id)
     {
+        $date = date('Ymd');
+
         //Set status to "C" (Complete).
+        $data['project_status']='C';
+        $data['project_completed_date']=$date;
         $data['project_approved']='Y';
-        $data['project_approved_date']=date('Ymd');
+        $data['project_approved_date']=$date;
         $data['project_approved_by']=$_SESSION['employee_id'];
         
         $this->db->where($this->table_id, $id);
