@@ -215,6 +215,20 @@ class Project_model extends PROJECTS_Model
         $this->db->where($this->table_id, $id);
         $this->db->delete($this->table);
     }
+
+    /* --------------------------------------------------------------------------------
+     * Mark project as approved.
+     * -------------------------------------------------------------------------------- */
+    public function approve_project($id)
+    {
+        //Set status to "C" (Complete).
+        $data['project_approved']='Y';
+        $data['project_approved_date']=date('Ymd');
+        $data['project_approved_by']=$_SESSION['employee_id'];
+        
+        $this->db->where($this->table_id, $id);
+        $this->db->update($this->table, $data);
+    }
     
     /* --------------------------------------------------------------------------------
      * Mark project as complete.
@@ -468,5 +482,108 @@ class Project_model extends PROJECTS_Model
         $this->db->where('project_id', $project_id);
         $this->db->where('file_id', $file_id);
         $this->db->delete('projects_files');
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Project Notes.
+     * -------------------------------------------------------------------------------- */
+    public function add_note($id)
+    {
+        //Prepare the data from the screen.
+        $data=$this->prepare('projects_notes');
+        
+        //Set data.
+        $data['project_id']=$id;
+        $data['employee_id']=$_SESSION['employee_id'];
+        $data['datetime']=date('Y-m-d H:i:s');
+        
+        //Insert the record into the database.
+        $this->db->insert('projects_notes', $data);
+        
+        return $this->db->insert_id();
+    }
+
+    public function get_notes($id)
+    {
+        $this->db->select('*');
+        $this->db->from('projects_notes');
+        $this->db->where('project_id', $id);
+        $this->db->order_by('datetime', 'desc');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
+    public function delete_note($id)
+    {
+        $this->db->where('project_note_id', $id);
+        $this->db->delete('projects_notes');
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Project Reminders
+     * -------------------------------------------------------------------------------- */
+    public function add_reminder($id)
+    {
+        //Prepare the data from the screen.
+        $data=$this->prepare('projects_reminders');
+        
+        //Set status to "I" (Incomplete) by default.
+        $data['project_id']=$id;
+        $data['employee_id']=$_SESSION['employee_id'];
+        
+        //Insert the record into the database.
+        $this->db->insert('projects_reminders', $data);
+        
+        $id = $this->db->insert_id();
+
+        //Set employees.
+        $this->set_reminders_employees($id);
+
+        return $id;
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Set associated employees.
+     * -------------------------------------------------------------------------------- */
+    public function set_reminders_employees($id)
+    {
+        //First, delete the related departments that are already out there.
+        $this->db->where('project_reminder_id', $id);
+        $this->db->delete('projects_reminders_employees');
+        
+        //Get data from the department checkbox(es).
+        $employees=$this->input->post('employee');
+        
+        //Then insert the new departments for this employee.
+        if (!empty($employees) and is_array($employees)) {
+            foreach ($employees as $key => $val) {
+                $insert=array();
+                if (trim($val)!="") {
+                    $insert['project_reminder_id']=$id;
+                    $insert['employee_id']=$val;
+                    $this->db->insert('projects_reminders_employees', $insert);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function get_reminders($id)
+    {
+        $this->db->select('*');
+        $this->db->from('projects_reminders');
+        $this->db->where('project_id', $id);
+        $this->db->order_by('reminder_date', 'desc');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
+    public function delete_reminder($id)
+    {
+        $this->db->where('project_reminder_id', $id);
+        $this->db->delete('projects_reminders');
     }
 }

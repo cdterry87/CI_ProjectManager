@@ -155,7 +155,7 @@ class Customers extends PROJECTS_Controller
 
     public function delete_note($customer_id, $note_id)
     {
-        $this->Customer_model->delete_note($contact_id);
+        $this->Customer_model->delete_note($note_id);
 
         $this->set_message('Note deleted successfully', 'danger');
         redirect('sales/customers/view/'.$customer_id);

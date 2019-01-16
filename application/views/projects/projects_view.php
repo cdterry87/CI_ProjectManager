@@ -1,6 +1,3 @@
-<?php echo form_open_multipart('projects/action'); ?>
-<?php echo form_hidden('project_id', $project['project_id']); ?>
-
 <h1 class="title is-3">
     <?php echo $project['project_name']; ?>
     <?php echo anchor('projects/form/'.$project['project_id'], '<i class="fas fa-edit"></i> Edit Project', 'class="button is-info is-small"'); ?>
@@ -10,16 +7,29 @@
     <ul>
         <li class="tab tab-init" data-target="project-details"><a><i class="fas fa-clipboard-list "></i>Details</a></li>
         <li class="tab" data-target="project-tasks"><a><i class="fas fa-tasks"></i>Tasks</a></li>
-        <li class="tab" data-target="project-files"><a><i class="fas fa-paperclip"></i>Files</a></li>
         <li class="tab" data-target="project-notes"><a><i class="fas fa-edit"></i> Notes</a></li>
         <li class="tab" data-target="project-reminders"><a><i class="fas fa-clock"></i> Reminders</a></li>
+        <li class="tab" data-target="project-files"><a><i class="fas fa-paperclip"></i>Files</a></li>
     </ul>
 </div>
 
 <div id="project-details" class="tab-panel tab-panel-init">
-    <div>
-        <strong>Project Date: </strong>
-        <?php echo $this->format->date($project['project_date']); ?>
+    <progress class="progress is-primary" value="<?php echo $project['project_percentage_completed']; ?>" max="100"><?php echo $project['project_percentage_completed']; ?>% Complete</progress>
+    <div class="columns">
+        <div class="column is-one-third">
+            <strong>Project Date: </strong>
+            <?php echo $this->format->date($project['project_date']); ?>
+        </div>
+        <div class="column is-one-third">
+            <strong>Estimated Completion: </strong>
+            <?php echo $this->format->date($project['project_estimated_completion_date']); ?>
+        </div>
+        <?php if ($project['project_completed_date'] != '') { ?>
+            <div class="column is-one-third">
+                <strong>Completed: </strong>
+                <?php echo $this->format->date($project['project_completed_date']); ?>
+            </div>
+        <?php } ?>
     </div>
 
     <?php if ($project['project_details'] != '') { ?>
@@ -151,52 +161,6 @@
     </table>
 </div>
 
-<div id="project-files" class="tab-panel">
-    <h3 class="title is-4">Attached Files</h3>
-    <div class="field is-grouped">
-        <div class="control is-expanded">
-            <div class="file has-name is-fullwidth">
-                <label class="file-label">
-                    <input class="file-input" type="file" name="userfile" id="file-attachment">
-                    <span class="file-cta">
-                        <span class="file-icon"><i class="fas fa-upload"></i></span>
-                        <span class="file-label">Choose a file…</span>
-                    </span>
-                    <span id="file-name" class="file-name"></span>
-                </label>
-            </div>
-        </div>
-        <div class="control">
-            <?php echo form_submit('action', 'Add File', 'class="button is-info is-fullwidth"'); ?>
-        </div>
-    </div>
-
-    <table class="table is-narrow is-fullwidth">
-        <tbody>
-            <?php
-                $file_num=0;
-            if (empty($files)) {
-                ?>
-            <tr>
-                <td colspan="2">Project does not currently have any attached files.</td>
-            </tr>
-                <?php
-            } else {
-                foreach ($files as $row) {
-                    $file_num++;
-                    ?>
-            <tr>
-                <td><?php echo anchor('public/files/projects/'.$row['project_id']."/".$row['file_name'], $file_num.". ".$row['file_name'], 'target="_blank"'); ?></td>
-                <td width="10%"><?php echo anchor('projects/delete_file/'.$row['project_id'].'/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-            </tr>
-                    <?php
-                }
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
-
 <div id="project-notes" class="tab-panel">
     <?php echo form_open('projects/action', 'id="notes-form"'); ?>
     <?php echo form_hidden('project_id', $project['project_id']); ?>
@@ -210,7 +174,7 @@
     </div>
     <?php echo form_close(); ?>
 
-    <br>
+    <hr>
 
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>
@@ -231,7 +195,7 @@
                 <td><?php echo $note['datetime']; ?></td>
                 <td><?php echo $employee['employee_name']; ?></td>
                 <td>
-                <?php echo anchor('sales/customers/delete_note/' . $customer['customer_id'] . '/' . $note['customer_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                <?php echo anchor('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
                 </td>
             </tr>
                 <?php
@@ -301,7 +265,7 @@
     </div>
     <?php echo form_close(); ?>
 
-    <br>
+    <hr>
 
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>
@@ -329,6 +293,54 @@
     </table>
 </div>
 
+<div id="project-files" class="tab-panel">
+    <h3 class="title is-4">Attached Files</h3>
+    <div class="field is-grouped">
+        <div class="control is-expanded">
+            <div class="file has-name is-fullwidth">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="userfile" id="file-attachment">
+                    <span class="file-cta">
+                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                        <span class="file-label">Choose a file…</span>
+                    </span>
+                    <span id="file-name" class="file-name"></span>
+                </label>
+            </div>
+        </div>
+        <div class="control">
+            <?php echo form_submit('action', 'Add File', 'class="button is-info is-fullwidth"'); ?>
+        </div>
+    </div>
+
+    <hr>
+
+    <table class="table is-narrow is-fullwidth">
+        <tbody>
+            <?php
+                $file_num=0;
+            if (empty($files)) {
+                ?>
+            <tr>
+                <td colspan="2">Project does not currently have any attached files.</td>
+            </tr>
+                <?php
+            } else {
+                foreach ($files as $row) {
+                    $file_num++;
+                    ?>
+            <tr>
+                <td><?php echo anchor('public/files/projects/'.$row['project_id']."/".$row['file_name'], $file_num.". ".$row['file_name'], 'target="_blank"'); ?></td>
+                <td width="10%"><?php echo anchor('projects/delete_file/'.$row['project_id'].'/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
+            </tr>
+                    <?php
+                }
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
 <br>
 
 <div class="field is-grouped is-grouped-centered">
@@ -342,11 +354,12 @@ switch ($project['project_status']) {
         echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
         break;
     case "I":
+        if ($_SESSION['employee_admin'] == "CHECKED") {
+            echo '<div class="control">'.form_submit('action', 'Approve Project', 'class="button is-success" data-confirm="Are you sure you want to approve this project?"').'</div>';
+        }
         echo '<div class="control">'.form_submit('action', 'Complete Project', 'class="button is-info" data-confirm="Are you sure you want to complete this project?"').'</div>';
         echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
         break;
 }
 ?>
 </div>
-
-<?php echo form_close(); ?>

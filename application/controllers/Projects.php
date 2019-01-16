@@ -7,6 +7,7 @@ class Projects extends PROJECTS_Controller
     {
         parent::__construct();
         
+        $this->load->model('Employee_model');
         $this->load->model('Project_model');
     }
     
@@ -156,8 +157,33 @@ class Projects extends PROJECTS_Controller
         
         //Get project files.
         $this->data['files']=$this->Project_model->get_files($id);
+
+        //Get a list of the project's notes
+        $this->data['notes'] = $this->Project_model->get_notes($id);
+
+        //Get list of employees
+        $this->data['employees']=$this->Employee_model->get_all();
+
+        //Get a list of the customer's reminders
+        $this->data['reminders'] = $this->Project_model->get_reminders($id);
         
         $this->load->view('template', $this->data);
+    }
+
+    public function delete_note($project_id, $note_id)
+    {
+        $this->Project_model->delete_note($note_id);
+
+        $this->set_message('Note deleted successfully', 'danger');
+        redirect('projects/view/'.$project_id);
+    }
+
+    public function delete_reminder($customer_id, $reminder_id)
+    {
+        $this->Project_model->delete_reminder($reminder_id);
+
+        $this->set_message('Reminder deleted successfully', 'danger');
+        redirect('projects/view/'.$customer_id);
     }
     
     public function validate()
@@ -192,6 +218,13 @@ class Projects extends PROJECTS_Controller
                 break;
             case "add note":
                 if ($this->validate()) {
+                    $this->Project_model->add_note($id);
+                    $this->set_message('Note added successfully.', 'success');
+                }
+                redirect('projects/view/'.$id);
+                break;
+            case "add task":
+                if ($this->validate()) {
                     $this->Project_model->add_task($id);
                     $this->set_message('Task added successfully.', 'success');
                 }
@@ -204,6 +237,11 @@ class Projects extends PROJECTS_Controller
                     $this->Project_model->upload($id, $upload_data);
                 }
                 redirect('projects/view/'.$id);
+                break;
+            case "approve project":
+                $this->Project_model->approve_project($id);
+                $this->set_message('This project is now approved!', 'success');
+                redirect('projects');
                 break;
             case "complete project":
                 $this->Project_model->complete_project($id);
@@ -224,6 +262,13 @@ class Projects extends PROJECTS_Controller
             case "restore project":
                 $this->Project_model->restore_project($id);
                 $this->set_message('This project has been restored!', 'success');
+                redirect('projects/view/'.$id);
+                break;
+            case "add reminder":
+                if ($this->validate()) {
+                    $this->Project_model->add_reminder($id);
+                    $this->set_message('Reminder added successfully.', 'success');
+                }
                 redirect('projects/view/'.$id);
                 break;
         }
