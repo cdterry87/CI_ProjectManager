@@ -1,21 +1,21 @@
 <?php
 if ($this->session->userdata('employee_admin') == "CHECKED") {
-?>
+    ?>
 <p class="menu-label">Admin</p>
 <ul class="menu-list">
     <li><a class="<?php echo ($this->current_page == "departments" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/departments'); ?>"><i class="fas fa-building"></i> Departments</a></li>
     <li><a class="<?php echo ($this->current_page == "employees" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/employees'); ?>"><i class="fas fa-user-tie"></i> Employees</a></li>
     <li><a class="<?php echo ($this->current_page == "systems" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/systems'); ?>"><i class="fas fa-cogs"></i> Systems</a></li>
 </ul>
-<?php
+    <?php
 }
 if ($this->session->userdata('employee_admin') == "CHECKED" or $this->session->userdata('employee_sales') == "CHECKED") {
-?>
+    ?>
 <p class="menu-label">Sales</p>
 <ul class="menu-list">
-    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('admin/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
+    <li><a class="<?php echo ($this->current_page == "customers" ? 'is-active' : '')  ?>" href="<?php echo base_url('sales/customers'); ?>"><i class="fas fa-users"></i> Customers</a></li>
 </ul>
-<?php   
+    <?php
 }
 ?>
 <p class="menu-label">Projects</p>
@@ -27,7 +27,7 @@ if ($this->session->userdata('employee_admin') == "CHECKED" or $this->session->u
 </ul>
 <?php
 if ($this->session->userdata('employee_sales') != "CHECKED") {
-?>
+    ?>
 <p class="menu-label">Support</p>
 <ul class="menu-list">
     <li><a class="<?php echo ($this->current_system == "support" && $this->current_page == ""  ? 'is-active' : '')  ?>" href="<?php echo base_url('support'); ?>"><i class="fas fa-exclamation-circle"></i> Open</a></li>
@@ -35,7 +35,7 @@ if ($this->session->userdata('employee_sales') != "CHECKED") {
     <li><a class="<?php echo ($this->current_system == "support" && $this->current_page == "archive" ? 'is-active' : '')  ?>" href="<?php echo base_url('support/archive'); ?>"><i class="fas fa-archive"></i> Archived</a></li>
     <li><a class="<?php echo ($this->current_system == "support" && $this->current_page == "all" ? 'is-active' : '')  ?>" href="<?php echo base_url('support/all'); ?>"><i class="fas fa-list"></i> All Support</a></li>
 </ul>
-<?php
+    <?php
 }
 ?>
 <p class="menu-label">Reports</p>
