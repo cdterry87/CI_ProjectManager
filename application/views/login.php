@@ -23,7 +23,7 @@
                 <hr/>
                 
                 <div id="messages"></div>
-                
+                <br>
                 <?php echo form_open('employee/authenticate'); ?>
                     <div class="field">
                         <div><?php echo form_label('Username:', 'employee_username', 'class="label"'); ?></div>
