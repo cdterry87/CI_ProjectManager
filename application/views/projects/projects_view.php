@@ -377,6 +377,13 @@
 </div>
 
 <div id="project-history" class="tab-panel">
+    <?php
+        if (empty($history)) {
+    ?>
+    <p>There is currently no history for this project.</p>
+    <?php
+        } else {
+    ?>
     <table class="table is-narrow is-fullwidth datatable">
         <thead>
             <tr>
@@ -387,14 +394,7 @@
         </thead>
         <tbody>
             <?php
-                if (empty($history)) {
-            ?>
-            <tr>
-                <td colspan="3">There is currently no history for this project.</td>
-            </tr>
-            <?php
-                } else {
-                    foreach($history as $row) {
+                foreach($history as $row) {
             ?>
             <tr>
                 <td><?php echo $row['history_action']; ?></td>
@@ -402,11 +402,13 @@
                 <td><?php echo $row['history_datetime']; ?></td>
             </tr>
             <?php
-                    }
                 }
             ?>
         </tbody>
     </table>
+    <?php
+        }
+    ?>
 </div>
 
 <br>
