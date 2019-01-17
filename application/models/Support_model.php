@@ -154,6 +154,9 @@ class Support_model extends PROJECTS_Model
             
             //Return the ID of the record that was inserted.
             $id=$this->db->insert_id();
+
+            //Add history
+            $this->add_history($id, 'Support created');
         } else {
             //Unset fields that should not be updated.
             unset($data[$this->table_id]);
@@ -161,6 +164,9 @@ class Support_model extends PROJECTS_Model
             //Update the record in the database.
             $this->db->where($this->table_id, $id);
             $this->db->update($this->table, $data);
+
+            //Add history
+            $this->add_history($id, 'Support updated');
         }
         
         //Set departments.
@@ -179,6 +185,9 @@ class Support_model extends PROJECTS_Model
     {
         $this->db->where($this->table_id, $id);
         $this->db->delete($this->table);
+
+        //Add history
+        $this->add_history($id, 'Support deleted');
     }
     
     /* --------------------------------------------------------------------------------
@@ -290,6 +299,9 @@ class Support_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Support closed');
     }
     
     /* --------------------------------------------------------------------------------
@@ -303,6 +315,9 @@ class Support_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Support opened');
     }
     
     /* --------------------------------------------------------------------------------
@@ -316,6 +331,9 @@ class Support_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Support archived');
     }
     
     /* --------------------------------------------------------------------------------
@@ -329,6 +347,9 @@ class Support_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Support restored');
     }
     
         
@@ -344,6 +365,10 @@ class Support_model extends PROJECTS_Model
         
         //Insert the record into the database.
         $this->db->insert('support_files', $data);
+        $file_id = $this->db->insert_id();
+
+        //Add history
+        $this->add_history($id, 'File #' . $file_id . ' uploaded');
     }
     
     /* --------------------------------------------------------------------------------
@@ -367,6 +392,9 @@ class Support_model extends PROJECTS_Model
         $this->db->where('support_id', $support_id);
         $this->db->where('file_id', $file_id);
         $this->db->delete('support_files');
+
+        //Add history
+        $this->add_history($support_id, 'File #' . $file_id . ' deleted');
     }
 
     /* --------------------------------------------------------------------------------
@@ -382,8 +410,12 @@ class Support_model extends PROJECTS_Model
         
         //Insert the record into the database.
         $this->db->insert('support_tasks', $data);
+        $id = $this->db->insert_id();
+
+        //Add history
+        $this->add_history($data['support_id'], 'Task #' . $id . ' created');
         
-        return $this->db->insert_id();
+        return $id;
     }
     
     /* --------------------------------------------------------------------------------
@@ -394,6 +426,9 @@ class Support_model extends PROJECTS_Model
         $this->db->where('support_id', $support_id);
         $this->db->where('task_id', $task_id);
         $this->db->delete('support_tasks');
+
+        //Add history
+        $this->add_history($support_id, 'Task #' . $task_id . ' deleted');
     }
 
     /* --------------------------------------------------------------------------------
@@ -408,5 +443,21 @@ class Support_model extends PROJECTS_Model
         $query=$this->db->get();
         
         return $query->result_array();
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Add history record.
+     * -------------------------------------------------------------------------------- */
+    public function add_history($id, $action) {
+        $data['support_id'] = $id;
+        $data['history_action'] = $action;
+        $data['history_employee_id'] = $_SESSION['employee_id'];
+        $data['history_datetime'] = date('Y-m-d H:i:s');
+
+        //Insert the record into the database.
+        $this->db->insert('support_history', $data);
+        $id = $this->db->insert_id();
+
+        return $id;
     }
 }

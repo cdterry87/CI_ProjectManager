@@ -29,35 +29,6 @@ class Project_model extends PROJECTS_Model
     }
     
     /* --------------------------------------------------------------------------------
-     * Get all quotes.
-     * -------------------------------------------------------------------------------- */
-    public function get_all_quotes()
-    {
-        $this->db->select('*');
-        $this->db->from($this->table);
-        $this->db->where('project_type', 'Q');
-        $this->db->where("project_status!='A'");
-        $this->db->order_by('project_date desc, project_name');
-        $query=$this->db->get();
-        
-        return $query->result_array();
-    }
-    
-    /* --------------------------------------------------------------------------------
-     * Get all requests.
-     * -------------------------------------------------------------------------------- */
-    public function get_all_requests()
-    {
-        $this->db->select('*');
-        $this->db->from($this->table);
-        $this->db->where('project_type', 'R');
-        $this->db->order_by('project_date desc, project_name');
-        $query=$this->db->get();
-        
-        return $query->result_array();
-    }
-    
-    /* --------------------------------------------------------------------------------
      * Get all incomplete projects.
      * -------------------------------------------------------------------------------- */
     public function get_all_incomplete()
@@ -189,6 +160,9 @@ class Project_model extends PROJECTS_Model
             
             //Return the ID of the record that was inserted.
             $id=$this->db->insert_id();
+
+            //Add history
+            $this->add_history($id, 'Project created');
         } else {
             //Unset fields that should not be updated.
             unset($data[$this->table_id]);
@@ -196,6 +170,9 @@ class Project_model extends PROJECTS_Model
             //Update the record in the database.
             $this->db->where($this->table_id, $id);
             $this->db->update($this->table, $data);
+
+            //Add history
+            $this->add_history($id, 'Project updated');
         }
         
         //Set departments.
@@ -232,6 +209,9 @@ class Project_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Project approved');
     }
     
     /* --------------------------------------------------------------------------------
@@ -245,6 +225,9 @@ class Project_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Project completed');
     }
     
     /* --------------------------------------------------------------------------------
@@ -258,6 +241,9 @@ class Project_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Project incomplete');
     }
     
     /* --------------------------------------------------------------------------------
@@ -271,6 +257,9 @@ class Project_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Project archived');
     }
     
     /* --------------------------------------------------------------------------------
@@ -284,6 +273,9 @@ class Project_model extends PROJECTS_Model
         
         $this->db->where($this->table_id, $id);
         $this->db->update($this->table, $data);
+
+        //Add history
+        $this->add_history($id, 'Project restored');
     }
     
     /* --------------------------------------------------------------------------------
@@ -398,11 +390,14 @@ class Project_model extends PROJECTS_Model
         //Insert the record into the database.
         $this->db->insert('projects_tasks', $data);
         
-        $id =  $this->db->insert_id();
+        $task_id =  $this->db->insert_id();
 
-        $this->set_tasks_employees($id);
+        $this->set_tasks_employees($task_id);
 
-        return $id;
+        //Add history
+        $this->add_history($id, 'Task #' . $task_id . ' created');
+
+        return $task_id;
     }
 
     /* --------------------------------------------------------------------------------
@@ -440,6 +435,9 @@ class Project_model extends PROJECTS_Model
         $this->db->where('project_id', $project_id);
         $this->db->where('task_id', $task_id);
         $this->db->delete('projects_tasks');
+
+        //Add history
+        $this->add_history($project_id, 'Task #' . $task_id . ' deleted');
     }
     
     /* --------------------------------------------------------------------------------
@@ -453,6 +451,9 @@ class Project_model extends PROJECTS_Model
         $this->db->where('project_id', $project_id);
         $this->db->where('task_id', $task_id);
         $this->db->update('projects_tasks', $data);
+
+        //Add history
+        $this->add_history($project_id, 'Task #' . $task_id . ' completed');
     }
     
     /* --------------------------------------------------------------------------------
@@ -466,6 +467,9 @@ class Project_model extends PROJECTS_Model
         $this->db->where('project_id', $project_id);
         $this->db->where('task_id', $task_id);
         $this->db->update('projects_tasks', $data);
+
+        //Add history
+        $this->add_history($project_id, 'Task #' . $task_id . ' incomplete');
     }
     
     /* --------------------------------------------------------------------------------
@@ -507,6 +511,10 @@ class Project_model extends PROJECTS_Model
         
         //Insert the record into the database.
         $this->db->insert('projects_files', $data);
+        $file_id = $this->db->insert_id();
+
+        //Add history
+        $this->add_history($id, 'File #' . $file_id . ' uploaded');
     }
     
     /* --------------------------------------------------------------------------------
@@ -517,6 +525,9 @@ class Project_model extends PROJECTS_Model
         $this->db->where('project_id', $project_id);
         $this->db->where('file_id', $file_id);
         $this->db->delete('projects_files');
+
+        //Add history
+        $this->add_history($project_id, 'File #' . $file_id . ' deleted');
     }
 
     /* --------------------------------------------------------------------------------
@@ -534,8 +545,12 @@ class Project_model extends PROJECTS_Model
         
         //Insert the record into the database.
         $this->db->insert('projects_notes', $data);
+        $note_id = $this->db->insert_id();
+
+        //Add history
+        $this->add_history($id, 'Note #'.$note_id.' created');
         
-        return $this->db->insert_id();
+        return $note_id;
     }
 
     public function get_notes($id)
@@ -549,10 +564,13 @@ class Project_model extends PROJECTS_Model
         return $query->result_array();
     }
 
-    public function delete_note($id)
+    public function delete_note($project_id, $id)
     {
         $this->db->where('project_note_id', $id);
         $this->db->delete('projects_notes');
+
+        //Add history
+        $this->add_history($project_id, 'Note #' . $id . ' deleted');
     }
 
     /* --------------------------------------------------------------------------------
@@ -570,12 +588,15 @@ class Project_model extends PROJECTS_Model
         //Insert the record into the database.
         $this->db->insert('projects_reminders', $data);
         
-        $id = $this->db->insert_id();
+        $reminder_id = $this->db->insert_id();
 
         //Set employees.
-        $this->set_reminders_employees($id);
+        $this->set_reminders_employees($reminder_id);
 
-        return $id;
+        //Add history
+        $this->add_history($id, 'Reminder #' . $reminder_id . ' created');
+
+        return $reminder_id;
     }
 
     /* --------------------------------------------------------------------------------
@@ -616,9 +637,28 @@ class Project_model extends PROJECTS_Model
         return $query->result_array();
     }
 
-    public function delete_reminder($id)
+    public function delete_reminder($project_id, $id)
     {
         $this->db->where('project_reminder_id', $id);
         $this->db->delete('projects_reminders');
+
+        //Add history
+        $this->add_history($project_id, 'Reminder #' . $id . ' deleted');
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Add history record.
+     * -------------------------------------------------------------------------------- */
+    public function add_history($id, $action) {
+        $data['project_id'] = $id;
+        $data['history_action'] = $action;
+        $data['history_employee_id'] = $_SESSION['employee_id'];
+        $data['history_datetime'] = date('Y-m-d H:i:s');
+
+        //Insert the record into the database.
+        $this->db->insert('projects_history', $data);
+        $id = $this->db->insert_id();
+
+        return $id;
     }
 }

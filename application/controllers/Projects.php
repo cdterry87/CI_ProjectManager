@@ -173,18 +173,18 @@ class Projects extends PROJECTS_Controller
 
     public function delete_note($project_id, $note_id)
     {
-        $this->Project_model->delete_note($note_id);
+        $this->Project_model->delete_note($project_id, $note_id);
 
         $this->set_message('Note deleted successfully', 'danger');
         redirect('projects/view/'.$project_id);
     }
 
-    public function delete_reminder($customer_id, $reminder_id)
+    public function delete_reminder($project_id, $reminder_id)
     {
-        $this->Project_model->delete_reminder($reminder_id);
+        $this->Project_model->delete_reminder($project_id, $reminder_id);
 
         $this->set_message('Reminder deleted successfully', 'danger');
-        redirect('projects/view/'.$customer_id);
+        redirect('projects/view/'.$project_id);
     }
     
     public function validate()
