@@ -9,7 +9,7 @@ class Reports extends PROJECTS_Controller {
 	}
 	
 	public function index(){
-		$this->data['page']='reports';
+		$this->data['page']='reports/list';
 		
 		$this->load->view('template', $this->data);
     }
@@ -18,7 +18,7 @@ class Reports extends PROJECTS_Controller {
         $this->data['report_title']="Open Projects/Support";
         $this->data['data']=$this->Report_model->open_projects_support();
 		
-		$this->load->view('reports_template', $this->data);
+		$this->load->view('reports/template', $this->data);
     }
 	
 }
