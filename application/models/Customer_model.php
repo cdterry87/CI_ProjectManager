@@ -421,4 +421,41 @@ class Customer_model extends PROJECTS_Model
         $this->db->where('customer_reminder_id', $id);
         $this->db->delete('customers_reminders');
     }
+
+    /* --------------------------------------------------------------------------------
+     * Get associated files.
+     * -------------------------------------------------------------------------------- */
+    public function get_files($id)
+    {
+        $this->db->select('*');
+        $this->db->from('customers_files');
+        $this->db->where('customer_id', $id);
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+    
+    /* --------------------------------------------------------------------------------
+     * Insert file information into the database.
+     * -------------------------------------------------------------------------------- */
+    public function upload($id, $upload_data)
+    {
+        $data=array(
+            'customer_id'    => $id,
+            'file_name'     => $upload_data['file_name'],
+        );
+        
+        //Insert the record into the database.
+        $this->db->insert('customers_files', $data);
+    }
+    
+    /* --------------------------------------------------------------------------------
+     * Delete a file.
+     * -------------------------------------------------------------------------------- */
+    public function delete_file($customer_id, $file_id)
+    {
+        $this->db->where('customer_id', $customer_id);
+        $this->db->where('file_id', $file_id);
+        $this->db->delete('customers_files');
+    }
 }

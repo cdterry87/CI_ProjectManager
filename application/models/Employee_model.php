@@ -92,6 +92,29 @@ class Employee_model extends PROJECTS_Model {
 			}
 		}
 		return $dropdown;
+    }
+    
+    /* --------------------------------------------------------------------------------
+	 * Get a record formatted for dropdowns as a key/value pair (only Admin/Sales)
+	 * -------------------------------------------------------------------------------- */
+	public function get_dropdown_admin_sales(){
+		$dropdown_key		= 'employee_id';
+		$dropdown_val		= 'employee_name';
+		
+		$this->db->select($dropdown_key.','.$dropdown_val);
+        $this->db->from($this->table);
+        $this->db->where("(employee_admin = 'CHECKED' or employee_sales = 'CHECKED')");
+		$this->db->order_by($dropdown_val);
+		$query=$this->db->get();
+		$result=$query->result_array();
+		
+		$dropdown=array(''=>'');
+		if(!empty($result)){
+			foreach($result as $row){
+				$dropdown[$row[$dropdown_key]]=$row['employee_name'];
+			}
+		}
+		return $dropdown;
 	}
 	
 	/* --------------------------------------------------------------------------------

@@ -26,7 +26,7 @@ class Customers extends PROJECTS_Controller
     {
         $this->data['page']='sales/customers/customers_form';
         
-        $this->data['employees'] = $this->Employee_model->get_dropdown();
+        $this->data['employees'] = $this->Employee_model->get_dropdown_admin_sales();
         $this->data['systems'] = $this->System_model->get_all();
         
         $this->data['customer_id']=$id;
@@ -141,6 +141,9 @@ class Customers extends PROJECTS_Controller
 
         //Get a list of the customer's reminders
         $this->data['reminders'] = $this->Customer_model->get_reminders($id);
+
+        //Get customer's files.
+        $this->data['files']=$this->Customer_model->get_files($id);
         
         $this->load->view('template', $this->data);
     }
@@ -166,6 +169,13 @@ class Customers extends PROJECTS_Controller
         $this->Customer_model->delete_reminder($reminder_id);
 
         $this->set_message('Reminder deleted successfully', 'danger');
+        redirect('sales/customers/view/'.$customer_id);
+    }
+
+    public function delete_file($customer_id, $file_id)
+    {
+        $this->Customer_model->delete_file($customer_id, $file_id);
+        $this->set_message('File has been removed!', 'danger');
         redirect('sales/customers/view/'.$customer_id);
     }
 
@@ -219,6 +229,14 @@ class Customers extends PROJECTS_Controller
                 if ($this->validate()) {
                     $this->Customer_model->add_reminder($id);
                     $this->set_message('Reminder added successfully.', 'success');
+                }
+                redirect('sales/customers/view/'.$id);
+                break;
+            case "add file":
+                //Upload the file to the server.
+                if ($upload_data=$this->upload($id, 'userfile', 'customers')) {
+                    //Save the file info in the database.
+                    $this->Customer_model->upload($id, $upload_data);
                 }
                 redirect('sales/customers/view/'.$id);
                 break;
