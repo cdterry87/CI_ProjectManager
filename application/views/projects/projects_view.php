@@ -10,6 +10,7 @@
         <li class="tab" data-target="project-notes"><a><i class="fas fa-edit"></i> Notes</a></li>
         <li class="tab" data-target="project-reminders"><a><i class="fas fa-clock"></i> Reminders</a></li>
         <li class="tab" data-target="project-files"><a><i class="fas fa-paperclip"></i> Files</a></li>
+        <li class="tab" data-target="project-history"><a><i class="fas fa-history"></i> History</a></li>
     </ul>
 </div>
 
@@ -370,6 +371,39 @@
                     <?php
                 }
             }
+            ?>
+        </tbody>
+    </table>
+</div>
+
+<div id="project-history" class="tab-panel">
+    <table class="table is-narrow is-fullwidth datatable">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Employee</th>
+                <th>Date/Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                if (empty($history)) {
+            ?>
+            <tr>
+                <td colspan="3">There is currently no history for this project.</td>
+            </tr>
+            <?php
+                } else {
+                    foreach($history as $row) {
+            ?>
+            <tr>
+                <td><?php echo $row['history_action']; ?></td>
+                <td><?php echo $this->Employee_model->get_by_employee_id($row['history_employee_id'])['employee_name']; ?></td>
+                <td><?php echo $row['history_datetime']; ?></td>
+            </tr>
+            <?php
+                    }
+                }
             ?>
         </tbody>
     </table>

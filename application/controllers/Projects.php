@@ -167,6 +167,9 @@ class Projects extends PROJECTS_Controller
 
         //Get a list of the customer's reminders
         $this->data['reminders'] = $this->Project_model->get_reminders($id);
+
+        //Get history
+        $this->data['history'] = $this->Project_model->get_history($id);
         
         $this->load->view('template', $this->data);
     }
