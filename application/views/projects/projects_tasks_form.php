@@ -78,7 +78,13 @@
             </div>
             <div class="field">
                 <div class="control">
-                    <?php echo form_textarea('task', '', 'class="textarea" placeholder="Enter task details" data-required rows="3"'); ?>
+                    <?php echo form_label('Task Information:', 'task_title', 'class="label"'); ?>
+                    <?php echo form_input('task_title', '', 'class="input is-small" data-required placeholder="Enter task title"'); ?>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <?php echo form_textarea('task_description', '', 'class="textarea is-small" placeholder="Enter task description" rows="3"'); ?>
                 </div>
             </div>
             <hr>
