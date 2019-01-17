@@ -38,6 +38,11 @@ if ($this->session->userdata('employee_sales') != "CHECKED") {
     <?php
 }
 ?>
+<p class="menu-label">Files</p>
+<ul class="menu-list">
+    <li><a href="<?php echo base_url('files/forms'); ?>"><i class="fas fa-file-invoice"></i> Forms</a></li>
+    <li><a href="<?php echo base_url('files/documentation'); ?>"><i class="fas fa-book"></i> Documentation</a></li>
+</ul>
 <p class="menu-label">Reports</p>
 <ul class="menu-list">
     <li><a href="<?php echo base_url('reports/open_projects_support'); ?>"><i class="fas fa-list"></i> Full List</a></li>

@@ -22,7 +22,7 @@
             <?php } ?>
             <?php if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_sales'] == 'CHECKED') { ?>
             <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link"><i class="fas fa-lock"></i> Sales</a>
+                <a class="navbar-link"><i class="fas fa-coins"></i> Sales</a>
                 <div class="navbar-dropdown">
                     <a href="<?php echo base_url('sales/customers'); ?>" class="navbar-item">Customers</a>
                 </div>
@@ -32,6 +32,13 @@
             <?php if ($_SESSION['employee_sales'] != 'CHECKED') { ?>
             <a href="<?php echo base_url('support'); ?>" class="navbar-item <?php echo ($this->current_system == "support" ? 'is-active' : '') ?>"><i class="fas fa-bug"></i> Support</a>
             <?php } ?>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link"><i class="fas fa-paperclip"></i> Files</a>
+                <div class="navbar-dropdown">
+                    <a href="<?php echo base_url('files/forms'); ?>" class="navbar-item">Forms</a>
+                    <a href="<?php echo base_url('files/documentation'); ?>" class="navbar-item">Documentation</a>
+                </div>
+            </div>
             <a href="<?php echo base_url('reports'); ?>" class="navbar-item <?php echo ($this->current_system == "reports" ? 'is-active' : '') ?>"><i class="fas fa-chart-pie"></i> Reports</a>
         </div>
         <div class="navbar-end">
