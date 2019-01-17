@@ -98,7 +98,3 @@ input.form-control[size]{width: auto; display: inline;}
 
 .text-green{color: green;}
 .text-red{color: red;}
-
-@media screen and (max-width: 800px){
-	
-}
