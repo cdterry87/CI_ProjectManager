@@ -20,6 +20,7 @@
                 </div>
             </div>
             <?php } ?>
+
             <?php if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_sales'] == 'CHECKED') { ?>
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link"><i class="fas fa-coins"></i> Sales</a>
@@ -28,10 +29,32 @@
                 </div>
             </div>
             <?php } ?>
-            <a href="<?php echo base_url('projects'); ?>" class="navbar-item <?php echo ($this->current_system == "projects" ? 'is-active' : '') ?>"><i class="fas fa-project-diagram"></i> Projects</a>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link"><i class="fas fa-project-diagram"></i> Projects</a>
+                <div class="navbar-dropdown">
+                    <a href="<?php echo base_url('projects/form'); ?>" class="navbar-item">New Project</a>
+                    <hr class="navbar-divider" />
+                    <a href="<?php echo base_url('projects'); ?>" class="navbar-item">Incomplete</a>
+                    <a href="<?php echo base_url('projects/complete'); ?>" class="navbar-item">Complete</a>
+                    <a href="<?php echo base_url('projects/archive'); ?>" class="navbar-item">Archived</a>
+                    <a href="<?php echo base_url('projects/all'); ?>" class="navbar-item">All Projects</a>
+                </div>
+            </div>
             <?php if ($_SESSION['employee_sales'] != 'CHECKED') { ?>
-            <a href="<?php echo base_url('support'); ?>" class="navbar-item <?php echo ($this->current_system == "support" ? 'is-active' : '') ?>"><i class="fas fa-bug"></i> Support</a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link"><i class="fas fa-bug"></i> Support</a>
+                    <div class="navbar-dropdown">
+                        <a href="<?php echo base_url('support/form'); ?>" class="navbar-item">New Support</a>
+                        <hr class="navbar-divider" />
+                        <a href="<?php echo base_url('support'); ?>" class="navbar-item">Incomplete</a>
+                        <a href="<?php echo base_url('support/closed'); ?>" class="navbar-item">Complete</a>
+                        <a href="<?php echo base_url('support/archive'); ?>" class="navbar-item">Archived</a>
+                        <a href="<?php echo base_url('support/all'); ?>" class="navbar-item">All Projects</a>
+                    </div>
+                </div>
             <?php } ?>
+
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link"><i class="fas fa-paperclip"></i> Files</a>
                 <div class="navbar-dropdown">
@@ -42,10 +65,6 @@
             <a href="<?php echo base_url('reports'); ?>" class="navbar-item <?php echo ($this->current_system == "reports" ? 'is-active' : '') ?>"><i class="fas fa-chart-pie"></i> Reports</a>
         </div>
         <div class="navbar-end">
-            <a href="<?php echo base_url('projects/form'); ?>" class="navbar-item <?php echo ($this->current_system == "projects" && $this->current_page == "form" ? 'is-active' : '') ?>"><i class="fas fa-plus-square"></i> New Project</a>
-            <?php if ($_SESSION['employee_sales'] != 'CHECKED') { ?>
-            <a href="<?php echo base_url('support/form'); ?>" class="navbar-item <?php echo ($this->current_system == "support" && $this->current_page == "form" ? 'is-active' : '') ?>"><i class="fas fa-plus-square"></i> New Support</a>
-            <?php } ?>
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link"><i class="fas fa-cogs"></i> Settings</a>
                 <div class="navbar-dropdown">
