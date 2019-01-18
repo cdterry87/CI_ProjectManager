@@ -151,37 +151,57 @@
             <?php echo form_input('task', '', 'placeholder="Enter notes here..." class="input" maxlength="250" data-required'); ?>
         </div>
         <div class="control">
-            <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
+            <?php echo form_submit('action', 'Add Task', 'class="button is-info is-fullwidth"'); ?>
         </div>
     </div>
     <?php echo form_close(); ?>
 
-    <br>
+    <hr>
 
-    <table class="table is-striped is-narrow is-fullwidth">
-        <tbody>
-            <?php
-            if (empty($tasks)) {
-                ?>
-            <tr>
-                <td colspan="3">Issue does not currently have any notes.</td>
-            </tr>
-                <?php
-            } else {
-                $task_num=0;
-                foreach ($tasks as $row) {
-                    $task_num++;
-                    ?>
-            <tr>
-                <td><?php echo $task_num.". ".$this->format->date($row['task_date'])." - ".$row['task']; ?></td>
-                <td width="10%"><?php echo anchor('support/delete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-            </tr>
+    <div class="columns is-multiline">
+        <?php
+        if (empty($tasks)) {
+        ?>
+
+        <div class="column is-full">Issue does not currently have any notes.</div>
+
+        <?php
+        } else {
+            foreach ($tasks as $row) {
+        ?>
+        <div class="column is-half">
+            <div class="card">
+                <div class="card-content">
+                    <p>
+                        <i class="fas fa-quote-left"></i>
+                        <?php echo $row['task']; ?>
+                        <i class="fas fa-quote-right"></i>
+                    </p>
+                    <br>
+                    <p class="is-size-7 has-text-right">
+                        <?php 
+                            echo $this->Employee_model->get_by_employee_id($row['employee_id'])['employee_name'] . ' - ' . $this->format->date($row['task_date']);
+                        ?>
+                    </p>
+                </div>
+                <div class="card-footer">
                     <?php
-                }
+                        if (trim($row['task_completed']) != '0000-00-00 00:00:00') {
+                            echo '<div class="card-footer-item has-text-centered has-text-success">Completed ' . $row['task_completed'] . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . ' </div>';
+                        } else {
+                            echo anchor('support/complete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
+                            echo anchor('support/edit_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-edit" title="Edit Task"></i>', 'class="card-footer-item has-text-link"');
+                            echo anchor('support/delete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <div id="support-files" class="tab-panel">
@@ -207,32 +227,31 @@
     </div>
     <?php echo form_close(); ?>
 
-    <br>
+    <hr>
 
-    <table class="table is-narrow is-fullwidth">
-        <tbody>
-            <?php
-                $file_num=0;
-            if (empty($files)) {
-                ?>
-            <tr>
-                <td colspan="2">Issue does not currently have any attached files.</td>
-            </tr>
-                <?php
-            } else {
-                foreach ($files as $row) {
-                    $file_num++;
-                    ?>
-            <tr>
-                <td><?php echo anchor('public/files/support/'.$row['support_id']."/".$row['file_name'], $file_num.". ".$row['file_name'], 'target="_blank"'); ?></td>
-                <td width="10%"><?php echo anchor('support/delete_file/'.$row['support_id'].'/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-            </tr>
-                    <?php
-                }
+    <div class="columns is-multiline">
+        <?php
+        if (empty($files)) {
+        ?>
+
+        <div>Issue does not currently have any attached files.</div>
+
+        <?php
+        } else {
+
+            foreach ($files as $row) {
+        ?>
+        <div class="column is-one-quarter">
+            <div class="notification is-<?php echo $this->theme_colors[array_rand($this->theme_colors)]; ?>">
+                <?php echo anchor('support/delete_file/'.$row['support_id'].'/'.$row['file_id'], '', 'class="delete"'); ?>
+                <?php echo anchor('public/files/support/'.$row['support_id']."/".$row['file_name'], $row['file_name'], 'target="_blank"'); ?>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <div id="support-history" class="tab-panel">

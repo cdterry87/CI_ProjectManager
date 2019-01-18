@@ -405,8 +405,7 @@ class Support_model extends PROJECTS_Model
         //Prepare the data from the screen.
         $data=$this->prepare('support_tasks');
         
-        //Set status to "I" (Incomplete) by default.
-        $data['task_status']="I";
+        $data['employee_id']=$_SESSION['employee_id'];
         
         //Insert the record into the database.
         $this->db->insert('support_tasks', $data);
@@ -417,7 +416,7 @@ class Support_model extends PROJECTS_Model
         
         return $id;
     }
-    
+
     /* --------------------------------------------------------------------------------
      * Delete a task.
      * -------------------------------------------------------------------------------- */
@@ -429,6 +428,21 @@ class Support_model extends PROJECTS_Model
 
         //Add history
         $this->add_history($support_id, 'Task #' . $task_id . ' deleted');
+    }
+    
+    /* --------------------------------------------------------------------------------
+     * Complete a task.
+     * -------------------------------------------------------------------------------- */
+    public function complete_task($support_id, $task_id)
+    {
+        $data['task_completed'] = date('Y-m-d H:i:s');
+        $data['task_completed_by'] = $_SESSION['employee_id'];
+
+        $this->db->where('task_id', $task_id);
+        $this->db->update('support_tasks', $data);
+
+        //Add history
+        $this->add_history($support_id, 'Task #' . $task_id . ' completed');
     }
 
     /* --------------------------------------------------------------------------------

@@ -186,7 +186,7 @@ class Support extends PROJECTS_Controller
                 $this->populate_screen($this->input->post());
                 redirect('support/form/'.$id);
                 break;
-            case "add note":
+            case "add task":
                 if ($this->validate()) {
                     $this->Support_model->add_task($id);
                     $this->set_message('Task added successfully.', 'success');
@@ -224,10 +224,17 @@ class Support extends PROJECTS_Controller
         }
     }
 
+    public function complete_task($support_id, $task_id)
+    {
+        $this->Support_model->complete_task($support_id, $task_id);
+        $this->set_message('Task has been completed!', 'success');
+        redirect('support/view/'.$support_id);
+    }
+
     public function delete_task($support_id, $task_id)
     {
         $this->Support_model->delete_task($support_id, $task_id);
-        $this->set_message('Note has been removed!', 'danger');
+        $this->set_message('Task has been removed!', 'danger');
         redirect('support/view/'.$support_id);
     }
     

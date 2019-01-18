@@ -85,6 +85,10 @@ a.tag:hover {
     text-decoration: none;
 }
 
+.notification a {
+    text-decoration: none !important;
+}
+
 table td a:not(table td a.tag){display: block; width: 100%; padding: 5px;}
 
 input[data-required],select[data-required], textarea[data-required]{border-color: #ffa4a4 !important;}

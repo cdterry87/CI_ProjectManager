@@ -53,6 +53,18 @@ class PROJECTS_Controller extends CI_Controller
             }
         }
         $_SESSION['employee_departments']=$employee_departments;
+
+        //Define theme colors
+        $this->theme_colors = [
+            'primary',
+            'link',
+            'info',
+            'warning',
+            'danger',
+            'success',
+            'dark',
+            'light'
+        ];
         
         //Determine the action of a form submission.
         $this->action=strtolower($this->input->post('action'));
