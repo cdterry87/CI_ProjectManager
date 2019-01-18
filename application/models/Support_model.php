@@ -460,4 +460,18 @@ class Support_model extends PROJECTS_Model
 
         return $id;
     }
+
+    /* --------------------------------------------------------------------------------
+     * Get history for a project.
+     * -------------------------------------------------------------------------------- */
+    public function get_history($id)
+    {
+        $this->db->select('*');
+        $this->db->from('support_history');
+        $this->db->where('support_id', $id);
+        $this->db->order_by('history_datetime', 'desc');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
 }

@@ -149,6 +149,9 @@ class Support extends PROJECTS_Controller
         
         //Get support files.
         $this->data['files']=$this->Support_model->get_files($id);
+
+        //Get history
+        $this->data['history'] = $this->Support_model->get_history($id);
         
         $this->load->view('template', $this->data);
     }
