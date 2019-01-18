@@ -196,7 +196,7 @@ class Support extends PROJECTS_Controller
             case "close issue":
                 $this->Support_model->close_issue($id);
                 $this->set_message('This support issue is now closed!', 'success');
-                redirect('support');
+                redirect('support/view/'.$id);
                 break;
             case "open issue":
                 $this->Support_model->open_issue($id);
@@ -206,7 +206,7 @@ class Support extends PROJECTS_Controller
             case "archive issue":
                 $this->Support_model->archive_issue($id);
                 $this->set_message('This support issue is now archived!', 'success');
-                redirect('support');
+                redirect('support/view/'.$id);
                 break;
             case "restore issue":
                 $this->Support_model->restore_issue($id);

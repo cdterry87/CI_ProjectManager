@@ -190,7 +190,7 @@
                             echo '<div class="card-footer-item has-text-centered has-text-success">Completed ' . $row['task_completed'] . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . ' </div>';
                         } else {
                             echo anchor('support/complete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
-                            echo anchor('support/edit_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-edit" title="Edit Task"></i>', 'class="card-footer-item has-text-link"');
+                            // echo anchor('support/edit_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-edit" title="Edit Task"></i>', 'class="card-footer-item has-text-link"');
                             echo anchor('support/delete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
                         }
                     ?>
