@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 16, 2019 at 06:17 AM
+-- Generation Time: Jan 18, 2019 at 03:41 PM
 -- Server version: 5.7.17
 -- PHP Version: 7.1.4
 
@@ -55,6 +55,18 @@ CREATE TABLE `customers_contacts` (
   `contact_email` varchar(250) NOT NULL,
   `contact_phone_type` varchar(15) NOT NULL,
   `contact_phone_alt_type` varchar(15) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers_files`
+--
+
+CREATE TABLE `customers_files` (
+  `file_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `file_name` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -235,10 +247,7 @@ CREATE TABLE `projects` (
   `project_start_date` varchar(8) NOT NULL,
   `project_completed_date` varchar(8) NOT NULL,
   `project_archived_date` varchar(8) NOT NULL,
-  `project_labor` int(2) NOT NULL,
-  `project_quote` varchar(15) NOT NULL,
   `project_status` char(1) NOT NULL,
-  `project_tags` varchar(100) NOT NULL,
   `project_estimated_completion_date` varchar(8) NOT NULL,
   `project_lead` int(11) NOT NULL,
   `project_percentage_completed` varchar(3) NOT NULL,
@@ -258,6 +267,20 @@ CREATE TABLE `projects_files` (
   `project_id` int(11) NOT NULL,
   `file_name` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects_history`
+--
+
+CREATE TABLE `projects_history` (
+  `project_history_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `history_action` varchar(50) NOT NULL,
+  `history_employee_id` int(11) NOT NULL,
+  `history_datetime` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -308,7 +331,8 @@ CREATE TABLE `projects_reminders_employees` (
 CREATE TABLE `projects_tasks` (
   `project_task_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  `task` text NOT NULL,
+  `task_title` varchar(100) NOT NULL,
+  `task_description` text NOT NULL,
   `task_date` varchar(8) NOT NULL,
   `task_assigned_by` int(11) NOT NULL,
   `task_assigned_date` varchar(8) NOT NULL,
@@ -359,7 +383,6 @@ CREATE TABLE `support` (
   `support_duration_hours` int(2) NOT NULL,
   `support_duration_minutes` int(2) NOT NULL,
   `support_status` char(1) NOT NULL,
-  `support_tags` varchar(100) NOT NULL,
   `support_complete_date` varchar(8) NOT NULL,
   `support_complete_time` varchar(4) NOT NULL,
   `support_closed_date` varchar(8) NOT NULL,
@@ -381,15 +404,31 @@ CREATE TABLE `support_files` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `support_history`
+--
+
+CREATE TABLE `support_history` (
+  `support_history_id` int(11) NOT NULL,
+  `support_id` int(11) NOT NULL,
+  `history_action` varchar(50) NOT NULL,
+  `history_employee_id` int(11) NOT NULL,
+  `history_datetime` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `support_tasks`
 --
 
 CREATE TABLE `support_tasks` (
   `task_id` int(11) NOT NULL,
   `support_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
   `task` varchar(250) NOT NULL,
-  `task_status` char(1) NOT NULL,
-  `task_date` varchar(8) NOT NULL
+  `task_date` varchar(8) NOT NULL,
+  `task_completed` datetime NOT NULL,
+  `task_completed_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -420,6 +459,14 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `customers_contacts`
   ADD PRIMARY KEY (`customer_contact_id`);
+
+--
+-- Indexes for table `customers_files`
+--
+ALTER TABLE `customers_files`
+  ADD PRIMARY KEY (`file_id`),
+  ADD KEY `project_id` (`customer_id`),
+  ADD KEY `file_name` (`file_name`);
 
 --
 -- Indexes for table `customers_notes`
@@ -526,6 +573,12 @@ ALTER TABLE `projects_files`
   ADD KEY `file_name` (`file_name`);
 
 --
+-- Indexes for table `projects_history`
+--
+ALTER TABLE `projects_history`
+  ADD PRIMARY KEY (`project_history_id`);
+
+--
 -- Indexes for table `projects_notes`
 --
 ALTER TABLE `projects_notes`
@@ -581,6 +634,12 @@ ALTER TABLE `support_files`
   ADD KEY `file_name` (`file_name`);
 
 --
+-- Indexes for table `support_history`
+--
+ALTER TABLE `support_history`
+  ADD PRIMARY KEY (`support_history_id`);
+
+--
 -- Indexes for table `support_tasks`
 --
 ALTER TABLE `support_tasks`
@@ -601,62 +660,67 @@ ALTER TABLE `systems`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `customers_contacts`
 --
 ALTER TABLE `customers_contacts`
-  MODIFY `customer_contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `customer_contact_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `customers_files`
+--
+ALTER TABLE `customers_files`
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `customers_notes`
 --
 ALTER TABLE `customers_notes`
-  MODIFY `customer_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `customer_note_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `customers_reminders`
 --
 ALTER TABLE `customers_reminders`
-  MODIFY `customer_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `customer_reminder_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `customers_reminders_employees`
 --
 ALTER TABLE `customers_reminders_employees`
-  MODIFY `customer_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `customers_systems`
 --
 ALTER TABLE `customers_systems`
-  MODIFY `customer_system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `customer_system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `departments_employees`
 --
 ALTER TABLE `departments_employees`
-  MODIFY `department_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `department_employee_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `departments_projects`
 --
 ALTER TABLE `departments_projects`
-  MODIFY `department_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `department_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `departments_support`
 --
 ALTER TABLE `departments_support`
-  MODIFY `department_support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `department_support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `employees_projects`
 --
 ALTER TABLE `employees_projects`
-  MODIFY `employee_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `employee_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `employees_reminders`
 --
@@ -666,62 +730,72 @@ ALTER TABLE `employees_reminders`
 -- AUTO_INCREMENT for table `employees_support`
 --
 ALTER TABLE `employees_support`
-  MODIFY `employee_support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `employee_support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `projects_files`
 --
 ALTER TABLE `projects_files`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `projects_history`
+--
+ALTER TABLE `projects_history`
+  MODIFY `project_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `projects_notes`
 --
 ALTER TABLE `projects_notes`
-  MODIFY `project_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `project_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `projects_reminders`
 --
 ALTER TABLE `projects_reminders`
-  MODIFY `project_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `project_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `projects_reminders_employees`
 --
 ALTER TABLE `projects_reminders_employees`
-  MODIFY `project_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `project_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `projects_tasks`
 --
 ALTER TABLE `projects_tasks`
-  MODIFY `project_task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `project_task_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `projects_tasks_employees`
 --
 ALTER TABLE `projects_tasks_employees`
-  MODIFY `project_task_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `project_task_employee_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `support`
 --
 ALTER TABLE `support`
-  MODIFY `support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `support_files`
 --
 ALTER TABLE `support_files`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `support_history`
+--
+ALTER TABLE `support_history`
+  MODIFY `support_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `support_tasks`
 --
 ALTER TABLE `support_tasks`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `systems`
 --
 ALTER TABLE `systems`
-  MODIFY `system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `system_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
