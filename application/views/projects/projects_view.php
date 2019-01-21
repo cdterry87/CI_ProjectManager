@@ -406,30 +406,29 @@
 
     <hr>
 
-    <table class="table is-narrow is-fullwidth">
-        <tbody>
-            <?php
-                $file_num=0;
-            if (empty($files)) {
-                ?>
-            <tr>
-                <td colspan="2">Project does not currently have any attached files.</td>
-            </tr>
-                <?php
-            } else {
-                foreach ($files as $row) {
-                    $file_num++;
-                    ?>
-            <tr>
-                <td><?php echo anchor('public/files/projects/'.$row['project_id']."/".$row['file_name'], $file_num.". ".$row['file_name'], 'target="_blank"'); ?></td>
-                <td width="10%"><?php echo anchor('projects/delete_file/'.$row['project_id'].'/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-            </tr>
-                    <?php
-                }
+    <div class="columns is-multiline">
+        <?php
+        if (empty($files)) {
+        ?>
+
+        <div>Project does not currently have any attached files.</div>
+
+        <?php
+        } else {
+
+            foreach ($files as $row) {
+        ?>
+        <div class="column is-one-quarter">
+            <div class="notification is-<?php echo $this->theme_colors[array_rand($this->theme_colors)]; ?>">
+                <?php echo anchor('projects/delete_file/'.$row['project_id'].'/'.$row['file_id'], '', 'class="delete"'); ?>
+                <?php echo anchor('public/files/projects/'.$row['project_id']."/".$row['file_name'], '<i class="fas fa-download"></i> ' . $this->format->shorten($row['file_name'], 20), 'target="_blank"'); ?>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <div id="project-history" class="tab-panel">

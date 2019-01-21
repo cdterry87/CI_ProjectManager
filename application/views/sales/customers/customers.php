@@ -11,6 +11,7 @@
 		<tr>
 			<th>Customer</th>
 			<th>Project Manager</th>
+			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,6 +22,7 @@
 		<tr>
 			<td><?php echo anchor($link, $row['customer_name']); ?></td>
 			<td><?php echo anchor($link, $this->Employee_model->get_by_employee_id($row['customer_project_manager'])['employee_name']); ?></td>
+			<td><?php echo anchor($link, ucfirst($row['customer_status'])); ?></td>
 		</tr>
 		<?php
 			}

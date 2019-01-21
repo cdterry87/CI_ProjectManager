@@ -245,7 +245,7 @@
         <div class="column is-one-quarter">
             <div class="notification is-<?php echo $this->theme_colors[array_rand($this->theme_colors)]; ?>">
                 <?php echo anchor('support/delete_file/'.$row['support_id'].'/'.$row['file_id'], '', 'class="delete"'); ?>
-                <?php echo anchor('public/files/support/'.$row['support_id']."/".$row['file_name'], $row['file_name'], 'target="_blank"'); ?>
+                <?php echo anchor('public/files/support/'.$row['support_id']."/".$row['file_name'], '<i class="fas fa-download"></i> ' . $row['file_name'], 'target="_blank"'); ?>
             </div>
         </div>
         <?php

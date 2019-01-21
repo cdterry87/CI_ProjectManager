@@ -349,7 +349,7 @@ class Customer_model extends PROJECTS_Model
         return $query->result_array();
     }
 
-    public function delete_notes($id)
+    public function delete_note($id)
     {
         $this->db->where('customer_note_id', $id);
         $this->db->delete('customers_notes');

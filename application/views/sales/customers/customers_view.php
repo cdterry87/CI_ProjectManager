@@ -89,36 +89,52 @@
         <button class="modal-close is-large" data-modal="contact-form" aria-label="close"></button>
     </div>
 
-    <table class="table is-striped is-narrow is-fullwidth">
-        <thead>
-            <tr>
-                <th width="20%">Name</th>
-                <th width="20%">Title</th>
-                <th width="20%">Email</th>
-                <th width="15%">Phone</th>
-                <th width="15%">Phone</th>
-                <th width="10%">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            foreach ($contacts as $key => $contact) {
-                ?>
-            <tr>
-                <td><?php echo $contact['contact_name']; ?></td>
-                <td><?php echo $contact['contact_title']; ?></td>
-                <td><?php echo $contact['contact_email']; ?></td>
-                <td><?php echo $this->format->phone($contact['contact_phone']); ?></td>
-                <td><?php echo $this->format->phone($contact['contact_phone_alt']); ?></td>
-                <td>
-                    <?php echo anchor('sales/customers/delete_contact/' . $customer['customer_id'] . '/' . $contact['customer_contact_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
-                </td>
-            </tr>
-                <?php
+    <div class="columns">
+        <?php
+        if (empty($contacts)) {
+        ?>
+
+        <div class="column is-full">Issue does not currently have any tasks.</div>
+
+        <?php
+        } else {
+            foreach ($contacts as $contact) {
+        ?>
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <h4 class="has-text-weight-bold is-size-4"><?php echo $contact['contact_name']; ?></h4>
+                    <h5 class="has-text-weight-semibold is-size-5"><?php echo $contact['contact_title']; ?></h5>
+                    <h6 class="is-size-6"><?php echo "Email: " . $contact['contact_email']; ?></h6>
+                    <p class="is-size-6">
+                        <?php echo "Phone: " . $this->format->phone($contact['contact_phone']); ?>
+                        <?php
+                            if ($contact['contact_phone_type'] != '') {
+                                echo "<strong>[ " . $contact['contact_phone_type'] . " ]</strong>";
+                            }
+                        ?>
+                    </p>
+                    <p class="is-size-6">
+                        <?php echo "Phone: " . $this->format->phone($contact['contact_phone_alt']); ?>
+                        <?php
+                            if ($contact['contact_phone_alt_type'] != '') {
+                                echo "<strong>[ " . $contact['contact_phone_alt_type'] . " ]</strong>";
+                            }
+                        ?>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <?php
+                        echo anchor('sales/customers/delete_contact/'.$contact['customer_id'].'/'.$contact['customer_contact_id'], '<i class="fas fa-trash" title="Delete Contact"></i>', 'class="card-footer-item has-text-danger"');
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <div id="customer-notes" class="tab-panel">
@@ -137,41 +153,44 @@
 
     <hr>
 
-    <table class="table is-striped is-narrow is-fullwidth">
-        <thead>
-            <tr>
-                <th>Note</th>
-                <th width="20%">Date</th>
-                <th width="20%">Employee</th>
-                <th width="10%">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (empty($notes)) {
-            ?>
-            <tr>
-                <td colspan="3">Customer does not currently have any notes.</td>
-            </tr>
-            <?php
-            } else {
-                foreach ($notes as $key => $note) {
-                    $employee = $this->Employee_model->get_by_employee_id($note['employee_id']);
-            ?>
-            <tr>
-                <td><?php echo $note['note']; ?></td>
-                <td><?php echo $note['datetime']; ?></td>
-                <td><?php echo $employee['employee_name']; ?></td>
-                <td>
-                <?php echo anchor('sales/customers/delete_note/' . $customer['customer_id'] . '/' . $note['customer_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
-                </td>
-            </tr>
-            <?php
-                }
+    <div class="columns is-multiline">
+        <?php
+        if (empty($notes)) {
+        ?>
+
+        <div class="column is-full">Customer does not currently have any notes.</div>
+
+        <?php
+        } else {
+            foreach ($notes as $note) {
+        ?>
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <p>
+                        <i class="fas fa-quote-left"></i>
+                        <?php echo $note['note']; ?>
+                        <i class="fas fa-quote-right"></i>
+                    </p>
+                    <br>
+                    <p class="is-size-7 has-text-right">
+                        <?php 
+                            echo $this->Employee_model->get_by_employee_id($note['employee_id'])['employee_name'] . ' - ' . $note['datetime'];
+                        ?>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <?php
+                        echo anchor('sales/customers/delete_note/' . $customer['customer_id'] . '/' . $note['customer_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="card-footer-item has-text-danger"');
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <div id="customer-reminders" class="tab-panel">
@@ -296,30 +315,29 @@
 
     <hr>
 
-    <table class="table is-narrow is-fullwidth">
-        <tbody>
-            <?php
-                $file_num=0;
-            if (empty($files)) {
-                ?>
-            <tr>
-                <td colspan="2">Customer does not currently have any attached files.</td>
-            </tr>
-                <?php
-            } else {
-                foreach ($files as $row) {
-                    $file_num++;
-                    ?>
-            <tr>
-                <td><?php echo anchor('public/files/customers/'.$row['customer_id']."/".$row['file_name'], $file_num.". ".$row['file_name'], 'target="_blank"'); ?></td>
-                <td width="10%"><?php echo anchor('customers/delete_file/'.$row['customer_id'].'/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-            </tr>
-                    <?php
-                }
+    <div class="columns is-multiline">
+        <?php
+        if (empty($files)) {
+        ?>
+
+        <div>Customer does not currently have any attached files.</div>
+
+        <?php
+        } else {
+
+            foreach ($files as $row) {
+        ?>
+        <div class="column is-one-quarter">
+            <div class="notification is-<?php echo $this->theme_colors[array_rand($this->theme_colors)]; ?>">
+                <?php echo anchor('sales/customers/delete_file/'.$row['customer_id'].'/'.$row['file_id'], '', 'class="delete"'); ?>
+                <?php echo anchor('public/files/customers/'.$row['customer_id']."/".$row['file_name'], '<i class="fas fa-download"></i> ' . $this->format->shorten($row['file_name'], 20), 'target="_blank"'); ?>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <?php echo form_close(); ?>
