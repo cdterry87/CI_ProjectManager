@@ -6,8 +6,9 @@
         <h2 class="title is-4">Add Contact</h2>
     </div>
     <div class="modal-card-body">
+        <div id="ajax-messages"></div>
+        <br>
         <div class="content">
-            <div id="ajax-messages"></div>
             <div class="field">
                 <?php echo form_label('Contact Name:', 'contact_name', 'class="label"'); ?>
                 <div class="control">

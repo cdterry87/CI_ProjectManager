@@ -262,33 +262,44 @@
 
     <hr>
 
-    <table class="table is-striped is-narrow is-fullwidth">
-        <thead>
-            <tr>
-                <th>Note</th>
-                <th width="20%">Date</th>
-                <th width="20%">Employee</th>
-                <th width="10%">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            foreach ($notes as $key => $note) {
-                $employee = $this->Employee_model->get_by_employee_id($note['employee_id']);
-                ?>
-            <tr>
-                <td><?php echo $note['note']; ?></td>
-                <td><?php echo $note['datetime']; ?></td>
-                <td><?php echo $employee['employee_name']; ?></td>
-                <td>
-                <?php echo anchor('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
-                </td>
-            </tr>
-                <?php
+    <div class="columns is-multiline">
+        <?php
+        if (empty($notes)) {
+        ?>
+
+        <div class="column is-full">Project does not currently have any notes.</div>
+
+        <?php
+        } else {
+            foreach ($notes as $note) {
+        ?>
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <p>
+                        <i class="fas fa-quote-left"></i>
+                        <?php echo $note['note']; ?>
+                        <i class="fas fa-quote-right"></i>
+                    </p>
+                    <br>
+                    <p class="is-size-7 has-text-right">
+                        <?php 
+                            echo $this->Employee_model->get_by_employee_id($note['employee_id'])['employee_name'] . ' - ' . $note['datetime'];
+                        ?>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <?php
+                        echo anchor('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="card-footer-item has-text-danger"');
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <div id="project-reminders" class="tab-panel">
