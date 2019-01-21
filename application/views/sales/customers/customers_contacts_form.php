@@ -7,6 +7,7 @@
     </div>
     <div class="modal-card-body">
         <div class="content">
+            <div id="ajax-messages"></div>
             <div class="field">
                 <?php echo form_label('Contact Name:', 'contact_name', 'class="label"'); ?>
                 <div class="control">
@@ -56,7 +57,7 @@
     </div>
     <div class="modal-card-foot">
         <div class="field is-grouped is-grouped-centered">
-            <p class="control"><?php echo form_submit('action', 'Save Contact', 'class="button is-info"'); ?></p>
+            <p class="control"><button type="submit" value='save contact' class="button is-info ajax-btn">Save Contact</button></p>
         </div>
     </div>
 </div>

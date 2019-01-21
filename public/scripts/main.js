@@ -196,6 +196,7 @@ $(function(){
         
         //The .done method will be executed if the AJAX request successfully receives a response.
         .done(function(data){
+            console.log('DATA', data);
             dataParsed = JSON.parse(data);
             get_messages_ajax();
             if (typeof(dataParsed.success) != "undefined") {
