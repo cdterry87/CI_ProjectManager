@@ -170,7 +170,7 @@
         } else {
             foreach ($tasks as $row) {
         ?>
-        <div class="column is-half">
+        <div class="column is-one-third">
             <div class="card">
                 <div class="card-content">
                     <p>

@@ -1,4 +1,4 @@
-<h2 class="title is-4">Files - Forms</h2>
+<h2 class="title is-4">Forms</h2>
 <?php
     if (empty($forms)) {
         echo "<p>No forms found.</p>";
