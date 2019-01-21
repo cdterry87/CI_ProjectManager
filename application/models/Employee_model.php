@@ -39,6 +39,20 @@ class Employee_model extends PROJECTS_Model
         
         return $query->result_array();
     }
+
+    /* --------------------------------------------------------------------------------
+     * Get all records except sales.
+     * -------------------------------------------------------------------------------- */
+    public function get_all_but_sales()
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->where("employee_sales != 'CHECKED'");
+        $this->db->order_by('employee_name');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
     
     /* --------------------------------------------------------------------------------
      * Get a record.
