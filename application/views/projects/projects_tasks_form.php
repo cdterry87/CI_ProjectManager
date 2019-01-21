@@ -7,7 +7,7 @@
     </div>
     <div class="modal-card-body">
         <div class="content">
-            <div id="messages"></div>
+            <div id="ajax-messages"></div>
             <div class="columns">
                 <div class="column is-half">
                     <?php echo form_label('Start Date:', 'task_start_date_mo', 'class="label"'); ?>
@@ -122,7 +122,7 @@
     </div>
     <div class="modal-card-foot">
         <div class="field is-grouped is-grouped-centered">
-            <p class="control"><?php echo form_submit('action', 'Save Task', 'class="button is-info"'); ?></p>
+            <p class="control"><button type="submit" value='save task' class="button is-info ajax-btn">Save Task</button></p>
         </div>
     </div>
 </div>
