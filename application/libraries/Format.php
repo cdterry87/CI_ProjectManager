@@ -41,6 +41,16 @@ class Format {
 				break;
 		}
 		return false;
-	}
+    }
+    
+    /* --------------------------------------------------------------------------------
+	 * Format phones as (###) ### - #### or ### - ####.
+	 * -------------------------------------------------------------------------------- */
+	public function shorten($string, $length = 50){
+		if (strlen($string) > ($length + 12)) {
+            $string = substr($string, 0, $length) . '...' . substr($string, -9);
+        }
+        return $string;
+    }
 	
 }
