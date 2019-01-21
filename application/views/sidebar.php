@@ -40,7 +40,9 @@ if ($this->session->userdata('employee_sales') != "CHECKED") {
 ?>
 <p class="menu-label">Files</p>
 <ul class="menu-list">
+    <?php if ($_SESSION['employee_admin'] == 'CHECKED') { ?>
     <li><a href="<?php echo base_url('files'); ?>"><i class="fas fa-paperclip"></i> Upload/View Files</a></li>
+    <?php } ?>
     <li><a href="<?php echo base_url('files/forms'); ?>"><i class="fas fa-file-invoice"></i> Forms</a></li>
     <li><a href="<?php echo base_url('files/documentation'); ?>"><i class="fas fa-book"></i> Documentation</a></li>
 </ul>

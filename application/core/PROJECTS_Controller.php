@@ -183,15 +183,20 @@ class PROJECTS_Controller extends CI_Controller
     /* --------------------------------------------------------------------------------
      * Universal file upload.
      * -------------------------------------------------------------------------------- */
-    public function upload($id, $fieldname = "userfile", $system = '')
+    public function upload($id='', $fieldname = "userfile", $system = '')
     {
         if (trim($system) == '') {
             $system = $this->current_system;
         }
+
+        $upload_path = 'public/files/'.$system.'/'.$id;
+        if (trim($id) != '') {
+            $upload_path = 'public/files/'.$system;
+        }
         
         //Define some configurations for uploading files.
         $upload_config=array(
-            'upload_path'           => 'public/files/'.$system.'/'.$id,
+            'upload_path'           => $upload_path,
             'overwrite'             => true,
             'allowed_types'         => '*',
             'file_ext_tolower'      => true,

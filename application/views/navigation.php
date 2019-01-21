@@ -56,8 +56,12 @@
             <?php } ?>
 
             <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href="<?php echo base_url('files'); ?>"><i class="fas fa-paperclip"></i> Files</a>
+                <a class="navbar-link"><i class="fas fa-paperclip"></i> Files</a>
                 <div class="navbar-dropdown">
+                    <?php if ($_SESSION['employee_admin'] == 'CHECKED') { ?>
+                    <a href="<?php echo base_url('files'); ?>" class="navbar-item">Upload/View Files</a>
+                    <hr class="navbar-divider" />
+                    <?php } ?>
                     <a href="<?php echo base_url('files/forms'); ?>" class="navbar-item">Forms</a>
                     <a href="<?php echo base_url('files/documentation'); ?>" class="navbar-item">Documentation</a>
                 </div>

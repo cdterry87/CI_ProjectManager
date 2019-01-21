@@ -29,5 +29,29 @@ class File_model extends PROJECTS_Model
         return $query->result_array();
     }
     
+    /* --------------------------------------------------------------------------------
+     * Insert file information into the database.
+     * -------------------------------------------------------------------------------- */
+    public function upload($upload_data, $file_type)
+    {
+        $data=array(
+            'file_name' => $upload_data['file_name'],
+            'file_size' => $upload_data['file_size'],
+            'file_title' => $upload_data['file_title'],
+            'file_description' => $upload_data['file_description'],
+        );
+        
+        //Insert the record into the database.
+        $this->db->insert('files_'.$file_type, $data);
+    }
+    
+    /* --------------------------------------------------------------------------------
+     * Delete a file.
+     * -------------------------------------------------------------------------------- */
+    public function delete_file($id)
+    {
+        $this->db->where('file_id', $id);
+        $this->db->delete('customers_files');
+    }
     
 }

@@ -19,6 +19,14 @@
             <?php echo form_textarea('file_description', '', 'class="textarea is-small" placeholder="Enter description here" data-required rows="3"'); ?>
         </div>
     </div>
+    <div class="field">
+        <div class="control">
+            <div class="select is-small is-fullwidth">
+                <?php echo form_dropdown('file_type', ['' => 'Choose a file type', 'forms' => 'Form', 'documentation' => 'Documentation'], '', 'data-required data-label="File Type"'); ?>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="field is-grouped">
         <div class="control is-expanded">
             <div class="file has-name is-fullwidth">
