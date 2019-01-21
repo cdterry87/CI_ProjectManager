@@ -80,7 +80,7 @@ class Support extends PROJECTS_Controller
         
         //Get employees.
         $this->load->model('Employee_model');
-        $this->data['employees']=$this->Employee_model->get_all_but_sales();
+        $this->data['employees']=$this->Employee_model->get_all_except_sales();
         
         //If an id is set, get record in order to populate the screen.
         if ($id!='') {

@@ -6,8 +6,9 @@
         <h2 class="title is-4">Add Task</h2>
     </div>
     <div class="modal-card-body">
+        <div id="ajax-messages"></div>
+        <br>
         <div class="content">
-            <div id="ajax-messages"></div>
             <div class="columns">
                 <div class="column is-half">
                     <?php echo form_label('Start Date:', 'task_start_date_mo', 'class="label"'); ?>

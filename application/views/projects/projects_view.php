@@ -180,7 +180,7 @@
                     $task_num++;
                     ?>
             <tr>
-                <td><?php echo $row['task']; ?></td>
+                <td><?php echo $row['task_title']; ?></td>
                 <td><?php echo $this->format->date($row['task_date']); ?></td>
                 <td width="10%"><?php echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
             </tr>

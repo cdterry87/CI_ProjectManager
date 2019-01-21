@@ -89,7 +89,7 @@ class Projects extends PROJECTS_Controller
         
         //Get employees.
         $this->load->model('Employee_model');
-        $this->data['employees'] = $this->Employee_model->get_all_but_sales();
+        $this->data['employees'] = $this->Employee_model->get_all_except_sales();
         $this->data['employees_dropdown'] = $this->Employee_model->get_dropdown();
         
         //If an id is set, get record in order to populate the screen.
@@ -163,7 +163,7 @@ class Projects extends PROJECTS_Controller
         $this->data['notes'] = $this->Project_model->get_notes($id);
 
         //Get list of employees
-        $this->data['employees'] = $this->Employee_model->get_all();
+        $this->data['employees'] = $this->Employee_model->get_all_except_sales();
 
         //Get a list of the customer's reminders
         $this->data['reminders'] = $this->Project_model->get_reminders($id);

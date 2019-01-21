@@ -43,7 +43,7 @@ class Employee_model extends PROJECTS_Model
     /* --------------------------------------------------------------------------------
      * Get all records except sales.
      * -------------------------------------------------------------------------------- */
-    public function get_all_but_sales()
+    public function get_all_except_sales()
     {
         $this->db->select('*');
         $this->db->from($this->table);
