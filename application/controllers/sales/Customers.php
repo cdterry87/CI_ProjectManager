@@ -213,10 +213,10 @@ class Customers extends PROJECTS_Controller
                 if ($this->validate()) {
                     $this->Customer_model->add_contact($id);
                     $this->set_message('Contact added successfully.', 'success');
-                } else {
-                    $this->populate_screen($this->input->post());
-                }
-                redirect('sales/customers/view/'.$id);
+                } 
+                echo json_encode($this->session->userdata('projects_messages'));
+                exit;
+                // redirect('sales/customers/view/'.$id);
                 break;
             case "add note":
                 if ($this->validate()) {
