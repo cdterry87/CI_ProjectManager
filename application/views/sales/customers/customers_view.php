@@ -16,7 +16,7 @@
 </div>
 
 <div id="customer-details" class="tab-panel tab-panel-init">
-    <h2 class="title is-4">Details</h2>
+    <h2 class="title is-4">Customer Details</h2>
     <div>
         <?php
         $status_color = 'success';
@@ -80,19 +80,14 @@
 </div>
 
 <div id="customer-contacts" class="tab-panel">
-    <h2 class="title is-4">Contacts</h2>
+    <h3 class="title is-4">
+        Customer Contacts
+        <a data-modal="contact-form" class="button is-info is-small"><i class="fas fa-plus-square"></i> Add Contact</a>    
+    </h3>
     <div id="contact-form" class="modal">
         <?php $this->load->view('sales/customers/customers_contacts_form'); ?>
         <button class="modal-close is-large" data-modal="contact-form" aria-label="close"></button>
     </div>
-
-    <div class="field is-grouped is-grouped-centered">
-        <p class="control">
-            <a data-modal="contact-form" class="button is-info">Add Contact</a>    
-        </p>
-    </div>
-
-    <hr>
 
     <table class="table is-striped is-narrow is-fullwidth">
         <thead>
@@ -129,7 +124,7 @@
 <div id="customer-notes" class="tab-panel">
     <?php echo form_open('sales/customers/action', 'id="notes-form"'); ?>
     <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
-    <h2 class="title is-4">Add Notes</h2>
+    <h2 class="title is-4">Customer Notes</h2>
     <div class="field is-grouped">
         <div class="control is-expanded">
             <?php echo form_textarea('note', '', 'class="textarea is-small" placeholder="Enter notes here" data-required rows="3"'); ?>
@@ -182,7 +177,7 @@
 <div id="customer-reminders" class="tab-panel">
     <?php echo form_open('sales/customers/action', 'id="reminders-form"'); ?>
     <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
-    <h2 class="title is-4">Reminders</h2>
+    <h2 class="title is-4">Customer Reminders</h2>
 
     <?php echo form_label('Reminder Date:', 'reminder_date_mo', 'class="label"'); ?>
     <div class="field is-grouped">

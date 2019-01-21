@@ -169,7 +169,7 @@
         } else {
             foreach ($tasks as $row) {
         ?>
-        <div class="column is-full">
+        <div class="column is-one-third">
             <div class="card">
                 <div class="card-content">
                     <p>
@@ -192,7 +192,7 @@
                         <?php } ?>
                     </p>
                     <br>
-                    <div class="columns">
+                    <div class="columns is-size-7">
                         <div class="column is-full">
                             <p><strong>Assigned To:</strong></p>
                             <p>
@@ -212,8 +212,8 @@
                     </div>
                     <div class="columns is-size-7 is-mobile">
                         <div class="column is-one-third">
-                            <p><strong>Assign Date:</strong></p>
-                            <p><?php echo $this->format->date($row['task_assigned_date']); ?></p>
+                            <p><strong>Assigned Date:</strong></p>
+                            <p><?php echo $this->format->date($row['task_assigned_date']); ?> by <?php echo $this->Employee_model->get_by_employee_id($row['task_assigned_by'])['employee_name']; ?></p>
                         </div>
                         <div class="column is-one-third">
                             <p><strong>Start Date:</strong></p>

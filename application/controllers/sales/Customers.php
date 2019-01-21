@@ -122,7 +122,7 @@ class Customers extends PROJECTS_Controller
         $this->data['support_open']=$this->Customer_model->get_support_open($id);
         
         //Get project manager name
-        $project_manager = $this->Employee_model->get_by_employee_id($this->data['customer']['customer_adsi_project_manager']);
+        $project_manager = $this->Employee_model->get_by_employee_id($this->data['customer']['customer_project_manager']);
         if (!empty($project_manager)) {
             $this->data['project_manager'] = $project_manager['employee_name'];
         }

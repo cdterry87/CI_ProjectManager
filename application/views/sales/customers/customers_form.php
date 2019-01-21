@@ -20,10 +20,10 @@
 </div>
 
 <div class="field">
-    <?php echo form_label('Project Manager:', 'customer_adsi_project_manager', 'class="label"'); ?>
+    <?php echo form_label('Project Manager:', 'customer_project_manager', 'class="label"'); ?>
     <div class="control">
         <div class="select is-small is-fullwidth">
-            <?php echo form_dropdown('customer_adsi_project_manager', $employees, '', 'data-required data-label="Project Manager"'); ?>
+            <?php echo form_dropdown('customer_project_manager', $employees, '', 'data-required data-label="Project Manager"'); ?>
         </div>
     </div>
 </div>

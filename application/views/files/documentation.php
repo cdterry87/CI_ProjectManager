@@ -1,3 +1,4 @@
+<h2 class="title is-4">Files - Documentation</h2>
 <?php
     if (empty($documentation)) {
         echo "<p>No documentation found.</p>";

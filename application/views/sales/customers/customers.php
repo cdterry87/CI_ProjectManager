@@ -6,10 +6,11 @@
 
 <?php }else{ ?>
 
-<table class="table is-striped is-narrow is-hoverable is-fullwidth">
+<table class="table is-striped is-narrow is-hoverable is-fullwidth datatable">
 	<thead>
 		<tr>
-			<th>Customers</th>
+			<th>Customer</th>
+			<th>Project Manager</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,6 +20,7 @@
 		?>
 		<tr>
 			<td><?php echo anchor($link, $row['customer_name']); ?></td>
+			<td><?php echo anchor($link, $this->Employee_model->get_by_employee_id($row['customer_project_manager'])['employee_name']); ?></td>
 		</tr>
 		<?php
 			}
