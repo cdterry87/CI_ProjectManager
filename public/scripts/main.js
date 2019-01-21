@@ -9,6 +9,7 @@ $(function(){
    minute_error	     = 'Invalid Minute!';
    form              = $('form');
    messages          = $('#messages');
+   ajax_messages	 = $('#ajax-messages')
    
    /* --------------------------------------------------------------------------------
     * On-load Functions.
@@ -137,6 +138,34 @@ $(function(){
          console.log('Message Retrieval Error: '+xhr.responseText);
       });
    }
+
+   function get_messages_ajax(){
+    console.log('get_messages()');
+    
+    //Clear existing messages.
+    clear_messages();
+    
+    //Setup a request to retrieve messages.
+    $.ajax({
+       method:	 "POST",
+       type:     "HTML",
+       url:	     base_url+'AJAX/Messages'
+    })
+    .done(function(data){
+       console.log('Messages retrieved successfully!');
+       //If messages are present.
+       if(data!=''){
+          //Display messages.
+          ajax_messages.html(data);
+          
+          //Format currency.
+          //$('.currency').formatCurrency();
+       }
+    })
+    .fail(function(xhr, status, error){
+       console.log('Message Retrieval Error: '+xhr.responseText);
+    });
+ }
     
    /* --------------------------------------------------------------------------------
     * Clear existing messages.
@@ -151,32 +180,35 @@ $(function(){
     * Form submit.
     * -------------------------------------------------------------------------------- */
     // AJAX form
-    $('form.ajax').on('submit', function(e) {
-        console.log('ajax form submit');
+    $('.ajax-btn').on('click', function(e) {
         e.preventDefault();
-        form = $(this);
-        action = $(this).val().toLowerCase();
+        form = $(this).parents('form:first');
+        action = $(this).val();
+        validate();
 
-        if (validate()) {
-            $.ajax({
-                async: 		false,
-                method: 	"POST",
-                type:		"JSON",
-                data: 		form.serialize()+'&action='+action,
-                url: 		form.attr('action'),
-            })
-            
-            //The .done method will be executed if the AJAX request successfully receives a response.
-            .done(function(data){
-                console.log('form submitted to: ' + form.attr('action') + ' | with: ' + form.serialize() + '&action=' + action);
-            })
-    
-            //The .fail method will be executed if the AJAX request fails to receive a response.
-            .fail(function(xhr, status, error){
-                console.log('Form Submit Error: '+xhr.responseText);
-            })
-        }
-        get_messages();
+        $.ajax({
+            async: 		false,
+            method: 	"POST",
+            type:		"JSON",
+            data: 		form.serialize()+'&action='+action,
+            url: 		form.attr('action'),
+        })
+        
+        //The .done method will be executed if the AJAX request successfully receives a response.
+        .done(function(data){
+            dataParsed = JSON.parse(data);
+            get_messages_ajax();
+            if (typeof(dataParsed.success) != "undefined") {
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        })
+
+        //The .fail method will be executed if the AJAX request fails to receive a response.
+        .fail(function(xhr, status, error){
+            console.log('Form Submit Error: '+xhr.responseText);
+        })
     });
 
    // Standard form
@@ -209,7 +241,8 @@ $(function(){
          //If data was returned, there are errors so set validated to false; otherwise set validated to true.
          if (data!='') {
             // console.log('Validations failed!');
-            // validated=false;
+            validated=false;
+            console.log(data);
          }
       })
       .fail(function(xhr, status, error){
