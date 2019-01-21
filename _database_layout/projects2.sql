@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2019 at 03:41 PM
+-- Generation Time: Jan 21, 2019 at 07:17 AM
 -- Server version: 5.7.17
 -- PHP Version: 7.1.4
 
@@ -228,6 +228,34 @@ CREATE TABLE `employees_support` (
   `employee_support_id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `support_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `files_documentation`
+--
+
+CREATE TABLE `files_documentation` (
+  `file_id` int(11) NOT NULL,
+  `file_name` varchar(250) NOT NULL,
+  `file_title` varchar(100) NOT NULL,
+  `file_description` text NOT NULL,
+  `file_size` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `files_forms`
+--
+
+CREATE TABLE `files_forms` (
+  `file_id` int(11) NOT NULL,
+  `file_name` varchar(250) NOT NULL,
+  `file_title` varchar(100) NOT NULL,
+  `file_description` text NOT NULL,
+  `file_size` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -555,6 +583,20 @@ ALTER TABLE `employees_support`
   ADD KEY `support_id` (`support_id`);
 
 --
+-- Indexes for table `files_documentation`
+--
+ALTER TABLE `files_documentation`
+  ADD PRIMARY KEY (`file_id`),
+  ADD KEY `file_name` (`file_name`);
+
+--
+-- Indexes for table `files_forms`
+--
+ALTER TABLE `files_forms`
+  ADD PRIMARY KEY (`file_id`),
+  ADD KEY `file_name` (`file_name`);
+
+--
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
@@ -695,17 +737,17 @@ ALTER TABLE `customers_systems`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `departments_employees`
 --
 ALTER TABLE `departments_employees`
-  MODIFY `department_employee_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `department_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `departments_projects`
 --
 ALTER TABLE `departments_projects`
-  MODIFY `department_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `department_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `departments_support`
 --
@@ -720,7 +762,7 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `employees_projects`
 --
 ALTER TABLE `employees_projects`
-  MODIFY `employee_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `employee_project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `employees_reminders`
 --
@@ -731,6 +773,16 @@ ALTER TABLE `employees_reminders`
 --
 ALTER TABLE `employees_support`
   MODIFY `employee_support_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `files_documentation`
+--
+ALTER TABLE `files_documentation`
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `files_forms`
+--
+ALTER TABLE `files_forms`
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `projects`
 --
@@ -745,22 +797,22 @@ ALTER TABLE `projects_files`
 -- AUTO_INCREMENT for table `projects_history`
 --
 ALTER TABLE `projects_history`
-  MODIFY `project_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `project_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `projects_notes`
 --
 ALTER TABLE `projects_notes`
-  MODIFY `project_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `project_note_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `projects_reminders`
 --
 ALTER TABLE `projects_reminders`
-  MODIFY `project_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `project_reminder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `projects_reminders_employees`
 --
 ALTER TABLE `projects_reminders_employees`
-  MODIFY `project_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `project_reminder_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `projects_tasks`
 --
