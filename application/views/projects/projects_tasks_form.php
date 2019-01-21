@@ -11,6 +11,22 @@
         <div class="content">
             <div class="columns">
                 <div class="column is-half">
+                    <?php echo form_label('Assign Date:', 'task_assigned_date_mo', 'class="label"'); ?>
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <?php echo form_input('task_assigned_date_mo', date('m'), 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Assigned Date Month"'); ?>
+                        </p>
+                        <p class="control slash">/</p>
+                        <p class="control">
+                            <?php echo form_input('task_assigned_date_day', date('d'), 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Assigned Date Day"'); ?>
+                        </p>
+                        <p class="control slash">/</p>
+                        <p class="control">
+                            <?php echo form_input('task_assigned_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Assigned Date Year"'); ?>
+                        </p>
+                    </div>
+                </div>
+                <div class="column is-half">
                     <?php echo form_label('Start Date:', 'task_start_date_mo', 'class="label"'); ?>
                     <div class="field is-grouped">
                         <p class="control">
@@ -23,22 +39,6 @@
                         <p class="control slash">/</p>
                         <p class="control">
                             <?php echo form_input('task_start_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Start Date Year"'); ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="column is-half">
-                    <?php echo form_label('Assign Date:', 'task_assigned_date_mo', 'class="label"'); ?>
-                    <div class="field is-grouped">
-                        <p class="control">
-                            <?php echo form_input('task_assigned_date_mo', date('m'), 'class="input is-small" maxlength="2" size="2" data-month data-autotab data-label="Assigned Date Month"'); ?>
-                        </p>
-                        <p class="control slash">/</p>
-                        <p class="control">
-                            <?php echo form_input('task_assigned_date_day', date('d'), 'class="input is-small" maxlength="2" size="2" data-day data-autotab data-label="Assigned Date Day"'); ?>
-                        </p>
-                        <p class="control slash">/</p>
-                        <p class="control">
-                            <?php echo form_input('task_assigned_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-year data-label="Assigned Date Year"'); ?>
                         </p>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             </div>
             <div class="field">
                 <div class="control">
-                    <?php echo form_label('Task Information:', 'task_title', 'class="label"'); ?>
+                    <?php echo form_label('Task Details:', 'task_title', 'class="label"'); ?>
                     <?php echo form_input('task_title', '', 'class="input is-small" data-required placeholder="Enter task title"'); ?>
                 </div>
             </div>

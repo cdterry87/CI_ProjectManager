@@ -15,6 +15,7 @@
 </div>
 
 <div id="project-details" class="tab-panel tab-panel-init">
+    <h3 class="title is-4">Project Details</h3>
     <progress class="progress is-primary" value="<?php echo $project['project_percentage_completed']; ?>" max="100"><?php echo $project['project_percentage_completed']; ?>% Complete</progress>
     <div>
         <strong>Project Lead: </strong>
@@ -147,52 +148,106 @@
 </div>
 
 <div id="project-tasks" class="tab-panel">
+    <h3 class="title is-4">
+        Project Tasks
+        <a data-modal="task-form" class="button is-info is-small"><i class="fas fa-plus-square"></i> Add Task</a>    
+    </h3>
+
     <div id="task-form" class="modal">
         <?php $this->load->view('projects/projects_tasks_form'); ?>
         <button class="modal-close is-large" data-modal="task-form" aria-label="close"></button>
     </div>
 
-    <div class="field is-grouped is-grouped-centered">
-        <p class="control">
-            <a data-modal="task-form" class="button is-info">Add Task</a>    
-        </p>
-    </div>
+    <div class="columns is-multiline">
+        <?php
+        if (empty($tasks)) {
+        ?>
 
-    <hr>
+        <div class="column is-full">Project does not currently have any tasks.</div>
 
-    <table class="table is-striped is-narrow is-fullwidth">
-        <tr>
-            <th>Task</th>
-            <th width="15%">Date</th>
-            <th width="10%">Delete</th>
-        </tr>
-        <tbody>
-            <?php
-            if (empty($tasks)) {
-                ?>
-            <tr>
-                <td colspan="3">Project does not currently have any tasks.</td>
-            </tr>
-                <?php
-            } else {
-                $task_num=0;
-                foreach ($tasks as $row) {
-                    $task_num++;
-                    ?>
-            <tr>
-                <td><?php echo $row['task_title']; ?></td>
-                <td><?php echo $this->format->date($row['task_date']); ?></td>
-                <td width="10%"><?php echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
-            </tr>
+        <?php
+        } else {
+            foreach ($tasks as $row) {
+        ?>
+        <div class="column is-full">
+            <div class="card">
+                <div class="card-content">
+                    <p>
+                        <h5 class="has-text-weight-bold is-size-5">
+                            <?php 
+                            if (trim($row['task_completed_date']) != '') { 
+                                echo '<div class="message is-success"><div class="message-body"><i class="fas fa-check"></i> Task Completed ' . $this->format->date($row['task_completed_date']) . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . '</div></div>';
+                            } else if (trim($row['task_due_date']) != '' and date('Ymd') > $row['task_due_date']) {
+                                echo '<div class="message is-danger"><div class="message-body"><i class="fas fa-exclamation-triangle"></i> Task is Past Due!</div></div>';
+                            } else {
+                                echo '<div class="message is-warning"><div class="message-body"><i class="fas fa-tasks"></i> Task is Currently Incomplete</div></div>';
+                            }
+                            echo "<div>" . ucfirst($row['task_title']) . "</div>";
+                            ?>
+                        </h5>
+                        <?php if (trim($row['task_description']) != '') { ?>
+                        <i class="fas fa-quote-left"></i>
+                        <?php echo $row['task_description']; ?>
+                        <i class="fas fa-quote-right"></i>
+                        <?php } ?>
+                    </p>
+                    <br>
+                    <div class="columns">
+                        <div class="column is-full">
+                            <p><strong>Assigned To:</strong></p>
+                            <p>
+                                <?php 
+                                    $assigned_to = $this->Project_model->get_task_assigned_to($row['project_task_id']);
+                                    if (!empty($assigned_to)) {
+                                        $task_assigned = '';
+                                        foreach ($assigned_to as $assigned) {
+                                            $task_assigned .= $assigned['employee_name'].", ";
+                                        }
+                                        $task_assigned = substr($task_assigned, 0, -2);
+                                        echo $task_assigned;
+                                    }
+                                ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="columns is-size-7 is-mobile">
+                        <div class="column is-one-third">
+                            <p><strong>Assign Date:</strong></p>
+                            <p><?php echo $this->format->date($row['task_assigned_date']); ?></p>
+                        </div>
+                        <div class="column is-one-third">
+                            <p><strong>Start Date:</strong></p>
+                            <p><?php echo $this->format->date($row['task_start_date']); ?></p>
+                        </div>
+                        <div class="column is-one-third">
+                            <?php if (trim($row['task_due_date']) != '') { ?>
+                            <p><strong>Due Date:</strong></p>
+                            <p><?php echo $this->format->date($row['task_due_date']); ?></p>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
                     <?php
-                }
+                        if (trim($row['task_completed_date']) == '') {
+                            echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
+                            if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
+                                echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
+                            }
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
             }
-            ?>
-        </tbody>
-    </table>
+        }
+        ?>
+    </div>
 </div>
 
 <div id="project-notes" class="tab-panel">
+    <h3 class="title is-4">Project Notes</h3>
     <?php echo form_open('projects/action', 'id="notes-form"'); ?>
     <?php echo form_hidden('project_id', $project['project_id']); ?>
     <div class="field is-grouped">
@@ -237,6 +292,7 @@
 </div>
 
 <div id="project-reminders" class="tab-panel">
+    <h3 class="title is-4">Project Reminders</h3>
     <?php echo form_open('projects/action', 'id="reminders-form"'); ?>
     <?php echo form_hidden('project_id', $project['project_id']); ?>   
     <?php echo form_hidden('tab_target', '#project-reminders'); ?>   
@@ -377,6 +433,7 @@
 </div>
 
 <div id="project-history" class="tab-panel">
+    <h3 class="title is-4">Project History</h3>
     <?php
         if (empty($history)) {
     ?>

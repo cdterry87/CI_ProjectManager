@@ -386,6 +386,9 @@ class Project_model extends PROJECTS_Model
         
         $data['task_assigned_by']=$_SESSION['employee_id'];
         $data['task_date']=date('Ymd');
+        if ($data['task_completed_date'] != '') {
+            $data['task_completed_by'] = $_SESSION['employee_id'];
+        }
         
         //Insert the record into the database.
         $this->db->insert('projects_tasks', $data);
@@ -432,8 +435,7 @@ class Project_model extends PROJECTS_Model
      * -------------------------------------------------------------------------------- */
     public function delete_task($project_id, $task_id)
     {
-        $this->db->where('project_id', $project_id);
-        $this->db->where('task_id', $task_id);
+        $this->db->where('project_task_id', $task_id);
         $this->db->delete('projects_tasks');
 
         //Add history
@@ -445,11 +447,10 @@ class Project_model extends PROJECTS_Model
      * -------------------------------------------------------------------------------- */
     public function complete_task($project_id, $task_id)
     {
-        //Set status to "C" (Complete).
-        $data['task_status']='C';
+        $data['task_completed_date']=date('Ymd');
+        $data['task_completed_by']=$_SESSION['employee_id'];
         
-        $this->db->where('project_id', $project_id);
-        $this->db->where('task_id', $task_id);
+        $this->db->where('project_task_id', $task_id);
         $this->db->update('projects_tasks', $data);
 
         //Add history
@@ -461,10 +462,9 @@ class Project_model extends PROJECTS_Model
      * -------------------------------------------------------------------------------- */
     public function incomplete_task($project_id, $task_id)
     {
-        //Set status to "I" (Incomplete).
-        $data['task_status']='I';
-        
-        $this->db->where('project_id', $project_id);
+        $data['task_completed_date']='';
+        $data['task_completed_by']=0;
+
         $this->db->where('task_id', $task_id);
         $this->db->update('projects_tasks', $data);
 
@@ -480,9 +480,24 @@ class Project_model extends PROJECTS_Model
         $this->db->select('*');
         $this->db->from('projects_tasks');
         $this->db->where('project_id', $id);
-        $this->db->order_by('task_date', 'desc');
+        $this->db->order_by('task_completed_date, task_start_date');
         $query=$this->db->get();
         
+        return $query->result_array();
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Get task's associated employees.
+     * -------------------------------------------------------------------------------- */
+    public function get_task_assigned_to($id)
+    {
+        $this->db->select('*');
+        $this->db->from('projects_tasks_employees');
+        $this->db->where('project_task_id', $id);
+        $this->db->join('employees', 'projects_tasks_employees.employee_id=employees.employee_id');
+        $this->db->order_by('employee_name');
+        $query=$this->db->get();
+
         return $query->result_array();
     }
     

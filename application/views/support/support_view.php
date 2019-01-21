@@ -15,6 +15,7 @@
 </div>
 
 <div id="support-details" class="tab-panel tab-panel-init">
+    <h3 class="title is-4">Support Details</h3>
     <div>
         <strong>Support Date: </strong>
         <?php echo $this->format->date($support['support_date'])." ".$this->format->time($support['support_time']); ?>
@@ -137,21 +138,21 @@
             <?php echo form_label('Date:', 'task_date_mo'); ?>
         </p>
         <p class="control">
-            <?php echo form_input('task_date_mo', '', 'class="input" maxlength="2" size="2" data-required data-month data-autotab data-label="Date Month"'); ?>
+            <?php echo form_input('task_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Date Month"'); ?>
         </p>
         <p class="control slash">/</p>
         <p class="control">
-            <?php echo form_input('task_date_day', '', 'class="input" maxlength="2" size="2" data-required data-day data-autotab data-label="Date Day"'); ?>
+            <?php echo form_input('task_date_day', '', 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Date Day"'); ?>
         </p>
         <p class="control slash">/</p>
         <p class="control">
-            <?php echo form_input('task_date_yr', date('Y'), 'class="input" maxlength="4" size="4" data-required data-year data-label="Date Year"'); ?>
+            <?php echo form_input('task_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Date Year"'); ?>
         </p>
         <div class="control is-expanded">
-            <?php echo form_input('task', '', 'placeholder="Enter notes here..." class="input" maxlength="250" data-required'); ?>
+            <?php echo form_input('task', '', 'placeholder="Enter notes here..." class="input is-small" maxlength="250" data-required'); ?>
         </div>
         <div class="control">
-            <?php echo form_submit('action', 'Add Task', 'class="button is-info is-fullwidth"'); ?>
+            <?php echo form_submit('action', 'Add Task', 'class="button is-info is-fullwidth is-small"'); ?>
         </div>
     </div>
     <?php echo form_close(); ?>
@@ -163,7 +164,7 @@
         if (empty($tasks)) {
         ?>
 
-        <div class="column is-full">Issue does not currently have any notes.</div>
+        <div class="column is-full">Issue does not currently have any tasks.</div>
 
         <?php
         } else {
@@ -187,7 +188,7 @@
                 <div class="card-footer">
                     <?php
                         if (trim($row['task_completed']) != '0000-00-00 00:00:00') {
-                            echo '<div class="card-footer-item has-text-centered has-text-success">Completed ' . $row['task_completed'] . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . ' </div>';
+                            echo '<div class="card-footer-item has-text-centered has-text-success is-size-7">Completed ' . $row['task_completed'] . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . ' </div>';
                         } else {
                             echo anchor('support/complete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
                             // echo anchor('support/edit_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-edit" title="Edit Task"></i>', 'class="card-footer-item has-text-link"');
@@ -255,6 +256,7 @@
 </div>
 
 <div id="support-history" class="tab-panel">
+    <h3 class="title is-4">Support History</h3>
     <?php
         if (empty($history)) {
     ?>
