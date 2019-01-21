@@ -1,4 +1,9 @@
-<table class="table is-striped is-narrow is-hoverable is-fullwidth">
+<?php
+    if (empty($forms)) {
+        echo "<p>No forms found.</p>";
+    } else {
+?>
+<table class="table is-striped is-narrow is-hoverable is-fullwidth datatable">
     <thead>
         <tr>
             <th>Download</th> 
@@ -9,15 +14,9 @@
         </tr>
     </thead>
     <tbody>
+        
         <?php
-            if (empty($forms)) {
-        ?>
-        <tr>
-            <td colspan="2">No forms at this time.</td>
-        </tr>
-        <?php
-            } else {
-                foreach ($forms as $row) {
+            foreach ($forms as $row) {
         ?>
         <tr>
             <td><?php echo anchor('public/files/forms/'.$row['file_id']."/".$row['file_name'], '<i class="fas fa-download"></i>Download', 'target="_blank"'); ?></td>
@@ -27,8 +26,11 @@
             <td><?php echo anchor('files/delete_form/'.$row['file_id'], '<i class="fas fa-trash"></i>', 'class="button is-danger is-fullwidth"'); ?></td>
         </tr>
         <?php
-                }
             }
         ?>
     </tbody>
 </table>
+<?php
+    }
+?>
+
