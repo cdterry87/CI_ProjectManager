@@ -7,10 +7,10 @@
 
 <div class="tabs is-centered">
     <ul>
-        <li class="tab tab-init" data-target="support-details"><a><i class="fas fa-clipboard-list "></i> Details</a></li>
-        <li class="tab" data-target="support-tasks"><a><i class="fas fa-tasks"></i> Tasks</a></li>
-        <li class="tab" data-target="support-files"><a><i class="fas fa-paperclip"></i> Files</a></li>
-        <li class="tab" data-target="support-history"><a><i class="fas fa-history"></i> History</a></li>
+        <li class="tab tab-init" data-target="support-details"><a href="#support-details-tab"><i class="fas fa-clipboard-list "></i> Details</a></li>
+        <li class="tab" data-target="support-tasks"><a href="#support-tasks-tab"><i class="fas fa-tasks"></i> Tasks</a></li>
+        <li class="tab" data-target="support-files"><a href="#support-files-tab"><i class="fas fa-paperclip"></i> Files</a></li>
+        <li class="tab" data-target="support-history"><a href="#support-history-tab"><i class="fas fa-history"></i> History</a></li>
     </ul>
 </div>
 
@@ -159,18 +159,18 @@
 
     <hr>
 
-    <div class="columns is-multiline">
+    <div class="columns is-multiline is-mobile">
         <?php
         if (empty($tasks)) {
-        ?>
+            ?>
 
         <div class="column is-full">Issue does not currently have any tasks.</div>
 
-        <?php
+            <?php
         } else {
             foreach ($tasks as $row) {
-        ?>
-        <div class="column is-one-third">
+                ?>
+        <div class="column is-full-mobile is-half-tablet is-half-desktop is-one-third-fullhd">
             <div class="card">
                 <div class="card-content">
                     <p>
@@ -180,25 +180,25 @@
                     </p>
                     <br>
                     <p class="is-size-7 has-text-right">
-                        <?php 
+                        <?php
                             echo $this->Employee_model->get_by_employee_id($row['employee_id'])['employee_name'] . ' - ' . $this->format->date($row['task_date']);
                         ?>
                     </p>
                 </div>
                 <div class="card-footer">
                     <?php
-                        if (trim($row['task_completed']) != '0000-00-00 00:00:00') {
-                            echo '<div class="card-footer-item has-text-centered has-text-success is-size-7">Completed ' . $row['task_completed'] . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . ' </div>';
-                        } else {
-                            echo anchor('support/complete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
-                            // echo anchor('support/edit_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-edit" title="Edit Task"></i>', 'class="card-footer-item has-text-link"');
-                            echo anchor('support/delete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
-                        }
+                    if (trim($row['task_completed']) != '0000-00-00 00:00:00') {
+                        echo '<div class="card-footer-item has-text-centered has-text-success is-size-7">Completed ' . $row['task_completed'] . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . ' </div>';
+                    } else {
+                        echo anchor('support/complete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
+                        // echo anchor('support/edit_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-edit" title="Edit Task"></i>', 'class="card-footer-item has-text-link"');
+                        echo anchor('support/delete_task/'.$row['support_id'].'/'.$row['task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
+                    }
                     ?>
                 </div>
             </div>
         </div>
-        <?php
+                <?php
             }
         }
         ?>
@@ -233,22 +233,21 @@
     <div class="columns is-multiline">
         <?php
         if (empty($files)) {
-        ?>
+            ?>
 
         <div>Issue does not currently have any attached files.</div>
 
-        <?php
+            <?php
         } else {
-
             foreach ($files as $row) {
-        ?>
+                ?>
         <div class="column is-one-quarter">
             <div class="notification is-<?php echo $this->theme_colors[array_rand($this->theme_colors)]; ?>">
                 <?php echo anchor('support/delete_file/'.$row['support_id'].'/'.$row['file_id'], '', 'class="delete"'); ?>
                 <?php echo anchor('public/files/support/'.$row['support_id']."/".$row['file_name'], '<i class="fas fa-download"></i> ' . $row['file_name'], 'target="_blank"'); ?>
             </div>
         </div>
-        <?php
+                <?php
             }
         }
         ?>
@@ -258,12 +257,12 @@
 <div id="support-history" class="tab-panel">
     <h3 class="title is-4">Support History</h3>
     <?php
-        if (empty($history)) {
-    ?>
+    if (empty($history)) {
+        ?>
     <p>There is currently no history for this project.</p>
-    <?php
-        } else {
-    ?>
+        <?php
+    } else {
+        ?>
     <table class="table is-narrow is-fullwidth datatable">
         <thead>
             <tr>
@@ -273,8 +272,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php
-                foreach($history as $row) {
+        <?php
+        foreach ($history as $row) {
             ?>
             <tr>
                 <td><?php echo $row['history_action']; ?></td>
@@ -282,11 +281,11 @@
                 <td><?php echo $row['history_datetime']; ?></td>
             </tr>
             <?php
-                }
-            ?>
+        }
+        ?>
         </tbody>
     </table>
-    <?php
-        }
+        <?php
+    }
     ?>
 </div>

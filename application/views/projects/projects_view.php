@@ -5,12 +5,12 @@
 
 <div class="tabs is-centered">
     <ul>
-        <li class="tab tab-init" data-target="project-details"><a><i class="fas fa-clipboard-list "></i> Details</a></li>
-        <li class="tab" data-target="project-tasks"><a><i class="fas fa-tasks"></i> Tasks</a></li>
-        <li class="tab" data-target="project-notes"><a><i class="fas fa-edit"></i> Notes</a></li>
-        <li class="tab" data-target="project-reminders"><a><i class="fas fa-clock"></i> Reminders</a></li>
-        <li class="tab" data-target="project-files"><a><i class="fas fa-paperclip"></i> Files</a></li>
-        <li class="tab" data-target="project-history"><a><i class="fas fa-history"></i> History</a></li>
+        <li class="tab tab-init" data-target="project-details"><a href="#project-details-tab"><i class="fas fa-clipboard-list "></i> Details</a></li>
+        <li class="tab" data-target="project-tasks"><a href="#project-tasks-tab"><i class="fas fa-tasks"></i> Tasks</a></li>
+        <li class="tab" data-target="project-notes"><a href="#project-notes-tab"><i class="fas fa-edit"></i> Notes</a></li>
+        <li class="tab" data-target="project-reminders"><a href="#project-reminders-tab"><i class="fas fa-clock"></i> Reminders</a></li>
+        <li class="tab" data-target="project-files"><a href="#project-files-tab"><i class="fas fa-paperclip"></i> Files</a></li>
+        <li class="tab" data-target="project-history"><a href="#project-history-tab"><i class="fas fa-history"></i> History</a></li>
     </ul>
 </div>
 
@@ -120,26 +120,28 @@
     <?php echo form_hidden('project_id', $project['project_id']); ?>
     <div class="field is-grouped is-grouped-centered">
     <?php
-    if ($project['project_approved'] != 'Y') {
-        switch ($project['project_status']) {
-            case "A":
-                echo '<div class="control">'.form_submit('action', 'Restore Project', 'class="button is-success" data-confirm="Are you sure you want to restore this project?"').'</div>';
-                break;
-            case "C":
-                if ($_SESSION['employee_admin'] == "CHECKED") {
-                    echo '<div class="control">'.form_submit('action', 'Approve Project', 'class="button is-success" data-confirm="Are you sure you want to approve this project?"').'</div>';
-                }
-                echo '<div class="control">'.form_submit('action', 'Incomplete Project', 'class="button is-danger" data-confirm="Are you sure you want to incomplete this project?"').'</div>';
-                echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
-                break;
-            case "I":
-                if ($_SESSION['employee_admin'] == "CHECKED") {
-                    echo '<div class="control">'.form_submit('action', 'Approve Project', 'class="button is-success" data-confirm="Are you sure you want to approve this project?"').'</div>';
-                } else {
-                    echo '<div class="control">'.form_submit('action', 'Complete Project', 'class="button is-info" data-confirm="Are you sure you want to complete this project?"').'</div>';
-                }
-                echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
-                break;
+    if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
+        if ($project['project_approved'] != 'Y') {
+            switch ($project['project_status']) {
+                case "A":
+                    echo '<div class="control">'.form_submit('action', 'Restore Project', 'class="button is-success" data-confirm="Are you sure you want to restore this project?"').'</div>';
+                    break;
+                case "C":
+                    if ($_SESSION['employee_admin'] == "CHECKED") {
+                        echo '<div class="control">'.form_submit('action', 'Approve Project', 'class="button is-success" data-confirm="Are you sure you want to approve this project?"').'</div>';
+                    }
+                    echo '<div class="control">'.form_submit('action', 'Incomplete Project', 'class="button is-danger" data-confirm="Are you sure you want to incomplete this project?"').'</div>';
+                    echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
+                    break;
+                case "I":
+                    if ($_SESSION['employee_admin'] == "CHECKED") {
+                        echo '<div class="control">'.form_submit('action', 'Approve Project', 'class="button is-success" data-confirm="Are you sure you want to approve this project?"').'</div>';
+                    } else {
+                        echo '<div class="control">'.form_submit('action', 'Complete Project', 'class="button is-info" data-confirm="Are you sure you want to complete this project?"').'</div>';
+                    }
+                    echo '<div class="control">'.form_submit('action', 'Archive Project', 'class="button is-warning" data-confirm="Are you sure you want to archive this project?"').'</div>';
+                    break;
+            }
         }
     }
     ?>
@@ -158,7 +160,7 @@
         <button class="modal-close is-large" data-modal="task-form" aria-label="close"></button>
     </div>
 
-    <div class="columns is-multiline">
+    <div class="columns is-multiline is-mobile">
         <?php
         if (empty($tasks)) {
             ?>
@@ -169,8 +171,8 @@
         } else {
             foreach ($tasks as $row) {
                 ?>
-        <div class="column is-one-third">
-            <div class="card">
+        <div class="column is-full-mobile is-half-tablet is-half-desktop is-one-third-fullhd">
+            <div class="card fixed">
                 <div class="card-content">
                     <p>
                         <h5 class="has-text-weight-bold is-size-5">
@@ -232,8 +234,8 @@
                 <div class="card-footer">
                     <?php
                     if (trim($row['task_completed_date']) == '') {
-                        echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
                         if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
+                            echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
                             echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
                         }
                     }
@@ -264,7 +266,7 @@
 
     <hr>
 
-    <div class="columns is-multiline">
+    <div class="columns is-multiline is-mobile">
         <?php
         if (empty($notes)) {
             ?>
@@ -275,7 +277,7 @@
         } else {
             foreach ($notes as $note) {
                 ?>
-        <div class="column is-one-third">
+        <div class="column is-full-mobile is-half-tablet is-half-desktop is-one-third-fullhd">
             <div class="card">
                 <div class="card-content">
                     <p>
@@ -292,7 +294,9 @@
                 </div>
                 <div class="card-footer">
                     <?php
+                    if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
                         echo anchor('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="card-footer-item has-text-danger"');
+                    }
                     ?>
                 </div>
             </div>

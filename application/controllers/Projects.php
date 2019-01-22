@@ -179,7 +179,7 @@ class Projects extends PROJECTS_Controller
         $this->Project_model->delete_note($project_id, $note_id);
 
         $this->set_message('Note deleted successfully', 'danger');
-        redirect('projects/view/' . $project_id);
+        redirect('projects/view/' . $project_id . '/#project-notes-tab');
     }
 
     public function delete_reminder($project_id, $reminder_id)
@@ -187,7 +187,7 @@ class Projects extends PROJECTS_Controller
         $this->Project_model->delete_reminder($project_id, $reminder_id);
 
         $this->set_message('Reminder deleted successfully', 'danger');
-        redirect('projects/view/' . $project_id);
+        redirect('projects/view/' . $project_id . '/#project-reminders-tab');
     }
 
     public function validate()
@@ -225,7 +225,7 @@ class Projects extends PROJECTS_Controller
                     $this->Project_model->add_note($id);
                     $this->set_message('Note added successfully.', 'success');
                 }
-                redirect('projects/view/' . $id);
+                redirect('projects/view/' . $id . '/#project-notes-tab');
                 break;
             case "save task":
                 if ($this->validate()) {
@@ -234,7 +234,6 @@ class Projects extends PROJECTS_Controller
                 }
                 echo json_encode($this->session->userdata('projects_messages'));
                 exit;
-                // redirect('projects/view/' . $id);
                 break;
             case "add file":
                 //Upload the file to the server.
@@ -242,7 +241,7 @@ class Projects extends PROJECTS_Controller
                     //Save the file info in the database.
                     $this->Project_model->upload($id, $upload_data);
                 }
-                redirect('projects/view/' . $id);
+                redirect('projects/view/' . $id . '/#project-files-tab');
                 break;
             case "approve project":
                 $this->Project_model->approve_project($id);
@@ -274,7 +273,7 @@ class Projects extends PROJECTS_Controller
                     $this->Project_model->add_reminder($id);
                     $this->set_message('Reminder added successfully.', 'success');
                 }
-                redirect('projects/view/' . $id);
+                redirect('projects/view/' . $id . '/#project-reminders-tab');
                 break;
         }
     }
@@ -283,20 +282,20 @@ class Projects extends PROJECTS_Controller
     {
         $this->Project_model->complete_task($project_id, $task_id);
         $this->set_message('Task is now complete!', 'success');
-        redirect('projects/view/' . $project_id);
+        redirect('projects/view/' . $project_id . '/#project-tasks-tab');
     }
 
     public function delete_task($project_id, $task_id)
     {
         $this->Project_model->delete_task($project_id, $task_id);
         $this->set_message('Note has been removed!', 'danger');
-        redirect('projects/view/' . $project_id);
+        redirect('projects/view/' . $project_id . '/#project-tasks-tab');
     }
 
     public function delete_file($project_id, $file_id)
     {
         $this->Project_model->delete_file($project_id, $file_id);
         $this->set_message('File has been removed!', 'danger');
-        redirect('projects/view/' . $project_id);
+        redirect('projects/view/' . $project_id . '/#project-files-tab');
     }
 }

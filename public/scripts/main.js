@@ -560,8 +560,17 @@ $(function(){
     });
 
     // New tabs
-    $('.tab-init').addClass('is-active');
-    $('.tab-panel-init').show();
+    // Load tabs based on hash.  Tabs must be in the format <a href="specific-target-tab"></a>
+    var hash = window.location.hash;
+    if (hash != null && typeof(hash) != 'undefined' && hash != '') {
+        $('.tab[data-target="' + hash.replace('#', '').replace('-tab', '') + '"]').addClass('is-active');
+        $(hash.replace('-tab', '')).show();
+    } else {
+        $('.tab-init').addClass('is-active');
+        $('.tab-panel-init').show();
+    }
+    
+    // Tab clicks
     $('.tab').on('click', function() {
         $('.tab-panel').hide();
         $('.tab').removeClass('is-active');
@@ -570,6 +579,8 @@ $(function(){
         var target = $(this).data('target');
         $('#' + target).show();
     });
+
+    
 
     // New modals
     $('[data-modal]').on('click', function() {
@@ -619,5 +630,5 @@ $(function(){
         }
     };
    }
-   
+
 });

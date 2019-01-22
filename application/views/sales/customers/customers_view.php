@@ -5,13 +5,13 @@
 
 <div class="tabs is-centered">
     <ul>
-        <li class="tab tab-init" data-target="customer-details"><a><i class="fas fa-clipboard-list "></i>Details</a></li>
-        <li class="tab" data-target="customer-projects"><a><i class="fas fa-project-diagram"></i>Projects</a></li>
-        <li class="tab" data-target="customer-support"><a><i class="fas fa-bug"></i> Support</a></li>
-        <li class="tab" data-target="customer-contacts"><a><i class="fas fa-users"></i> Contacts</a></li>
-        <li class="tab" data-target="customer-notes"><a><i class="fas fa-edit"></i> Notes</a></li>
-        <li class="tab" data-target="customer-reminders"><a><i class="fas fa-clock"></i> Reminders</a></li>
-        <li class="tab" data-target="customer-files"><a><i class="fas fa-paperclip"></i> Files</a></li>
+        <li class="tab tab-init" data-target="customer-details"><a href="#customer-details-tab"><i class="fas fa-clipboard-list "></i>Details</a></li>
+        <li class="tab" data-target="customer-projects"><a href="#customer-projects-tab"><i class="fas fa-project-diagram"></i>Projects</a></li>
+        <li class="tab" data-target="customer-support"><a href="#customer-support-tab"><i class="fas fa-bug"></i> Support</a></li>
+        <li class="tab" data-target="customer-contacts"><a href="#customer-contacts-tab"><i class="fas fa-users"></i> Contacts</a></li>
+        <li class="tab" data-target="customer-notes"><a href="#customer-notes-tab"><i class="fas fa-edit"></i> Notes</a></li>
+        <li class="tab" data-target="customer-reminders"><a href="#customer-reminders-tab"><i class="fas fa-clock"></i> Reminders</a></li>
+        <li class="tab" data-target="customer-files"><a href="#customer-files-tab"><i class="fas fa-paperclip"></i> Files</a></li>
     </ul>
 </div>
 
@@ -92,14 +92,14 @@
     <div class="columns">
         <?php
         if (empty($contacts)) {
-        ?>
+            ?>
 
         <div class="column is-full">Issue does not currently have any tasks.</div>
 
-        <?php
+            <?php
         } else {
             foreach ($contacts as $contact) {
-        ?>
+                ?>
         <div class="column is-one-quarter">
             <div class="card">
                 <div class="card-content">
@@ -109,17 +109,17 @@
                     <p class="is-size-6">
                         <?php echo "Phone: " . $this->format->phone($contact['contact_phone']); ?>
                         <?php
-                            if ($contact['contact_phone_type'] != '') {
-                                echo "<strong>[ " . $contact['contact_phone_type'] . " ]</strong>";
-                            }
+                        if ($contact['contact_phone_type'] != '') {
+                            echo "<strong>[ " . $contact['contact_phone_type'] . " ]</strong>";
+                        }
                         ?>
                     </p>
                     <p class="is-size-6">
                         <?php echo "Phone: " . $this->format->phone($contact['contact_phone_alt']); ?>
                         <?php
-                            if ($contact['contact_phone_alt_type'] != '') {
-                                echo "<strong>[ " . $contact['contact_phone_alt_type'] . " ]</strong>";
-                            }
+                        if ($contact['contact_phone_alt_type'] != '') {
+                            echo "<strong>[ " . $contact['contact_phone_alt_type'] . " ]</strong>";
+                        }
                         ?>
                     </p>
                 </div>
@@ -130,7 +130,7 @@
                 </div>
             </div>
         </div>
-        <?php
+                <?php
             }
         }
         ?>
@@ -156,14 +156,14 @@
     <div class="columns is-multiline">
         <?php
         if (empty($notes)) {
-        ?>
+            ?>
 
         <div class="column is-full">Customer does not currently have any notes.</div>
 
-        <?php
+            <?php
         } else {
             foreach ($notes as $note) {
-        ?>
+                ?>
         <div class="column is-one-third">
             <div class="card">
                 <div class="card-content">
@@ -174,7 +174,7 @@
                     </p>
                     <br>
                     <p class="is-size-7 has-text-right">
-                        <?php 
+                        <?php
                             echo $this->Employee_model->get_by_employee_id($note['employee_id'])['employee_name'] . ' - ' . $note['datetime'];
                         ?>
                     </p>
@@ -186,7 +186,7 @@
                 </div>
             </div>
         </div>
-        <?php
+                <?php
             }
         }
         ?>
@@ -267,22 +267,22 @@
         <tbody>
             <?php
             if (empty($reminders)) {
-            ?>
+                ?>
             <tr>
                 <td colspan="3">Customer does not currently have any reminders.</td>
             </tr>
-            <?php
+                <?php
             } else {
                 foreach ($reminders as $key => $reminder) {
-            ?>
+                    ?>
             <tr>
                 <td><?php echo $reminder['reminder']; ?></td>
                 <td><?php echo $this->format->date($reminder['reminder_date']); ?></td>
                 <td>
-                <?php echo anchor('sales/customers/delete_reminder/' . $customer['customer_id'] . '/' . $reminder['customer_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
+                    <?php echo anchor('sales/customers/delete_reminder/' . $customer['customer_id'] . '/' . $reminder['customer_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
                 </td>
             </tr>
-            <?php
+                    <?php
                 }
             }
             ?>
@@ -318,22 +318,21 @@
     <div class="columns is-multiline">
         <?php
         if (empty($files)) {
-        ?>
+            ?>
 
         <div>Customer does not currently have any attached files.</div>
 
-        <?php
+            <?php
         } else {
-
             foreach ($files as $row) {
-        ?>
+                ?>
         <div class="column is-one-quarter">
             <div class="notification is-<?php echo $this->theme_colors[array_rand($this->theme_colors)]; ?>">
                 <?php echo anchor('sales/customers/delete_file/'.$row['customer_id'].'/'.$row['file_id'], '', 'class="delete"'); ?>
                 <?php echo anchor('public/files/customers/'.$row['customer_id']."/".$row['file_name'], '<i class="fas fa-download"></i> ' . $this->format->shorten($row['file_name'], 20), 'target="_blank"'); ?>
             </div>
         </div>
-        <?php
+                <?php
             }
         }
         ?>

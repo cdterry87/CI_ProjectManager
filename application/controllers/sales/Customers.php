@@ -153,7 +153,7 @@ class Customers extends PROJECTS_Controller
         $this->Customer_model->delete_contact($contact_id);
 
         $this->set_message('Contact deleted successfully', 'danger');
-        redirect('sales/customers/view/'.$customer_id);
+        redirect('sales/customers/view/'.$customer_id . '/#customer-contacts-tab');
     }
 
     public function delete_note($customer_id, $note_id)
@@ -161,7 +161,7 @@ class Customers extends PROJECTS_Controller
         $this->Customer_model->delete_note($note_id);
 
         $this->set_message('Note deleted successfully', 'danger');
-        redirect('sales/customers/view/'.$customer_id);
+        redirect('sales/customers/view/'.$customer_id . '/#customer-notes-tab');
     }
 
     public function delete_reminder($customer_id, $reminder_id)
@@ -169,14 +169,14 @@ class Customers extends PROJECTS_Controller
         $this->Customer_model->delete_reminder($reminder_id);
 
         $this->set_message('Reminder deleted successfully', 'danger');
-        redirect('sales/customers/view/'.$customer_id);
+        redirect('sales/customers/view/'.$customer_id . '/#customer-reminders-tab');
     }
 
     public function delete_file($customer_id, $file_id)
     {
         $this->Customer_model->delete_file($customer_id, $file_id);
         $this->set_message('File has been removed!', 'danger');
-        redirect('sales/customers/view/'.$customer_id);
+        redirect('sales/customers/view/'.$customer_id . '/#customer-files-tab');
     }
 
     public function validate()
@@ -197,7 +197,7 @@ class Customers extends PROJECTS_Controller
                 if ($this->validate()) {
                     $this->Customer_model->save($id);
                     $this->set_message('Customer information saved successfully', 'success');
-                    redirect('sales/customers');
+                    redirect('sales/customers/view/' . $id);
                 }
                 
                 //The validation failed so retrieve POST data and reload the page.
@@ -213,7 +213,7 @@ class Customers extends PROJECTS_Controller
                 if ($this->validate()) {
                     $this->Customer_model->add_contact($id);
                     $this->set_message('Contact added successfully.', 'success');
-                } 
+                }
                 echo json_encode($this->session->userdata('projects_messages'));
                 exit;
                 // redirect('sales/customers/view/'.$id);
@@ -223,14 +223,14 @@ class Customers extends PROJECTS_Controller
                     $this->Customer_model->add_note($id);
                     $this->set_message('Note added successfully.', 'success');
                 }
-                redirect('sales/customers/view/'.$id);
+                redirect('sales/customers/view/'.$id . '/#customer-notes-tab');
                 break;
             case "add reminder":
                 if ($this->validate()) {
                     $this->Customer_model->add_reminder($id);
                     $this->set_message('Reminder added successfully.', 'success');
                 }
-                redirect('sales/customers/view/'.$id);
+                redirect('sales/customers/view/'.$id . '/#customer-reminders-tab');
                 break;
             case "add file":
                 //Upload the file to the server.
@@ -238,7 +238,7 @@ class Customers extends PROJECTS_Controller
                     //Save the file info in the database.
                     $this->Customer_model->upload($id, $upload_data);
                 }
-                redirect('sales/customers/view/'.$id);
+                redirect('sales/customers/view/'.$id . '/#customer-files-tab');
                 break;
         }
     }

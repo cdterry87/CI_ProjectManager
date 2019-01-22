@@ -191,7 +191,7 @@ class Support extends PROJECTS_Controller
                     $this->Support_model->add_task($id);
                     $this->set_message('Task added successfully.', 'success');
                 }
-                redirect('support/view/'.$id);
+                redirect('support/view/'.$id . '/#support-tasks-tab');
                 break;
             case "close issue":
                 $this->Support_model->close_issue($id);
@@ -219,7 +219,7 @@ class Support extends PROJECTS_Controller
                     //Save the file info in the database.
                     $this->Support_model->upload($id, $upload_data);
                 }
-                redirect('support/view/'.$id);
+                redirect('support/view/'.$id . '/#support-files-tab');
                 break;
         }
     }
@@ -228,33 +228,20 @@ class Support extends PROJECTS_Controller
     {
         $this->Support_model->complete_task($support_id, $task_id);
         $this->set_message('Task has been completed!', 'success');
-        redirect('support/view/'.$support_id);
+        redirect('support/view/'.$support_id . '/#support-tasks-tab');
     }
 
     public function delete_task($support_id, $task_id)
     {
         $this->Support_model->delete_task($support_id, $task_id);
         $this->set_message('Task has been removed!', 'danger');
-        redirect('support/view/'.$support_id);
+        redirect('support/view/'.$support_id . '/#support-tasks-tab');
     }
     
     public function delete_file($support_id, $file_id)
     {
         $this->Support_model->delete_file($support_id, $file_id);
         $this->set_message('File has been removed!', 'danger');
-        redirect('support/view/'.$support_id);
-    }
-    
-    public function analytics()
-    {
-        $this->data['page']='support/analytics';
-        
-        $this->load->model('Analytics_model');
-        
-        //Get all open support.
-        $this->data['customers']=$this->Analytics_model->get_customers();
-        $this->data['support']=$this->Analytics_model->get_support();
-        
-        $this->load->view('template', $this->data);
+        redirect('support/view/'.$support_id . '/#support-files-tab');
     }
 }
