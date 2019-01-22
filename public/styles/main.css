@@ -90,6 +90,7 @@ a.tag:hover {
 }
 
 .card.fixed {
+    min-height: 400px !important;
     max-height: 400px !important;
     overflow: scroll !important;
 }

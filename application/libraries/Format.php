@@ -1,6 +1,21 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Format {
+
+    /* --------------------------------------------------------------------------------
+	 * Format dates as YYYY-MM-DDTHH:MM:SS.
+	 * -------------------------------------------------------------------------------- */
+	public function calendar_date($date, $time=""){
+		if(strlen($date)==8){
+            if ($time=='' or strlen($time) != 4) {
+                $time = "T00:00:00";
+            } else {
+                $time = "T".substr($time,0,2).":".substr($time,2,2).":00";
+            }
+            return substr($date,0,4)."-".substr($date,4,2)."-".substr($date,6,2).$time;
+		}
+		return false;
+	}
 	
 	/* --------------------------------------------------------------------------------
 	 * Format dates as MM/DD/YYYY.

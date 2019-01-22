@@ -66,6 +66,7 @@
                     <a href="<?php echo base_url('files/documentation'); ?>" class="navbar-item">Documentation</a>
                 </div>
             </div>
+            <a href="<?php echo base_url('calendar'); ?>" class="navbar-item <?php echo ($this->current_system == "calendar" ? 'is-active' : '') ?>"><i class="fas fa-calendar"></i> Calendar</a>
             <a href="<?php echo base_url('reports'); ?>" class="navbar-item <?php echo ($this->current_system == "reports" ? 'is-active' : '') ?>"><i class="fas fa-chart-pie"></i> Reports</a>
         </div>
         <div class="navbar-end">
