@@ -105,6 +105,29 @@
 <div class="columns">
     <div class="column is-half">
         <div class="panel">
+            <div class="panel-heading has-background-success has-text-dark">
+                <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
+            </div>
+            <div class="panel-block">
+                <?php $this->load->view('projects/projects_user'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="column is-half">
+        <div class="panel">
+            <div class="panel-heading has-background-warning has-text-dark">
+                <h2><i class="fas fa-bug"></i> My Support</h2>
+            </div>
+            <div class="panel-block">
+                <?php $this->load->view('support/support_user'); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-half">
+        <div class="panel">
             <div class="panel-heading has-background-info has-text-white">
                 <h2><i class="fas fa-project-diagram"></i> Incomplete Projects</h2>
             </div>

@@ -49,6 +49,24 @@ class Home_model extends PROJECTS_Model
         
         return $query->result_array();
     }
+
+    /* --------------------------------------------------------------------------------
+     * Get my (incomplete) projects.
+     * -------------------------------------------------------------------------------- */
+    public function get_my_projects()
+    {
+        $this->db->select('projects.project_id, project_name, project_date, customer_id');
+        $this->db->from('projects, employees_projects');
+        $this->db->where('projects.project_id=employees_projects.project_id');
+        $this->db->where("employees_projects.employee_id = '".$_SESSION['employee_id']."'");
+        $this->db->where('project_type', 'P');
+        $this->db->where('project_status', 'I');
+        $this->db->order_by('project_date desc, project_name');
+        $this->db->group_by('projects.project_id');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
     
     /* --------------------------------------------------------------------------------
      * Get my (complete) projects.
@@ -92,6 +110,23 @@ class Home_model extends PROJECTS_Model
         $this->db->where('support_status', 'O');
         //$this->db->join('employees_support','employees_support.support_id=support.support_id');
         //$this->db->where('employee_id',$this->session->userdata('employee_id'));
+        $this->db->order_by('support_date desc, support_name');
+        $this->db->group_by('support.support_id');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
+        /* --------------------------------------------------------------------------------
+     * Get my (open) support.
+     * -------------------------------------------------------------------------------- */
+    public function get_my_support()
+    {
+        $this->db->select('support.support_id, support_name, support_date, support_time, customer_id');
+        $this->db->from('support, employees_support');
+        $this->db->where('support.support_id=employees_support.support_id');
+        $this->db->where("employees_support.employee_id = '".$_SESSION['employee_id']."'");
+        $this->db->where('support_status', 'O');
         $this->db->order_by('support_date desc, support_name');
         $this->db->group_by('support.support_id');
         $query=$this->db->get();
