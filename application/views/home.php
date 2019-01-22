@@ -1,3 +1,6 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="<?php echo base_url('public/scripts/charts.js'); ?>"></script>
+
 <div class="columns is-mobile is-multiline">
     <div class="column is-half-tablet is-one-quarter-desktop">
         <div class="box notification is-info">
@@ -104,6 +107,15 @@
 
 <div class="columns">
     <div class="column is-half">
+        <canvas id="customerSupport"></canvas>
+    </div>
+    <div class="column is-half">
+        <canvas id="versusProjectSupport"></canvas>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-half">
         <div class="panel">
             <div class="panel-heading has-background-success has-text-dark">
                 <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
@@ -143,6 +155,19 @@
             </div>
             <div class="panel-block">
                 <?php $this->load->view('support/support_open'); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-half">
+        <div class="panel">
+            <div class="panel-heading has-background-primary has-text-dark">
+                <h2><i class="fas fa-users"></i> My Customers</h2>
+            </div>
+            <div class="panel-block">
+                <?php $this->load->view('sales/customers/customers_user'); ?>
             </div>
         </div>
     </div>

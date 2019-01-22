@@ -30,7 +30,8 @@ class Home extends PROJECTS_Controller
         //Get user's open/closed support.
         $this->data['my_support']=$this->Home_model->get_my_support();
 
-
+        //Get user's customers
+        $this->data['my_customers']=$this->Home_model->get_my_customers();
         
         //Get projects counts
         $this->data['projects_count']=$this->Home_model->get_counts('project_id', 'projects');

@@ -149,6 +149,21 @@ class Home_model extends PROJECTS_Model
         
         return $query->result_array();
     }
+
+    /* --------------------------------------------------------------------------------
+     * Get my customers.
+     * -------------------------------------------------------------------------------- */
+    public function get_my_customers()
+    {
+        $this->db->select('*');
+        $this->db->from('customers');
+        $this->db->where('customer_project_manager', $_SESSION['employee_id']);
+        $this->db->order_by('customer_name');
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
     
     /* --------------------------------------------------------------------------------
      * Get recent quotes.
