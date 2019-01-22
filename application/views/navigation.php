@@ -1,6 +1,6 @@
 <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item <?php echo ($this->current_system == "" ? 'is-active' : '') ?>" href="<?php echo base_url('/'); ?>"><i class="fas fa-home"></i> Home</a>
+        <a class="navbar-item <?php echo ($this->current_system == "" ? 'is-active' : '') ?>" href="<?php echo base_url('/'); ?>"><i class="fas fa-tachometer-alt"></i> <?php echo (trim($this->config->item('home_title')) != '' ? $this->config->item('home_title') : 'Home'); ?></a>
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
