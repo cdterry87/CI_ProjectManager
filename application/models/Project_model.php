@@ -212,6 +212,9 @@ class Project_model extends PROJECTS_Model
 
         //Add history
         $this->add_history($id, 'Project approved');
+
+        //Approve all associated tasks
+        $this->complete_all_tasks($id);
     }
     
     /* --------------------------------------------------------------------------------
@@ -228,7 +231,27 @@ class Project_model extends PROJECTS_Model
 
         //Add history
         $this->add_history($id, 'Project completed');
+
+        //Approve all associated tasks
+        $this->complete_all_tasks($id);
     }
+
+    /* --------------------------------------------------------------------------------
+     * Mark all tasks as complete.
+     * -------------------------------------------------------------------------------- */
+    public function complete_all_tasks($id)
+    {
+        $data['task_completed_date'] = date('Ymd');
+        $data['task_completed_by'] = $_SESSION['employee_id'];
+
+        $this->db->where("(task_completed_date = '' or task_completed_date is null)");
+        $this->db->where('project_id', $id);
+        $this->db->update('projects_tasks', $data);
+
+        //Add history
+        $this->add_history($id, 'All project tasks completed');
+    }
+
     
     /* --------------------------------------------------------------------------------
      * Mark project as incomplete.
@@ -664,7 +687,8 @@ class Project_model extends PROJECTS_Model
     /* --------------------------------------------------------------------------------
      * Add history record.
      * -------------------------------------------------------------------------------- */
-    public function add_history($id, $action) {
+    public function add_history($id, $action)
+    {
         $data['project_id'] = $id;
         $data['history_action'] = $action;
         $data['history_employee_id'] = $_SESSION['employee_id'];

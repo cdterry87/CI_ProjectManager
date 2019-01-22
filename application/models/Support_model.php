@@ -302,6 +302,25 @@ class Support_model extends PROJECTS_Model
 
         //Add history
         $this->add_history($id, 'Support closed');
+
+        //Approve all associated tasks
+        $this->complete_all_tasks($id);
+    }
+
+    /* --------------------------------------------------------------------------------
+     * Mark all tasks as complete.
+     * -------------------------------------------------------------------------------- */
+    public function complete_all_tasks($id)
+    {
+        $data['task_completed'] = date('Y-m-d H:i:s');
+        $data['task_completed_by'] = $_SESSION['employee_id'];
+
+        $this->db->where("(task_completed = '0000-00-00 00:00:00' or task_completed is null)");
+        $this->db->where('support_id', $id);
+        $this->db->update('support_tasks', $data);
+
+        //Add history
+        $this->add_history($id, 'All support tasks completed');
     }
     
     /* --------------------------------------------------------------------------------
@@ -462,7 +481,8 @@ class Support_model extends PROJECTS_Model
     /* --------------------------------------------------------------------------------
      * Add history record.
      * -------------------------------------------------------------------------------- */
-    public function add_history($id, $action) {
+    public function add_history($id, $action)
+    {
         $data['support_id'] = $id;
         $data['history_action'] = $action;
         $data['history_employee_id'] = $_SESSION['employee_id'];
