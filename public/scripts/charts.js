@@ -1,9 +1,9 @@
 window.chartColors = {
-	red: 'rgb(255, 99, 132)',
+	red: '#FF3B62',
 	orange: 'rgb(255, 159, 64)',
-	yellow: 'rgb(255, 205, 86)',
-	green: 'rgb(75, 192, 192)',
-	blue: 'rgb(54, 162, 235)',
+	yellow: '#FFDD57',
+	green: '#23D160',
+	blue: '#209CEE',
 	purple: 'rgb(153, 102, 255)',
 	grey: 'rgb(201, 203, 207)'
 };
@@ -77,7 +77,7 @@ var lineChart = {
     data: {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [{
-            label: 'My First dataset',
+            label: 'Support',
             backgroundColor: window.chartColors.red,
             borderColor: window.chartColors.red,
             fill: false,
@@ -91,7 +91,7 @@ var lineChart = {
                 randomScalingFactor()
             ],
         }, {
-            label: 'My Second dataset',
+            label: 'Projects',
             backgroundColor: window.chartColors.blue,
             borderColor: window.chartColors.blue,
             fill: false,
@@ -127,7 +127,7 @@ var lineChart = {
 var barChartData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
-        label: 'Dataset 1',
+        label: 'Support',
         backgroundColor: window.chartColors.red,
         borderColor: window.chartColors.red,
         borderWidth: 1,
@@ -141,7 +141,7 @@ var barChartData = {
             randomScalingFactor()
         ]
     }, {
-        label: 'Dataset 2',
+        label: 'Projects',
         backgroundColor: window.chartColors.blue,
         borderColor: window.chartColors.blue,
         borderWidth: 1,
