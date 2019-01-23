@@ -1,4 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="<?php echo base_url('public/chartjs/chart.min.js'); ?>"></script>
 <script src="<?php echo base_url('public/scripts/charts.js'); ?>"></script>
 
 <div class="columns is-mobile is-multiline">
