@@ -142,7 +142,7 @@ class Project_model extends PROJECTS_Model
         $data=$this->prepare($this->table);
         
         //Set completed date if status is initially set to complete.
-        if ($data['project_status']=="C") {
+        if ($data['project_status']=="C" and trim($data['project_completed_date']) == '') {
             $data['project_completed_date']=date('Ymd');
         }
         
@@ -166,7 +166,7 @@ class Project_model extends PROJECTS_Model
         } else {
             //Unset fields that should not be updated.
             unset($data[$this->table_id]);
-            
+
             //Update the record in the database.
             $this->db->where($this->table_id, $id);
             $this->db->update($this->table, $data);
