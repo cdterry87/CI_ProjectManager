@@ -105,16 +105,13 @@
     </div>
 </div>
 
-<div class="columns">
+<div class="columns is-multiline">
     <div class="column is-half">
-        <canvas id="customerSupport"></canvas>
+        <canvas id="pieChart"></canvas>
     </div>
     <div class="column is-half">
-        <canvas id="versusProjectSupport"></canvas>
+        <canvas id="lineChart"></canvas>
     </div>
-</div>
-
-<div class="columns">
     <div class="column is-half">
         <div class="panel">
             <div class="panel-heading has-background-success has-text-dark">
@@ -135,9 +132,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="columns">
     <div class="column is-half">
         <div class="panel">
             <div class="panel-heading has-background-info has-text-white">
@@ -158,9 +152,9 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="columns">
+    <div class="column is-half">
+        <canvas id="barChart"></canvas>
+    </div>
     <div class="column is-half">
         <div class="panel">
             <div class="panel-heading has-background-primary has-text-dark">

@@ -65,7 +65,7 @@ $(function(){
       
       //Setup a request to retrieve data to populate on the screen.
       $.ajax({
-         async:		    false,
+        //  async:		    false,
          method:		"POST",
          type:		    "HTML",
          url:           base_url+'AJAX/Populate'
@@ -187,7 +187,7 @@ $(function(){
         validate();
 
         $.ajax({
-            async: 		false,
+            // async: 		false,
             method: 	"POST",
             type:		"JSON",
             data: 		form.serialize()+'&action='+action,
@@ -233,7 +233,7 @@ $(function(){
       var validated = true;
       
       $.ajax({
-         async:		false,
+        //  async:		false,
          type:		"POST",
          url:		base_url+'AJAX/Validate',
          data:		{validations: get_validations()}
