@@ -602,6 +602,15 @@ class Project_model extends PROJECTS_Model
         return $query->result_array();
     }
 
+    public function get_note($id) {
+        $this->db->select('*');
+        $this->db->from('projects_notes');
+        $this->db->where('project_note_id', $id);
+        $query=$this->db->get();
+        
+        return $query->row_array();
+    }
+
     public function delete_note($project_id, $id)
     {
         $this->db->where('project_note_id', $id);

@@ -196,7 +196,7 @@ $(function(){
         
         //The .done method will be executed if the AJAX request successfully receives a response.
         .done(function(data){
-            console.log('DATA', data);
+            // console.log('DATA', data);
             dataParsed = JSON.parse(data);
             get_messages_ajax();
             if (typeof(dataParsed.success) != "undefined") {
@@ -221,6 +221,36 @@ $(function(){
       
 	  //Validate form submission.
       validate();
+   });
+
+   // Populate a form via ajax for editing
+   $('[ajax-populate]').on('click', function(e) {
+        e.preventDefault();
+
+        var href = $(this).attr('href');
+        var form = $(this).attr('ajax-populate');
+
+        $.ajax({
+            method: 	"GET",
+            type:		"JSON",
+            url: 		href,
+        })
+
+        //The .done method will be executed if the AJAX request successfully receives a response.
+        .done(function(data){
+            console.log(data);
+            for(key in data) {
+                if (data.hasOwnProperty(key)) {
+                    console.log(key + " -> " + data[key]);
+                    $(form).find('[name="' + key + '"]').val(data[key]);
+                }
+            }
+        })
+
+        //The .fail method will be executed if the AJAX request fails to receive a response.
+        .fail(function(xhr, status, error){
+            console.log('AJAX Populate Error: '+xhr.responseText);
+        })
    });
 
    

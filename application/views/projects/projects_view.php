@@ -116,7 +116,7 @@
         </div>
     </div>
 
-    <?php echo form_open('projects/action', 'id="notes-form"'); ?>
+    <?php echo form_open('projects/action', 'id="details-form"'); ?>
     <?php echo form_hidden('project_id', $project['project_id']); ?>
     <div class="field is-grouped is-grouped-centered">
     <?php
@@ -235,6 +235,8 @@
                     <?php
                     if (trim($row['task_completed_date']) == '') {
                         if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
+
+                            echo anchor('api/projects/get_task/' . $row['project_task_id'], '<i class="fas fa-edit"></i>', 'class="card-footer-item" ajax-populate="#task-form"');
                             echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
                             echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
                         }
@@ -293,6 +295,7 @@
                     </p>
                 </div>
                 <div class="card-footer">
+                    <a href="<?php echo base_url('api/projects/get_note/' . $note['project_note_id']); ?>" ajax-populate="#notes-form" class="card-footer-item"><i class="fas fa-edit"></i></a>
                     <?php
                     if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
                         echo anchor('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="card-footer-item has-text-danger"');
