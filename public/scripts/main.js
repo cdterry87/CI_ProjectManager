@@ -243,6 +243,12 @@ $(function(){
                 if (data.hasOwnProperty(key)) {
                     console.log(key + " -> " + data[key]);
                     $(form).find('[name="' + key + '"]').val(data[key]);
+
+                    if (key.indexOf('date') != -1) {
+                        $(form).find('[name="' + key + '_mo"]').val(data[key].substr(4,2));
+                        $(form).find('[name="' + key + '_day"]').val(data[key].substr(6,2));
+                        $(form).find('[name="' + key + '_yr"]').val(data[key].substr(0,4));
+                    }
                 }
             }
         })

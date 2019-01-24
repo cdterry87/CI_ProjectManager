@@ -402,7 +402,7 @@ class Project_model extends PROJECTS_Model
     /* --------------------------------------------------------------------------------
      * Add a task to a project.
      * -------------------------------------------------------------------------------- */
-    public function add_task($id = '')
+    public function save_task($id = '')
     {
         //Prepare the data from the screen.
         $data=$this->prepare('projects_tasks');
@@ -412,6 +412,9 @@ class Project_model extends PROJECTS_Model
         if ($data['task_completed_date'] != '') {
             $data['task_completed_by'] = $_SESSION['employee_id'];
         }
+
+        $task_id = $data['project_task_id'];
+        unset($data['project_task_id']);
         
         //Insert the record into the database.
         $this->db->insert('projects_tasks', $data);
@@ -494,6 +497,16 @@ class Project_model extends PROJECTS_Model
         //Add history
         $this->add_history($project_id, 'Task #' . $task_id . ' incomplete');
     }
+
+    public function get_task($id)
+    {
+        $this->db->select('*');
+        $this->db->from('projects_tasks');
+        $this->db->where('project_task_id', $id);
+        $query=$this->db->get();
+        
+        return $query->row_array();
+    }
     
     /* --------------------------------------------------------------------------------
      * Get associated tasks.
@@ -571,7 +584,7 @@ class Project_model extends PROJECTS_Model
     /* --------------------------------------------------------------------------------
      * Project Notes.
      * -------------------------------------------------------------------------------- */
-    public function add_note($id)
+    public function save_note($id)
     {
         //Prepare the data from the screen.
         $data=$this->prepare('projects_notes');
@@ -602,7 +615,8 @@ class Project_model extends PROJECTS_Model
         return $query->result_array();
     }
 
-    public function get_note($id) {
+    public function get_note($id)
+    {
         $this->db->select('*');
         $this->db->from('projects_notes');
         $this->db->where('project_note_id', $id);

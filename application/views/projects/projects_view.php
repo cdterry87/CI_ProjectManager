@@ -171,7 +171,7 @@
         } else {
             foreach ($tasks as $row) {
                 ?>
-        <div class="column is-full-mobile is-half-tablet is-half-desktop is-one-third-fullhd">
+        <div class="column is-full-mobile is-one-third-tablet">
             <div class="card fixed">
                 <div class="card-content">
                     <p>
@@ -235,9 +235,8 @@
                     <?php
                     if (trim($row['task_completed_date']) == '') {
                         if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
-
-                            echo anchor('api/projects/get_task/' . $row['project_task_id'], '<i class="fas fa-edit"></i>', 'class="card-footer-item" ajax-populate="#task-form"');
                             echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
+                            echo anchor('api/projects/get_task/' . $row['project_task_id'], '<i class="fas fa-edit"></i>', 'class="card-footer-item" ajax-populate="#task-form" data-modal="task-form"');
                             echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
                         }
                     }
@@ -260,8 +259,11 @@
         <div class="control is-expanded">
             <?php echo form_textarea('note', '', 'class="textarea is-small" placeholder="Enter notes here" data-required rows="3"'); ?>
         </div>
-        <div class="control">
-            <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
+    </div>
+    <div class="field is-grouped"></div>
+        <div class="control has-text-centered">
+            <?php echo form_submit('action', 'Save Note', 'class="button is-info"'); ?>
+            <?php echo form_submit('action', 'Clear Note', 'class="button is-warning"'); ?>
         </div>
     </div>
     <?php echo form_close(); ?>

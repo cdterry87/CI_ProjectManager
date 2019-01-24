@@ -220,17 +220,17 @@ class Projects extends PROJECTS_Controller
                 $this->populate_screen($this->input->post());
                 redirect('projects/form/' . $id);
                 break;
-            case "add note":
+            case "save note":
                 if ($this->validate()) {
-                    $this->Project_model->add_note($id);
-                    $this->set_message('Note added successfully.', 'success');
+                    $this->Project_model->save_note($id);
+                    $this->set_message('Note saved successfully.', 'success');
                 }
                 redirect('projects/view/' . $id . '/#project-notes-tab');
                 break;
             case "save task":
                 if ($this->validate()) {
-                    $this->Project_model->add_task($id);
-                    $this->set_message('Task added successfully.', 'success');
+                    $this->Project_model->save_task($id);
+                    $this->set_message('Task saved successfully.', 'success');
                 }
                 echo json_encode($this->session->userdata('projects_messages'));
                 exit;
@@ -274,6 +274,15 @@ class Projects extends PROJECTS_Controller
                     $this->set_message('Reminder added successfully.', 'success');
                 }
                 redirect('projects/view/' . $id . '/#project-reminders-tab');
+                break;
+            case "clear task":
+                redirect('projects/view/' . $id . '/#project-tasks-tab');
+                break;
+            case "clear reminder":
+                redirect('projects/view/' . $id . '/#project-reminders-tab');
+                break;
+            case "clear note":
+                redirect('projects/view/' . $id . '/#project-notes-tab');
                 break;
         }
     }
