@@ -217,9 +217,6 @@
         <div class="control is-expanded">
             <?php echo form_textarea('reminder', '', 'class="textarea is-small" placeholder="Enter reminder here" data-required rows="3"'); ?>
         </div>
-        <div class="control">
-            <?php echo form_submit('action', 'Add Reminder', 'class="button is-info is-fullwidth"'); ?>
-        </div>
     </div>
     
     <div class="field">
@@ -251,6 +248,11 @@
             <?php
         }
         ?>
+    </div>
+    <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+            <?php echo form_submit('action', 'Add Reminder', 'class="button is-info"'); ?>
+        </div>
     </div>
     <?php echo form_close(); ?>
 

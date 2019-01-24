@@ -20,6 +20,7 @@ if ($this->session->userdata('employee_admin') == "CHECKED" or $this->session->u
 ?>
 <p class="menu-label">Projects</p>
 <ul class="menu-list">
+    <li><a class="<?php echo ($this->current_system == "projects" && $this->current_page == "form" ? 'is-active' : '')  ?>" href="<?php echo base_url('projects/form'); ?>"><i class="fas fa-plus-square"></i> New Project</a></li>
     <li><a class="<?php echo ($this->current_system == "projects" && $this->current_page == "" ? 'is-active' : '')  ?>" href="<?php echo base_url('projects'); ?>"><i class="fas fa-exclamation-circle"></i> Incomplete</a></li>
     <li><a class="<?php echo ($this->current_system == "projects" && $this->current_page == "complete" ? 'is-active' : '')  ?>" href="<?php echo base_url('projects/complete'); ?>"><i class="fas fa-check"></i> Complete</a></li>
     <li><a class="<?php echo ($this->current_system == "projects" && $this->current_page == "archive" ? 'is-active' : '')  ?>" href="<?php echo base_url('projects/archive'); ?>"><i class="fas fa-archive"></i> Archived</a></li>
@@ -30,6 +31,7 @@ if ($this->session->userdata('employee_sales') != "CHECKED") {
     ?>
 <p class="menu-label">Support</p>
 <ul class="menu-list">
+    <li><a class="<?php echo ($this->current_system == "support" && $this->current_page == "form"  ? 'is-active' : '')  ?>" href="<?php echo base_url('support/form'); ?>"><i class="fas fa-plus-square"></i> New Support</a></li>
     <li><a class="<?php echo ($this->current_system == "support" && $this->current_page == ""  ? 'is-active' : '')  ?>" href="<?php echo base_url('support'); ?>"><i class="fas fa-exclamation-circle"></i> Open</a></li>
     <li><a class="<?php echo ($this->current_system == "support" && $this->current_page == "closed" ? 'is-active' : '')  ?>" href="<?php echo base_url('support/closed'); ?>"><i class="fas fa-check"></i> Closed</a></li>
     <li><a class="<?php echo ($this->current_system == "support" && $this->current_page == "archive" ? 'is-active' : '')  ?>" href="<?php echo base_url('support/archive'); ?>"><i class="fas fa-archive"></i> Archived</a></li>
