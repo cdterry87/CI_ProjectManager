@@ -195,7 +195,7 @@ class Customers extends PROJECTS_Controller
             case "save":
                 //Validate the form submission.
                 if ($this->validate()) {
-                    $this->Customer_model->save($id);
+                    $id = $this->Customer_model->save($id);
                     $this->set_message('Customer information saved successfully', 'success');
                     redirect('sales/customers/view/' . $id);
                 }
