@@ -100,6 +100,10 @@ a.tag:hover {
     font-size: 25px;
 }
 
+p {
+    margin-bottom: 8px;
+}
+
 table td a:not(table td a.tag){display: block; width: 100%; padding: 5px;}
 
 input[data-required],select[data-required], textarea[data-required]{border-color: #ffa4a4 !important;}
