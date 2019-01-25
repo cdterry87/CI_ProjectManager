@@ -118,7 +118,6 @@ var lineChart = {
             }],
             yAxes: [{
                 display: true,
-                type: 'logarithmic',
             }]
         }
     }
