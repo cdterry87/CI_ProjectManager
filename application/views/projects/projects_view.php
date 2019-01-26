@@ -171,33 +171,32 @@
         } else {
             foreach ($tasks as $row) {
                 ?>
-        <div class="column is-full-mobile is-one-third-tablet">
-            <div class="card fixed">
+        <div class="column is-full-mobile is-half-tablet is-one-third-fullhd">
+            <div class="card">
+                <?php
+                if (trim($row['task_completed_date']) != '') {
+                    echo '<div class="message is-success"><div class="message-body"><i class="fas fa-check"></i> Task Completed ' . $this->format->date($row['task_completed_date']) . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . '</div></div>';
+                } elseif (trim($row['task_due_date']) != '' and date('Ymd') > $row['task_due_date']) {
+                    echo '<div class="message is-danger"><div class="message-body"><i class="fas fa-exclamation-triangle"></i> Task is Past Due!</div></div>';
+                } else {
+                    echo '<div class="message is-warning"><div class="message-body"><i class="fas fa-tasks"></i> Task is Incomplete</div></div>';
+                }
+                ?>
                 <div class="card-content">
-                    <p>
-                        <h5 class="has-text-weight-bold is-size-5">
-                            <?php
-                            if (trim($row['task_completed_date']) != '') {
-                                echo '<div class="message is-success"><div class="message-body"><i class="fas fa-check"></i> Task Completed ' . $this->format->date($row['task_completed_date']) . ' by ' . $this->Employee_model->get_by_employee_id($row['task_completed_by'])['employee_name'] . '</div></div>';
-                            } elseif (trim($row['task_due_date']) != '' and date('Ymd') > $row['task_due_date']) {
-                                echo '<div class="message is-danger"><div class="message-body"><i class="fas fa-exclamation-triangle"></i> Task is Past Due!</div></div>';
-                            } else {
-                                echo '<div class="message is-warning"><div class="message-body"><i class="fas fa-tasks"></i> Task is Incomplete</div></div>';
-                            }
-                            echo "<div>" . ucfirst($row['task_title']) . "</div>";
-                            ?>
-                        </h5>
-                        <?php if (trim($row['task_description']) != '') { ?>
-                        <i class="fas fa-quote-left"></i>
-                            <?php echo $row['task_description']; ?>
-                        <i class="fas fa-quote-right"></i>
-                        <?php } ?>
-                    </p>
-                    <br>
-                    <div class="columns is-size-7">
+                    <div class="columns is-size-7 is-multiline">
                         <div class="column is-full">
-                            <p><strong>Assigned To:</strong></p>
+                            <h5 class="is-size-5"><?php echo ucfirst($row['task_title']); ?></h5>
+                            <?php if (trim($row['task_description']) != '') { ?>
                             <p>
+                                <i class="fas fa-quote-left"></i>
+                                <?php echo $row['task_description']; ?>
+                                <i class="fas fa-quote-right"></i>
+                            </p>
+                            <?php } ?>
+                        </div>
+                        <div class="column is-full">
+                            <div><strong>Assigned:</strong></div>
+                            <div>
                                 <?php
                                     $assigned_to = $this->Project_model->get_task_assigned_to($row['project_task_id']);
                                 if (!empty($assigned_to)) {
@@ -206,27 +205,23 @@
                                         $task_assigned .= $assigned['employee_name'].", ";
                                     }
                                     $task_assigned = substr($task_assigned, 0, -2);
-                                    echo $task_assigned;
+
+                                    echo "<strong>" . $this->format->date($row['task_assigned_date']) . "</strong> by <strong>" . $this->Employee_model->get_by_employee_id($row['task_assigned_by'])['employee_name'] . "</strong>";
+                                    if (trim($task_assigned) != '') {
+                                        echo " to <strong>" . $task_assigned . "</strong>";
+                                    }
                                 }
                                 ?>
-                            </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="columns is-size-7">
-                        <div class="column is-full">
-                            <p><strong>Assigned Date:</strong></p>
-                            <p><?php echo $this->format->date($row['task_assigned_date']); ?> by <?php echo $this->Employee_model->get_by_employee_id($row['task_assigned_by'])['employee_name']; ?></p>
-                        </div>
-                    </div>
-                    <div class="columns is-size-7">
                         <div class="column is-half">
-                            <p><strong>Start Date:</strong></p>
-                            <p><?php echo $this->format->date($row['task_start_date']); ?></p>
+                            <div><strong>Start Date:</strong></div>
+                            <div><?php echo $this->format->date($row['task_start_date']); ?></div>
                         </div>
                         <div class="column is-half">
                             <?php if (trim($row['task_due_date']) != '') { ?>
-                            <p><strong>Due Date:</strong></p>
-                            <p><?php echo $this->format->date($row['task_due_date']); ?></p>
+                            <div><strong>Due Date:</strong></div>
+                            <div><?php echo $this->format->date($row['task_due_date']); ?></div>
                             <?php } ?>
                         </div>
                     </div>

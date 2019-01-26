@@ -100,28 +100,28 @@
         } else {
             foreach ($contacts as $contact) {
                 ?>
-        <div class="column is-one-quarter">
+        <div class="column is-one-third">
             <div class="card">
                 <div class="card-content">
                     <h4 class="has-text-weight-bold is-size-4"><?php echo $contact['contact_name']; ?></h4>
                     <h5 class="has-text-weight-semibold is-size-5"><?php echo $contact['contact_title']; ?></h5>
                     <h6 class="is-size-6"><?php echo "Email: " . $contact['contact_email']; ?></h6>
-                    <p class="is-size-6">
+                    <div class="is-size-6">
                         <?php echo "Phone: " . $this->format->phone($contact['contact_phone']); ?>
                         <?php
                         if ($contact['contact_phone_type'] != '') {
                             echo "<strong>[ " . $contact['contact_phone_type'] . " ]</strong>";
                         }
                         ?>
-                    </p>
-                    <p class="is-size-6">
+                    </div>
+                    <div class="is-size-6">
                         <?php echo "Phone: " . $this->format->phone($contact['contact_phone_alt']); ?>
                         <?php
                         if ($contact['contact_phone_alt_type'] != '') {
                             echo "<strong>[ " . $contact['contact_phone_alt_type'] . " ]</strong>";
                         }
                         ?>
-                    </p>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <?php

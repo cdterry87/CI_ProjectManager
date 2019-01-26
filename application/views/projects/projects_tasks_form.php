@@ -81,7 +81,7 @@
             <div class="field">
                 <div class="control">
                     <?php echo form_label('Task Details:', 'task_title', 'class="label"'); ?>
-                    <?php echo form_input('task_title', '', 'class="input is-small" data-required placeholder="Enter task title"'); ?>
+                    <?php echo form_input('task_title', '', 'class="input is-small" data-required placeholder="Enter task title" maxlength="100"'); ?>
                 </div>
             </div>
             <div class="field">

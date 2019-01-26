@@ -297,14 +297,14 @@ class Projects extends PROJECTS_Controller
     public function delete_task($project_id, $task_id)
     {
         $this->Project_model->delete_task($project_id, $task_id);
-        $this->set_message('Note has been removed!', 'danger');
+        $this->set_message('Task has been deleted!', 'danger');
         redirect('projects/view/' . $project_id . '/#project-tasks-tab');
     }
 
     public function delete_file($project_id, $file_id)
     {
         $this->Project_model->delete_file($project_id, $file_id);
-        $this->set_message('File has been removed!', 'danger');
+        $this->set_message('File has been deleted!', 'danger');
         redirect('projects/view/' . $project_id . '/#project-files-tab');
     }
 }

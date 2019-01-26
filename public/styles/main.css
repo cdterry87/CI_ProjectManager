@@ -89,12 +89,6 @@ a.tag:hover {
     text-decoration: none !important;
 }
 
-.card.fixed {
-    min-height: 400px !important;
-    max-height: 400px !important;
-    overflow: scroll !important;
-}
-
 .fc-toolbar h2 {
     font-weight: bold;
     font-size: 25px;
@@ -102,6 +96,19 @@ a.tag:hover {
 
 p {
     margin-bottom: 8px;
+}
+
+.card .message, .card .message-body {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.card .message-body {
+    padding: 0.5em;
+}
+
+.card .card-content {
+    padding: 0.5rem;
 }
 
 table td a:not(table td a.tag){display: block; width: 100%; padding: 5px;}
