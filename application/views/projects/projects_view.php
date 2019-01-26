@@ -171,7 +171,7 @@
         } else {
             foreach ($tasks as $row) {
                 ?>
-        <div class="column is-full-mobile is-half-tablet is-one-third-fullhd">
+        <div class="column is-full-mobile is-full-tablet is-one-third-fullhd">
             <div class="card">
                 <?php
                 if (trim($row['task_completed_date']) != '') {

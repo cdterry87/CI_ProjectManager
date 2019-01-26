@@ -94,7 +94,7 @@
         if (empty($contacts)) {
             ?>
 
-        <div class="column is-full">Issue does not currently have any tasks.</div>
+        <div class="column is-full">Customer does not currently have any contacts.</div>
 
             <?php
         } else {
@@ -164,7 +164,7 @@
         } else {
             foreach ($notes as $note) {
                 ?>
-        <div class="column is-one-third">
+        <div class="column is-mobile is-half-tablet is-one-third-fullhd">
             <div class="card">
                 <div class="card-content">
                     <p>
