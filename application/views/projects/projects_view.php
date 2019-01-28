@@ -374,30 +374,46 @@
 
     <hr>
 
-    <table class="table is-striped is-narrow is-fullwidth">
-        <thead>
-            <tr>
-                <th>Reminder</th>
-                <th width="20%">Reminder Date</th>
-                <th width="10%">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            foreach ($reminders as $key => $reminder) {
-                ?>
-            <tr>
-                <td><?php echo $reminder['reminder']; ?></td>
-                <td><?php echo $this->format->date($reminder['reminder_date']); ?></td>
-                <td>
-                <?php echo anchor('projects/delete_reminder/' . $project['project_id'] . '/' . $reminder['project_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
-                </td>
-            </tr>
-                <?php
-            }
-            ?>
-        </tbody>
-    </table>
+    <div class="columns is-multiline">
+    <?php
+    foreach ($reminders as $row) {
+    ?>
+    <div class="column is-half">
+        <div class="card">
+            <header class="card-header">
+                <div class="card-header-title">Remind on <?php echo $this->format->date($row['reminder_date']); ?></div>
+                <a href="<?php echo base_url('projects/delete_reminder/' . $project['project_id'] . '/' . $row['project_reminder_id']); ?>" class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-trash-alt has-text-danger" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <?php echo $this->format->shorten($row['reminder'], 100); ?>
+                    <hr>
+                    <div class="is-size-7">
+                        <strong>Remind:</strong>
+                        <?php
+                            $reminders_employees = '';
+                            foreach ($this->Project_model->get_reminders_employees($row['project_reminder_id']) as $row_reminder_employee) {
+                                $reminders_employees .= $this->Employee_model->get_by_employee_id($row_reminder_employee['employee_id'])['employee_name'].', ';
+                            }
+                            $reminders_employees = substr($reminders_employees, 0, -2);
+
+                            if (trim($reminders_employees) != '') {
+                                echo $reminders_employees;
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+    </div>
 </div>
 
 <div id="project-files" class="tab-panel">

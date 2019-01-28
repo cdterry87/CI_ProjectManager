@@ -698,6 +698,15 @@ class Project_model extends PROJECTS_Model
         return $query->result_array();
     }
 
+    public function get_reminders_employees($id) {
+        $this->db->select('*');
+        $this->db->from('projects_reminders_employees');
+        $this->db->where('project_reminder_id', $id);
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
     public function delete_reminder($project_id, $id)
     {
         $this->db->where('project_reminder_id', $id);
