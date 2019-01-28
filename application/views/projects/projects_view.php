@@ -283,6 +283,14 @@
                 ?>
         <div class="column is-full-mobile is-half-tablet is-half-desktop is-one-third-fullhd">
             <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title"><?php echo $note['datetime']; ?></div>
+                    <a href="<?php echo base_url('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id']); ?>" class="card-header-icon" aria-label="more options">
+                        <span class="icon">
+                            <i class="fas fa-trash-alt has-text-danger" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
                 <div class="card-content">
                     <p>
                         <i class="fas fa-quote-left"></i>
@@ -292,17 +300,9 @@
                     <br>
                     <p class="is-size-7 has-text-right">
                         <?php
-                            echo $this->Employee_model->get_by_employee_id($note['employee_id'])['employee_name'] . ' - ' . $note['datetime'];
+                            echo '-- ' . $this->Employee_model->get_by_employee_id($note['employee_id'])['employee_name'];
                         ?>
                     </p>
-                </div>
-                <div class="card-footer">
-                    <a href="<?php echo base_url('api/projects/get_note/' . $note['project_note_id']); ?>" ajax-populate="#notes-form" class="card-footer-item"><i class="fas fa-edit"></i></a>
-                    <?php
-                    if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
-                        echo anchor('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id'], '<i class="fas fa-trash-alt"></i>', 'class="card-footer-item has-text-danger"');
-                    }
-                    ?>
                 </div>
             </div>
         </div>
