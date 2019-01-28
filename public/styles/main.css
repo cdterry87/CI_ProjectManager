@@ -111,6 +111,10 @@ p {
     padding: 0.5rem;
 }
 
+.modal-card-head, .modal-card-foot {
+    padding: 8px !important;
+}
+
 table td a:not(table td a.tag){display: block; width: 100%; padding: 5px;}
 
 input[data-required],select[data-required], textarea[data-required]{border-color: #ffa4a4 !important;}
