@@ -9,7 +9,6 @@ $(function(){
    minute_error	     = 'Invalid Minute!';
    form              = $('form');
    messages          = $('#messages');
-   ajax_messages	 = $('#ajax-messages')
    
    /* --------------------------------------------------------------------------------
     * On-load Functions.
@@ -140,10 +139,10 @@ $(function(){
    }
 
    function get_messages_ajax(){
-    console.log('get_messages()');
+    console.log('get_messages_ajax()');
     
     //Clear existing messages.
-    clear_messages();
+    clear_messages_ajax();
     
     //Setup a request to retrieve messages.
     $.ajax({
@@ -152,11 +151,11 @@ $(function(){
        url:	     base_url+'AJAX/Messages'
     })
     .done(function(data){
-       console.log('Messages retrieved successfully!');
+       console.log('Messages retrieved successfully!', data);
        //If messages are present.
        if(data!=''){
           //Display messages.
-          ajax_messages.html(data);
+          $('.ajax-messages').html(data);
           
           //Format currency.
           //$('.currency').formatCurrency();
@@ -174,6 +173,12 @@ $(function(){
       console.log('clear_messages()');
        
       messages.html('');
+   }
+
+   function clear_messages_ajax() {
+       console.log('clear_messages_ajax()');
+
+       $('.ajax-messages').html('');
    }
    
    /* --------------------------------------------------------------------------------
@@ -621,6 +626,7 @@ $(function(){
     // New modals
     $('[data-modal]').on('click', function() {
         console.log('modal click');
+        clear_messages_ajax();
         var modal = $(this).data('modal');
         $('#' + modal).addClass('is-active');
     });

@@ -7,7 +7,7 @@
         <h2 class="title is-4">Add Task</h2>
     </div>
     <div class="modal-card-body">
-        <div id="ajax-messages"></div>
+        <div class="ajax-messages"></div>
         <div class="content">
             <div class="columns is-multiline">
                 <div class="column is-half">

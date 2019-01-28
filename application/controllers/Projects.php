@@ -235,6 +235,14 @@ class Projects extends PROJECTS_Controller
                 echo json_encode($this->session->userdata('projects_messages'));
                 exit;
                 break;
+            case "save reminder":
+                if ($this->validate()) {
+                    $this->Project_model->add_reminder($id);
+                    $this->set_message('Reminder saved successfully.', 'success');
+                }
+                echo json_encode($this->session->userdata('projects_messages'));
+                exit;
+                break;
             case "add file":
                 //Upload the file to the server.
                 if ($upload_data = $this->upload($id)) {

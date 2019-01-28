@@ -248,24 +248,29 @@
 
 <div id="project-notes" class="tab-panel">
     <h3 class="title is-4">Project Notes</h3>
-    <?php echo form_open('projects/action', 'id="notes-form"'); ?>
-    <?php echo form_hidden('project_id', $project['project_id']); ?>
-    <div class="field is-grouped">
-        <div class="control is-expanded">
-            <?php echo form_textarea('note', '', 'class="textarea is-small" placeholder="Enter notes here" data-required rows="3"'); ?>
-        </div>
-    </div>
-    <div class="field is-grouped is-grouped-centered">
-        <div class="control">
-            <?php echo form_submit('action', 'Save Note', 'class="button is-info"'); ?>
-            <?php echo form_submit('action', 'Clear Note', 'class="button is-warning"'); ?>
-        </div>
-    </div>
-    <?php echo form_close(); ?>
-
-    <hr>
 
     <div class="columns is-multiline is-mobile">
+        <div class="column is-full-mobile is-half-tablet is-half-desktop is-one-third-fullhd">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="title is-4">Add Note</h3>
+                    <?php echo form_open('projects/action', 'id="notes-form"'); ?>
+                    <?php echo form_hidden('project_id', $project['project_id']); ?>
+                    <div class="field is-grouped">
+                        <div class="control is-expanded">
+                            <?php echo form_textarea('note', '', 'class="textarea is-small" placeholder="Enter notes here" data-required rows="3"'); ?>
+                        </div>
+                    </div>
+                    <div class="field is-grouped is-grouped-centered">
+                        <div class="control">
+                            <?php echo form_submit('action', 'Save Note', 'class="button is-info"'); ?>
+                        </div>
+                    </div>
+                    <?php echo form_close(); ?>
+                </div>
+            </div>
+        </div>
+
         <?php
         if (empty($notes)) {
             ?>
@@ -309,70 +314,15 @@
 </div>
 
 <div id="project-reminders" class="tab-panel">
-    <h3 class="title is-4">Project Reminders</h3>
-    <?php echo form_open('projects/action', 'id="reminders-form"'); ?>
-    <?php echo form_hidden('project_id', $project['project_id']); ?>   
-    <?php echo form_hidden('tab_target', '#project-reminders'); ?>   
-    
-    <?php echo form_label('Reminder Date:', 'reminder_date_mo', 'class="label"'); ?>
-    <div class="field is-grouped">
-        <p class="control">
-            <?php echo form_input('reminder_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Reminder Date Month"'); ?>
-        </p>
-        <p class="control slash">/</p>
-        <p class="control">
-            <?php echo form_input('reminder_date_day', '', 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Reminder Date Day"'); ?>
-        </p>
-        <p class="control slash">/</p>
-        <p class="control">
-            <?php echo form_input('reminder_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Reminder Date Year"'); ?>
-        </p>
-    </div>
+    <h3 class="title is-4">
+        Project Reminders
+        <a data-modal="reminders-form" class="button is-info is-small"><i class="fas fa-plus-square"></i> Add Reminder</a>    
+    </h3>
 
-    <div class="field is-grouped">
-        <div class="control is-expanded">
-            <?php echo form_textarea('reminder', '', 'class="textarea is-small" placeholder="Enter reminder here" data-required rows="3"'); ?>
-        </div>
+    <div id="reminders-form" class="modal">
+        <?php $this->load->view('projects/projects_reminders_form'); ?>
+        <button class="modal-close is-large" data-modal="reminders-form" aria-label="close"></button>
     </div>
-    
-    <div class="field">
-        <div class="control">
-            <?php echo form_label('Remind Employee(s):', '', 'class="label"');  ?>
-            <?php echo form_checkbox('all_employees'); ?>
-            <?php echo form_label('All Employees', 'all_employees'); ?>
-        </div>
-    </div>
-
-    <div class="columns is-multiline is-gapless">
-        <?php
-        if (!empty($employees)) {
-            foreach ($employees as $row) {
-                $checked="";
-                if ($_SESSION['employee_id']==$row['employee_id']) {
-                    $checked="CHECKED";
-                }
-                ?>
-        <div class="column is-one-quarter assigned_employees">
-                <?php echo form_checkbox('employee['.$row['employee_id'].']', $row['employee_id'], $checked); ?>
-                <?php echo form_label($row['employee_name'], 'employee['.$row['employee_id'].']'); ?>
-        </div>
-                <?php
-            }
-        } else {
-            ?>
-        There are currently no employees in the system.  <?php echo anchor('sales/employees/form', 'Click here to add one.'); ?>
-            <?php
-        }
-        ?>
-    </div>
-    <div class="field is-grouped is-grouped-centered">
-        <div class="control">
-            <?php echo form_submit('action', 'Add Reminder', 'class="button is-info"'); ?>
-        </div>
-    </div>
-    <?php echo form_close(); ?>
-
-    <hr>
 
     <div class="columns is-multiline">
     <?php
