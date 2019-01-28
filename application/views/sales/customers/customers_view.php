@@ -103,10 +103,10 @@
         <div class="column is-one-third">
             <div class="card">
                 <div class="card-content">
-                    <h4 class="has-text-weight-bold is-size-4"><?php echo $contact['contact_name']; ?></h4>
-                    <h5 class="has-text-weight-semibold is-size-5"><?php echo $contact['contact_title']; ?></h5>
-                    <h6 class="is-size-6"><?php echo "Email: " . $contact['contact_email']; ?></h6>
-                    <div class="is-size-6">
+                    <h4 class="has-text-weight-bold is-size-4"><?php echo $this->format->shorten($contact['contact_name'], 20, true); ?></h4>
+                    <h5 class="has-text-weight-semibold is-size-5"><?php echo $this->format->shorten($contact['contact_title'], 25, true); ?></h5>
+                    <h6 class="is-size-7"><?php echo "Email: " . $contact['contact_email']; ?></h6>
+                    <div class="is-size-7">
                         <?php echo "Phone: " . $this->format->phone($contact['contact_phone']); ?>
                         <?php
                         if ($contact['contact_phone_type'] != '') {
@@ -114,7 +114,7 @@
                         }
                         ?>
                     </div>
-                    <div class="is-size-6">
+                    <div class="is-size-7">
                         <?php echo "Phone: " . $this->format->phone($contact['contact_phone_alt']); ?>
                         <?php
                         if ($contact['contact_phone_alt_type'] != '') {

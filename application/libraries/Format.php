@@ -55,17 +55,24 @@ class Format
                 return substr($phone, 0, 3)." - ".substr($phone, 3, 4);
                 break;
         }
-        return false;
+        return "N/A";
     }
     
     /* --------------------------------------------------------------------------------
      * Format phones as (###) ### - #### or ### - ####.
      * -------------------------------------------------------------------------------- */
-    public function shorten($string, $length = 50)
+    public function shorten($string, $length = 50, $front_only = false)
     {
-        if (strlen($string) > ($length + 12)) {
-            $string = substr($string, 0, $length) . '...' . substr($string, -9);
+        if ($front_only) {
+            if (strlen($string) > ($length)) {
+                $string = substr($string, 0, $length) . '...';
+            }
+        } else {
+            if (strlen($string) > ($length + 12)) {
+                $string = substr($string, 0, $length) . '...' . substr($string, -9);
+            }
         }
+        
         return $string;
     }
 }
