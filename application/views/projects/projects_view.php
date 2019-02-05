@@ -230,9 +230,9 @@
                     <?php
                     if (trim($row['task_completed_date']) == '') {
                         if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
-                            echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i>', 'class="card-footer-item has-text-success"');
-                            echo anchor('api/projects/get_task/' . $row['project_task_id'], '<i class="fas fa-edit"></i>', 'class="card-footer-item" ajax-populate="#task-form" data-modal="task-form"');
-                            echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash" title="Delete Task"></i>', 'class="card-footer-item has-text-danger"');
+                            echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i> Complete', 'class="card-footer-item has-text-success"');
+                            echo anchor('api/projects/get_task/' . $row['project_task_id'], '<i class="fas fa-edit"></i> Edit', 'class="card-footer-item" ajax-populate="#task-form" data-modal="task-form"');
+                            echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash" title="Delete Task"></i> Delete', 'class="card-footer-item has-text-danger"');
                         }
                     }
                     ?>
@@ -247,30 +247,22 @@
 </div>
 
 <div id="project-notes" class="tab-panel">
-    <h3 class="title is-4">Project Notes</h3>
+    <?php echo form_open('projects/action', 'id="notes-form"'); ?>
+    <?php echo form_hidden('project_id', $project['project_id']); ?>
+    <h2 class="title is-4">Project Notes</h2>
+    <div class="field is-grouped">
+        <div class="control is-expanded">
+            <?php echo form_textarea('note', '', 'class="textarea is-small" placeholder="Enter notes here" data-required rows="3"'); ?>
+        </div>
+        <div class="control">
+            <?php echo form_submit('action', 'Add Note', 'class="button is-info is-fullwidth"'); ?>
+        </div>
+    </div>
+    <?php echo form_close(); ?>
+
+    <hr>
 
     <div class="columns is-multiline is-mobile">
-        <div class="column is-full-mobile is-half-tablet is-half-desktop is-one-third-fullhd">
-            <div class="card">
-                <div class="card-content">
-                    <h3 class="title is-4">Add Note</h3>
-                    <?php echo form_open('projects/action', 'id="notes-form"'); ?>
-                    <?php echo form_hidden('project_id', $project['project_id']); ?>
-                    <div class="field is-grouped">
-                        <div class="control is-expanded">
-                            <?php echo form_textarea('note', '', 'class="textarea is-small" placeholder="Enter notes here" data-required rows="3"'); ?>
-                        </div>
-                    </div>
-                    <div class="field is-grouped is-grouped-centered">
-                        <div class="control">
-                            <?php echo form_submit('action', 'Save Note', 'class="button is-info"'); ?>
-                        </div>
-                    </div>
-                    <?php echo form_close(); ?>
-                </div>
-            </div>
-        </div>
-
         <?php
         if (empty($notes)) {
             ?>
@@ -287,7 +279,7 @@
                     <div class="card-header-title"><?php echo $note['datetime']; ?></div>
                     <a href="<?php echo base_url('projects/delete_note/' . $project['project_id'] . '/' . $note['project_note_id']); ?>" class="card-header-icon" aria-label="more options">
                         <span class="icon">
-                            <i class="fas fa-trash-alt has-text-danger" aria-hidden="true"></i>
+                            <i class="fas fa-trash has-text-danger" aria-hidden="true"></i>
                         </span>
                     </a>
                 </div>
@@ -326,15 +318,20 @@
 
     <div class="columns is-multiline">
     <?php
+    
+    if (empty($reminders)) {
+        echo "<div class='column'>No reminders available at this time.</div>";
+    }
+
     foreach ($reminders as $row) {
-    ?>
+        ?>
     <div class="column is-half">
         <div class="card">
             <header class="card-header">
                 <div class="card-header-title">Remind on <?php echo $this->format->date($row['reminder_date']); ?></div>
                 <a href="<?php echo base_url('projects/delete_reminder/' . $project['project_id'] . '/' . $row['project_reminder_id']); ?>" class="card-header-icon" aria-label="more options">
                     <span class="icon">
-                        <i class="fas fa-trash-alt has-text-danger" aria-hidden="true"></i>
+                        <i class="fas fa-trash has-text-danger" aria-hidden="true"></i>
                     </span>
                 </a>
             </header>
@@ -346,21 +343,21 @@
                         <strong>Remind:</strong>
                         <?php
                             $reminders_employees = '';
-                            foreach ($this->Project_model->get_reminders_employees($row['project_reminder_id']) as $row_reminder_employee) {
-                                $reminders_employees .= $this->Employee_model->get_by_employee_id($row_reminder_employee['employee_id'])['employee_name'].', ';
-                            }
+                        foreach ($this->Project_model->get_reminders_employees($row['project_reminder_id']) as $row_reminder_employee) {
+                            $reminders_employees .= $this->Employee_model->get_by_employee_id($row_reminder_employee['employee_id'])['employee_name'].', ';
+                        }
                             $reminders_employees = substr($reminders_employees, 0, -2);
 
-                            if (trim($reminders_employees) != '') {
-                                echo $reminders_employees;
-                            }
+                        if (trim($reminders_employees) != '') {
+                            echo $reminders_employees;
+                        }
                         ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <?php
+        <?php
     }
     ?>
     </div>

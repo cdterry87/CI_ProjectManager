@@ -123,9 +123,7 @@
         </div>
     </div>
     <div class="modal-card-foot">
-        <div class="field is-grouped is-grouped-centered">
-            <p class="control"><button type="submit" value='save task' class="button is-info ajax-btn">Save Task</button></p>
-        </div>
+        <button type="submit" value='save task' class="button is-info ajax-btn">Save Task</button>
     </div>
 </div>
 <?php echo form_close(); ?>

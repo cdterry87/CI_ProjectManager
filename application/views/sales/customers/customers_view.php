@@ -194,102 +194,61 @@
 </div>
 
 <div id="customer-reminders" class="tab-panel">
-    <?php echo form_open('sales/customers/action', 'id="reminders-form"'); ?>
-    <?php echo form_hidden('customer_id', $customer['customer_id']); ?>
-    <h2 class="title is-4">Customer Reminders</h2>
+    <h3 class="title is-4">
+        Customer Reminders
+        <a data-modal="reminders-form" class="button is-info is-small"><i class="fas fa-plus-square"></i> Add Reminder</a>    
+    </h3>
 
-    <?php echo form_label('Reminder Date:', 'reminder_date_mo', 'class="label"'); ?>
-    <div class="field is-grouped">
-        <p class="control">
-            <?php echo form_input('reminder_date_mo', '', 'class="input is-small" maxlength="2" size="2" data-required data-month data-autotab data-label="Reminder Date Month"'); ?>
-        </p>
-        <p class="control slash">/</p>
-        <p class="control">
-            <?php echo form_input('reminder_date_day', '', 'class="input is-small" maxlength="2" size="2" data-required data-day data-autotab data-label="Reminder Date Day"'); ?>
-        </p>
-        <p class="control slash">/</p>
-        <p class="control">
-            <?php echo form_input('reminder_date_yr', date('Y'), 'class="input is-small" maxlength="4" size="4" data-required data-year data-label="Reminder Date Year"'); ?>
-        </p>
+    <div id="reminders-form" class="modal">
+        <?php $this->load->view('sales/customers/customers_reminders_form'); ?>
+        <button class="modal-close is-large" data-modal="reminders-form" aria-label="close"></button>
     </div>
 
-    <div class="field is-grouped">
-        <div class="control is-expanded">
-            <?php echo form_textarea('reminder', '', 'class="textarea is-small" placeholder="Enter reminder here" data-required rows="3"'); ?>
-        </div>
-    </div>
-    
-    <div class="field">
-        <div class="control">
-            <?php echo form_label('Remind Employee(s):', '', 'class="label"');  ?>
-            <?php echo form_checkbox('all_employees'); ?>
-            <?php echo form_label('All Employees', 'all_employees'); ?>
-        </div>
-    </div>
+    <div class="columns is-multiline">
+    <?php
 
-    <div class="columns is-multiline is-gapless">
-        <?php
-        if (!empty($employees)) {
-            foreach ($employees as $row) {
-                $checked="";
-                if ($_SESSION['employee_id']==$row['employee_id']) {
-                    $checked="CHECKED";
-                }
-                ?>
-        <div class="column is-one-quarter assigned_employees">
-                <?php echo form_checkbox('employee['.$row['employee_id'].']', $row['employee_id'], $checked); ?>
-                <?php echo form_label($row['employee_name'], 'employee['.$row['employee_id'].']'); ?>
-        </div>
-                <?php
-            }
-        } else {
-            ?>
-        There are currently no employees in the system.  <?php echo anchor('sales/employees/form', 'Click here to add one.'); ?>
-            <?php
-        }
+    if (empty($reminders)) {
+        echo "<div class='column'>No reminders available at this time.</div>";
+    }
+
+    foreach ($reminders as $row) {
         ?>
-    </div>
-    <div class="field is-grouped is-grouped-centered">
-        <div class="control">
-            <?php echo form_submit('action', 'Add Reminder', 'class="button is-info"'); ?>
+    <div class="column is-half">
+        <div class="card">
+            <header class="card-header">
+                <div class="card-header-title">Remind on <?php echo $this->format->date($row['reminder_date']); ?></div>
+                <a href="<?php echo base_url('sales/customers/delete_reminder/' . $customer['customer_id'] . '/' . $row['customer_reminder_id']); ?>" class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-trash has-text-danger" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <?php echo $this->format->shorten($row['reminder'], 100); ?>
+                    <hr>
+                    <div class="is-size-7">
+                        <strong>Remind:</strong>
+                        <?php
+                        $reminders_employees = '';
+                        foreach ($this->Customer_model->get_reminders_employees($row['customer_reminder_id']) as $row_reminder_employee) {
+                            $reminders_employees .= $this->Employee_model->get_by_employee_id($row_reminder_employee['employee_id'])['employee_name'].', ';
+                        }
+                        $reminders_employees = substr($reminders_employees, 0, -2);
+
+                        if (trim($reminders_employees) != '') {
+                            echo $reminders_employees;
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <?php echo form_close(); ?>
-
-    <br>
-
-    <table class="table is-striped is-narrow is-fullwidth">
-        <thead>
-            <tr>
-                <th>Reminder</th>
-                <th width="20%">Reminder Date</th>
-                <th width="10%">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (empty($reminders)) {
-                ?>
-            <tr>
-                <td colspan="3">Customer does not currently have any reminders.</td>
-            </tr>
-                <?php
-            } else {
-                foreach ($reminders as $key => $reminder) {
-                    ?>
-            <tr>
-                <td><?php echo $reminder['reminder']; ?></td>
-                <td><?php echo $this->format->date($reminder['reminder_date']); ?></td>
-                <td>
-                    <?php echo anchor('sales/customers/delete_reminder/' . $customer['customer_id'] . '/' . $reminder['customer_reminder_id'], '<i class="fas fa-trash-alt"></i>', 'class="button is-danger"'); ?>
-                </td>
-            </tr>
-                    <?php
-                }
-            }
-            ?>
-        </tbody>
-    </table>
+        <?php
+    }
+    ?>
+    </div>
 </div>
 
 <div id="customer-files" class="tab-panel">

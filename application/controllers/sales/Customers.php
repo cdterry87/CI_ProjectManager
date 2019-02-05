@@ -240,6 +240,14 @@ class Customers extends PROJECTS_Controller
                 }
                 redirect('sales/customers/view/'.$id . '/#customer-files-tab');
                 break;
+            case "save reminder":
+                if ($this->validate()) {
+                    $this->Customer_model->add_reminder($id);
+                    $this->set_message('Reminder saved successfully.', 'success');
+                }
+                echo json_encode($this->session->userdata('projects_messages'));
+                exit;
+                break;
         }
     }
 }

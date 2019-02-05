@@ -56,9 +56,7 @@
         </div>
     </div>
     <div class="modal-card-foot">
-        <div class="field is-grouped is-grouped-centered">
-            <p class="control"><button type="submit" value='save contact' class="button is-info ajax-btn">Save Contact</button></p>
-        </div>
+        <button type="submit" value='save contact' class="button is-info ajax-btn">Save Contact</button>
     </div>
 </div>
 <?php echo form_close(); ?>

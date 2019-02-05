@@ -416,6 +416,15 @@ class Customer_model extends PROJECTS_Model
         return $query->result_array();
     }
 
+    public function get_reminders_employees($id) {
+        $this->db->select('*');
+        $this->db->from('customers_reminders_employees');
+        $this->db->where('customer_reminder_id', $id);
+        $query=$this->db->get();
+        
+        return $query->result_array();
+    }
+
     public function delete_reminder($id)
     {
         $this->db->where('customer_reminder_id', $id);

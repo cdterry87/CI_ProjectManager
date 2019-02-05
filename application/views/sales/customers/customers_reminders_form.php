@@ -1,6 +1,6 @@
-<?php echo form_open('projects/action', 'id="reminders-form"'); ?>
-<?php echo form_hidden('project_id', $project['project_id']); ?>   
-<?php echo form_hidden('tab_target', '#project-reminders'); ?>   
+<?php echo form_open('sales/customers/action', 'id="reminders-form"'); ?>
+<?php echo form_hidden('customer_id', $customer['customer_id']); ?>   
+<?php echo form_hidden('tab_target', '#customer-reminders'); ?>   
 
 <div class="modal-background" data-modal="reminders-form" ></div>
 <div class="modal-card">
