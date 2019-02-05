@@ -70,6 +70,8 @@ $(function(){
          url:           base_url+'AJAX/Populate'
       })
       .done(function(data){
+          console.log(form);
+          console.log(data);
          //If a JSON object is retrieved from the request, try to parse the data onto the screen.
          try{
             obj=jQuery.parseJSON(data);
@@ -233,7 +235,9 @@ $(function(){
         e.preventDefault();
 
         var href = $(this).attr('href');
-        var form = $(this).attr('ajax-populate');
+        var form_id = $(this).attr('ajax-populate');
+        
+        form = $('#' + form_id);
 
         $.ajax({
             method: 	"GET",
@@ -244,18 +248,8 @@ $(function(){
         //The .done method will be executed if the AJAX request successfully receives a response.
         .done(function(data){
             console.log(data);
-            for(key in data) {
-                if (data.hasOwnProperty(key)) {
-                    console.log(key + " -> " + data[key]);
-                    $(form).find('[name="' + key + '"]').val(data[key]);
 
-                    if (key.indexOf('date') != -1) {
-                        $(form).find('[name="' + key + '_mo"]').val(data[key].substr(4,2));
-                        $(form).find('[name="' + key + '_day"]').val(data[key].substr(6,2));
-                        $(form).find('[name="' + key + '_yr"]').val(data[key].substr(0,4));
-                    }
-                }
-            }
+            populate_screen();
         })
 
         //The .fail method will be executed if the AJAX request fails to receive a response.

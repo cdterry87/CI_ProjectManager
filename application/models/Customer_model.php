@@ -288,18 +288,40 @@ class Customer_model extends PROJECTS_Model
     /* --------------------------------------------------------------------------------
      * Customer Contacts.
      * -------------------------------------------------------------------------------- */
-    public function add_contact($id)
+    public function save_contact($id, $contact_id = '')
     {
         //Prepare the data from the screen.
         $data=$this->prepare('customers_contacts');
         
-        //Set status to "I" (Incomplete) by default.
         $data['customer_id']=$id;
+
+        if ($contact_id == '') {
+            //Insert the record into the database.
+            $this->db->insert('customers_contacts', $data);
+
+            //Return the ID of the record that was inserted.
+            $id = $this->db->insert_id();
+        } else {
+            //Unset fields that should not be updated.
+            unset($data[$this->table_id]);
+
+            //Update the record in the database.
+            $this->db->where('customer_contact_id', $contact_id);
+            $this->db->update('customers_contacts', $data);
+        }
         
-        //Insert the record into the database.
-        $this->db->insert('customers_contacts', $data);
+        return $id;
+    }
+
+    public function get_contact($id)
+    {
+        $this->db->select('*');
+        $this->db->from('customers_contacts');
+        $this->db->where('customer_contact_id', $id);
+        $query=$this->db->get();
+        $result = $query->row_array();
         
-        return $this->db->insert_id();
+        return $result;
     }
 
     public function get_contacts($id)

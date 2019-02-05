@@ -148,6 +148,12 @@ class Customers extends PROJECTS_Controller
         $this->load->view('template', $this->data);
     }
 
+    public function edit_contact($contact_id)
+    {
+        $contact = $this->Customer_model->get_contact($contact_id);
+        $this->populate_screen($contact);
+    }
+
     public function delete_contact($customer_id, $contact_id)
     {
         $this->Customer_model->delete_contact($contact_id);
@@ -211,12 +217,12 @@ class Customers extends PROJECTS_Controller
                 break;
             case "save contact":
                 if ($this->validate()) {
-                    $this->Customer_model->add_contact($id);
-                    $this->set_message('Contact added successfully.', 'success');
+                    $contact_id = $this->input->post('customer_contact_id');
+                    $this->Customer_model->save_contact($id, $contact_id);
+                    $this->set_message('Contact saved successfully.', 'success');
                 }
                 echo json_encode($this->session->userdata('projects_messages'));
                 exit;
-                // redirect('sales/customers/view/'.$id);
                 break;
             case "add note":
                 if ($this->validate()) {

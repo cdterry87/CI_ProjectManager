@@ -125,7 +125,8 @@
                 </div>
                 <div class="card-footer">
                     <?php
-                        echo anchor('sales/customers/delete_contact/'.$contact['customer_id'].'/'.$contact['customer_contact_id'], '<i class="fas fa-trash" title="Delete Contact"></i>', 'class="card-footer-item has-text-danger"');
+                        echo anchor('sales/customers/edit_contact/'.$contact['customer_contact_id'], '<i class="fas fa-edit" title="Edit Contact"></i> Edit', 'data-modal="contact-form" ajax-populate="contacts-form" class="card-footer-item has-text-link"');
+                        echo anchor('sales/customers/delete_contact/'.$contact['customer_id'].'/'.$contact['customer_contact_id'], '<i class="fas fa-trash" title="Delete Contact"></i> Delete', 'class="card-footer-item has-text-danger"');
                     ?>
                 </div>
             </div>
