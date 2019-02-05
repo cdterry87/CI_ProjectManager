@@ -4,7 +4,7 @@
 <div class="modal-background" data-modal="task-form" ></div>
 <div class="modal-card">
     <div class="modal-card-head">
-        <h2 class="title is-4">Add Task</h2>
+        <h2 class="title is-4">Task Details</h2>
     </div>
     <div class="modal-card-body">
         <div class="ajax-messages"></div>

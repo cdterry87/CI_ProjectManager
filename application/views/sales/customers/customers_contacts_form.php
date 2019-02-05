@@ -4,7 +4,7 @@
 <div class="modal-background" data-modal="contact-form" ></div>
 <div class="modal-card">
     <div class="modal-card-head">
-        <h2 class="title is-4">Add Contact</h2>
+        <h2 class="title is-4">Contact Information</h2>
     </div>
     <div class="modal-card-body">
         <div class="ajax-messages"></div>
@@ -37,22 +37,32 @@
 
             <?php echo form_label('Phone #1:', 'contact_phone_1', 'class="label"'); ?>
             <div class="field is-grouped">
-                <p class="control"><?php echo form_input('contact_phone_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
-                <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('contact_phone_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
-                <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('contact_phone_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
-                <p class="control"><?php echo form_input('contact_phone_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type"'); ?></p>
+                <div class="select is-small control">
+                    <select name="contact_phone_type" id="contact_phone_type">
+                        <option value="">Phone type</option>
+                        <option value="Cell">Cell</option>
+                        <option value="Home">Home</option>
+                        <option value="Work">Work</option>
+                    </select>    
+                </div>
+                <div class="control"><?php echo form_input('contact_phone_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></div>
+                <div class="control"><?php echo form_input('contact_phone_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></div>
+                <div class="control"><?php echo form_input('contact_phone_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></div>
             </div>
 
             <?php echo form_label('Phone #2:', 'contact_phone2_1', 'class="label"'); ?>
             <div class="field is-grouped">
-                <p class="control"><?php echo form_input('contact_phone_alt_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
-                <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('contact_phone_alt_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></p>
-                <p class="control slash">-</p>
-                <p class="control"><?php echo form_input('contact_phone_alt_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></p>
-                <p class="control"><?php echo form_input('contact_phone_alt_type', '', 'class="input is-small" maxlength="15" size="10" placeholder="Phone Type"'); ?></p>
+                <div class="select is-small control">
+                    <select name="contact_phone_alt_type" id="contact_phone_alt_type">
+                        <option value="">Phone type</option>
+                        <option value="Cell">Cell</option>
+                        <option value="Home">Home</option>
+                        <option value="Work">Work</option>
+                    </select>    
+                </div>
+                <div class="control"><?php echo form_input('contact_phone_alt_1', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></div>
+                <div class="control"><?php echo form_input('contact_phone_alt_2', '', 'class="input is-small" maxlength="3" size="3" data-numeric data-autotab'); ?></div>
+                <div class="control"><?php echo form_input('contact_phone_alt_3', '', 'class="input is-small" maxlength="4" size="4" data-numeric'); ?></div>
             </div>
         </div>
     </div>

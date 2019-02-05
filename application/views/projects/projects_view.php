@@ -183,15 +183,25 @@
                 }
                 ?>
                 <div class="card-content">
-                    <div class="columns is-size-7 is-multiline">
+                    <div class="columns is-size-7 is-multiline is-mobile">
+                        <div class="column is-half">
+                            <div><strong>Start Date:</strong></div>
+                            <div><?php echo $this->format->date($row['task_start_date']); ?></div>
+                        </div>
+                        <div class="column is-half">
+                            <?php if (trim($row['task_due_date']) != '') { ?>
+                            <div><strong>Due Date:</strong></div>
+                            <div><?php echo $this->format->date($row['task_due_date']); ?></div>
+                            <?php } ?>
+                        </div>
                         <div class="column is-full">
                             <h5 class="is-size-5"><?php echo ucfirst($row['task_title']); ?></h5>
                             <?php if (trim($row['task_description']) != '') { ?>
-                            <p>
+                            <div>
                                 <i class="fas fa-quote-left"></i>
                                 <?php echo $row['task_description']; ?>
                                 <i class="fas fa-quote-right"></i>
-                            </p>
+                            </div>
                             <?php } ?>
                         </div>
                         <div class="column is-full">
@@ -213,16 +223,6 @@
                                 }
                                 ?>
                             </div>
-                        </div>
-                        <div class="column is-half">
-                            <div><strong>Start Date:</strong></div>
-                            <div><?php echo $this->format->date($row['task_start_date']); ?></div>
-                        </div>
-                        <div class="column is-half">
-                            <?php if (trim($row['task_due_date']) != '') { ?>
-                            <div><strong>Due Date:</strong></div>
-                            <div><?php echo $this->format->date($row['task_due_date']); ?></div>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
