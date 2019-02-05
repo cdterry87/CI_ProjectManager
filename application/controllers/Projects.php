@@ -229,7 +229,8 @@ class Projects extends PROJECTS_Controller
                 break;
             case "save task":
                 if ($this->validate()) {
-                    $this->Project_model->save_task($id);
+                    $task_id = $this->input->post('project_task_id');
+                    $this->Project_model->save_task($task_id);
                     $this->set_message('Task saved successfully.', 'success');
                 }
                 echo json_encode($this->session->userdata('projects_messages'));
@@ -293,6 +294,12 @@ class Projects extends PROJECTS_Controller
                 redirect('projects/view/' . $id . '/#project-notes-tab');
                 break;
         }
+    }
+
+    public function edit_task($task_id)
+    {
+        $task = $this->Project_model->get_task($task_id);
+        $this->populate_screen($task);
     }
 
     public function complete_task($project_id, $task_id)

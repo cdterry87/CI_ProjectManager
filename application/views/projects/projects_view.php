@@ -231,7 +231,7 @@
                     if (trim($row['task_completed_date']) == '') {
                         if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_id'] == $project['project_lead']) {
                             echo anchor('projects/complete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-check" title="Complete Task"></i> Complete', 'class="card-footer-item has-text-success"');
-                            echo anchor('api/projects/get_task/' . $row['project_task_id'], '<i class="fas fa-edit"></i> Edit', 'class="card-footer-item" ajax-populate="#task-form" data-modal="task-form"');
+                            echo anchor('projects/edit_task/' . $row['project_task_id'], '<i class="fas fa-edit"></i> Edit', 'class="card-footer-item" ajax-populate="tasks-form" data-modal="task-form"');
                             echo anchor('projects/delete_task/'.$row['project_id'].'/'.$row['project_task_id'], '<i class="fas fa-trash" title="Delete Task"></i> Delete', 'class="card-footer-item has-text-danger"');
                         }
                     }

@@ -308,6 +308,8 @@ class Customer_model extends PROJECTS_Model
             //Update the record in the database.
             $this->db->where('customer_contact_id', $contact_id);
             $this->db->update('customers_contacts', $data);
+
+            $id = $contact_id;
         }
         
         return $id;

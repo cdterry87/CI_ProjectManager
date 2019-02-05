@@ -406,25 +406,35 @@ class Project_model extends PROJECTS_Model
     {
         //Prepare the data from the screen.
         $data=$this->prepare('projects_tasks');
-        
-        $data['task_assigned_by']=$_SESSION['employee_id'];
-        $data['task_date']=date('Ymd');
-        if ($data['task_completed_date'] != '') {
-            $data['task_completed_by'] = $_SESSION['employee_id'];
+
+        if ($id == '') {
+            $data['task_assigned_by']=$_SESSION['employee_id'];
+            $data['task_date']=date('Ymd');
+            if ($data['task_completed_date'] != '') {
+                $data['task_completed_by'] = $_SESSION['employee_id'];
+            }
+    
+            //Insert the record into the database.
+            $this->db->insert('projects_tasks', $data);
+            
+            $task_id =  $this->db->insert_id();
+
+            //Add history
+            $this->add_history($id, 'Task #' . $task_id . ' created');
+        } else {
+            $task_id = $id;
+
+            unset($data['project_id']);
+            unset($data['project_task_id']);
+
+            $this->db->where('project_task_id', $id);
+            $this->db->update('projects_tasks', $data);
+
+            //Add history
+            $this->add_history($id, 'Task #' . $task_id . ' updated');
         }
 
-        $task_id = $data['project_task_id'];
-        unset($data['project_task_id']);
-        
-        //Insert the record into the database.
-        $this->db->insert('projects_tasks', $data);
-        
-        $task_id =  $this->db->insert_id();
-
         $this->set_tasks_employees($task_id);
-
-        //Add history
-        $this->add_history($id, 'Task #' . $task_id . ' created');
 
         return $task_id;
     }
@@ -434,14 +444,14 @@ class Project_model extends PROJECTS_Model
      * -------------------------------------------------------------------------------- */
     public function set_tasks_employees($id)
     {
-        //First, delete the related departments that are already out there.
+        //First, delete the related employees that are already out there.
         $this->db->where('project_task_id', $id);
         $this->db->delete('projects_tasks_employees');
         
-        //Get data from the department checkbox(es).
+        //Get data from the employees checkbox(es).
         $employees=$this->input->post('employee');
         
-        //Then insert the new departments for this employee.
+        //Then insert the new employees for this task.
         if (!empty($employees) and is_array($employees)) {
             foreach ($employees as $key => $val) {
                 $insert=array();
@@ -455,7 +465,7 @@ class Project_model extends PROJECTS_Model
         }
         return false;
     }
-    
+
     /* --------------------------------------------------------------------------------
      * Delete a task.
      * -------------------------------------------------------------------------------- */
