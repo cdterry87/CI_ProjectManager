@@ -11,5 +11,5 @@ Revised version of my original Project Manager in CodeIgniter with more style ðŸ
 ## Login
 Navigate to the application's URL on your web server.  The default setup is http://localhost/projects2
 
-Username: admin
+Username: 'admin' or 'sales' or 'user'
 Password: password
