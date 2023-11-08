@@ -15,46 +15,6 @@ $(function(){
     * -------------------------------------------------------------------------------- */
    populate_screen();
    get_messages();
-
-   /* --------------------------------------------------------------------------------
-    * Initialize TinyMCE textarea.
-    * -------------------------------------------------------------------------------- */
-    tinymce.init({
-        selector: ".tinymce",
-        height: 300,
-        width: '100%',
-        plugins: "link image table paste textcolor",
-        menubar: false,
-        toolbar: "fontselect fontsizeselect forecolor backcolor | bold italic underline strikethrough | bullist numlist | alignleft aligncenter alignright alignjustify | link image table"
-    });
-
-    /* --------------------------------------------------------------------------------
-    * Initialize Datatables.
-    * -------------------------------------------------------------------------------- */
-    $('.datatable').DataTable({
-        dom: 'lfrtBip',
-        "order": [[1, "desc"]],
-        iDisplayLength: 50,
-        "language": {
-            "search": "",
-            "lengthMenu": "_MENU_"
-        },
-        // buttons: ['copy', 'print', 'excel', 'pdf']
-        buttons: {
-            buttons: [
-                { extend: 'copy', className: 'button is-warning' },
-                { extend: 'print', className: 'button is-info' },
-                { extend: 'excel', className: 'button is-success' },
-                { extend: 'pdf', className: 'button is-danger' }
-            ]
-        },
-        initComplete: function (settings, json) {
-            $(".dt-button").removeClass("dt-button");
-        }
-    });
-    $('.dataTables_length label').addClass('select');
-    $('.dataTables_filter input').addClass('input');
-    $('.dataTables_filter input').attr('placeholder', 'Search...');
    
    /* --------------------------------------------------------------------------------
     * Populate screen with data from JSON.
@@ -70,8 +30,6 @@ $(function(){
          url:           base_url+'AJAX/Populate'
       })
       .done(function(data){
-          console.log(form);
-          console.log(data);
          //If a JSON object is retrieved from the request, try to parse the data onto the screen.
          try{
             obj=jQuery.parseJSON(data);
@@ -139,34 +97,6 @@ $(function(){
          console.log('Message Retrieval Error: '+xhr.responseText);
       });
    }
-
-   function get_messages_ajax(){
-    console.log('get_messages_ajax()');
-    
-    //Clear existing messages.
-    clear_messages_ajax();
-    
-    //Setup a request to retrieve messages.
-    $.ajax({
-       method:	 "POST",
-       type:     "HTML",
-       url:	     base_url+'AJAX/Messages'
-    })
-    .done(function(data){
-       console.log('Messages retrieved successfully!', data);
-       //If messages are present.
-       if(data!=''){
-          //Display messages.
-          $('.ajax-messages').html(data);
-          
-          //Format currency.
-          //$('.currency').formatCurrency();
-       }
-    })
-    .fail(function(xhr, status, error){
-       console.log('Message Retrieval Error: '+xhr.responseText);
-    });
- }
     
    /* --------------------------------------------------------------------------------
     * Clear existing messages.
@@ -176,88 +106,16 @@ $(function(){
        
       messages.html('');
    }
-
-   function clear_messages_ajax() {
-       console.log('clear_messages_ajax()');
-
-       $('.ajax-messages').html('');
-   }
    
    /* --------------------------------------------------------------------------------
     * Form submit.
     * -------------------------------------------------------------------------------- */
-    // AJAX form
-    $('.ajax-btn').on('click', function(e) {
-        e.preventDefault();
-        form = $(this).parents('form:first');
-        action = $(this).val();
-        validate();
-
-        $.ajax({
-            async: 		false,
-            method: 	"POST",
-            type:		"JSON",
-            data: 		form.serialize()+'&action='+action,
-            url: 		form.attr('action'),
-        })
-        
-        //The .done method will be executed if the AJAX request successfully receives a response.
-        .done(function(data){
-            // console.log('DATA', data);
-            dataParsed = JSON.parse(data);
-            get_messages_ajax();
-            if (typeof(dataParsed.success) != "undefined") {
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            }
-        })
-
-        //The .fail method will be executed if the AJAX request fails to receive a response.
-        .fail(function(xhr, status, error){
-            console.log('Form Submit Error: '+xhr.responseText);
-        })
-    });
-
-   // Standard form
-   form.not('.ajax').on('submit', function(e){
+   form.on('submit', function(e){
       console.log('form_submit()');
-
-      // Setting the specific form that was submitted.
-      form = $(this);
       
 	  //Validate form submission.
       validate();
    });
-
-   // Populate a form via ajax for editing
-   $('[ajax-populate]').on('click', function(e) {
-        e.preventDefault();
-
-        var href = $(this).attr('href');
-        var form_id = $(this).attr('ajax-populate');
-        
-        form = $('#' + form_id);
-
-        $.ajax({
-            method: 	"GET",
-            type:		"JSON",
-            url: 		href,
-        })
-
-        //The .done method will be executed if the AJAX request successfully receives a response.
-        .done(function(data){
-            console.log(data);
-
-            populate_screen();
-        })
-
-        //The .fail method will be executed if the AJAX request fails to receive a response.
-        .fail(function(xhr, status, error){
-            console.log('AJAX Populate Error: '+xhr.responseText);
-        })
-   });
-
    
    /* --------------------------------------------------------------------------------
     * Run server-side validations to validate form submission.
@@ -276,9 +134,8 @@ $(function(){
       .done(function(data){
          //If data was returned, there are errors so set validated to false; otherwise set validated to true.
          if (data!='') {
-            // console.log('Validations failed!');
+            console.log('Validations failed!');
             validated=false;
-            console.log(data);
          }
       })
       .fail(function(xhr, status, error){
@@ -554,84 +411,7 @@ $(function(){
 	  }
 	  return false;
    });
-
-   $("#all_employees").on("click", function(e){
-        var all_employees = $(this).is(':checked');
-
-        $('body .assigned_employees input[type=checkbox]').each(function() {
-            // console.log('checkbox: ' + $(this).attr('id'));
-            if (all_employees === true) {
-                $(this).prop('checked', true);
-            } else {
-                $(this).prop('checked', false);
-            }
-        });
-   });
    
-   $("#all_departments").on("click", function(e){
-        var all_departments = $(this).is(':checked');
-
-        $('body .assigned_departments input[type=checkbox]').each(function() {
-            // console.log('checkbox: ' + $(this).attr('id'));
-            if (all_departments === true) {
-                $(this).prop('checked', true);
-            } else {
-                $(this).prop('checked', false);
-            }
-        });
-    });
-
-    $("#all_systems").on("click", function(e){
-        var all_systems = $(this).is(':checked');
-
-        $('body .all_systems input[type=checkbox]').each(function() {
-            // console.log('checkbox: ' + $(this).attr('id'));
-            if (all_systems === true) {
-                $(this).prop('checked', true);
-            } else {
-                $(this).prop('checked', false);
-            }
-        });
-    });
-
-    // New tabs
-    // Load tabs based on hash.  Tabs must be in the format <a href="specific-target-tab"></a>
-    var hash = window.location.hash;
-    if (hash != null && typeof(hash) != 'undefined' && hash != '') {
-        $('.tab[data-target="' + hash.replace('#', '').replace('-tab', '') + '"]').addClass('is-active');
-        $(hash.replace('-tab', '')).show();
-    } else {
-        $('.tab-init').addClass('is-active');
-        $('.tab-panel-init').show();
-    }
-    
-    // Tab clicks
-    $('.tab').on('click', function() {
-        $('.tab-panel').hide();
-        $('.tab').removeClass('is-active');
-        $(this).addClass('is-active');
-
-        var target = $(this).data('target');
-        $('#' + target).show();
-    });
-
-    
-
-    // New modals
-    $('[data-modal]').on('click', function() {
-        console.log('modal click');
-        clear_messages_ajax();
-        var modal = $(this).data('modal');
-        $('#' + modal).addClass('is-active');
-    });
-
-    $('.modal-close, .modal-background').on('click', function() {
-        console.log('closing modal');
-        var modal = $(this).data('modal');
-        $('#' + modal).removeClass('is-active');
-    });
-
-
    /* --------------------------------------------------------------------------------
 	 * When a "remove" icon is hovered over, change to a success icon.
 	 * -------------------------------------------------------------------------------- */
@@ -644,27 +424,17 @@ $(function(){
 	  $(this).removeClass('glyphicon-ok btn-success');
 	  $(this).addClass('glyphicon-remove btn-danger');
    });
-
-   if ($(".navbar-burger").on("click", function () { 
-      $(".navbar-burger").hasClass("is-active") ? 
-      ($(".navbar-burger").removeClass("is-active"), $(".navbar-menu").removeClass("is-active")) : 
-      ($(".navbar-burger").addClass("is-active"), $(".navbar-menu").addClass("is-active"))
-   }));
-
-   $('#file-attachment').on('change', function() {
-      if ($(this).files.length > 0) {
-         $('#file-name').html($(this).files[0].name);
-      }
-   });
-
-   // Used to display the file attachment name in the file attachment box
-   var file = document.getElementById("file-attachment");
-   if (file != null && typeof(file) != 'undefined') {
-    file.onchange = function() {
-        if(file.files.length > 0) {
-            document.getElementById('file-name').innerHTML = file.files[0].name;
-        }
-    };
-   }
-
+   
+   /* --------------------------------------------------------------------------------
+    * Initialize TinyMCE textarea.
+    * -------------------------------------------------------------------------------- */
+   tinymce.init({
+		selector: "textarea",
+		height: 300,
+		width: '100%',
+		plugins: "link image table paste",
+		menubar: false,
+		toolbar: "fontselect fontsizeselect | bold italic underline strikethrough | bullist numlist | alignleft aligncenter alignright alignjustify | link image table"
+	});
+  
 });

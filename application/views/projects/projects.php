@@ -1,8 +1,10 @@
 <?php $this->load->view('projects/navigation'); ?>
 
+<p><?php echo anchor('projects/form', 'New Project', 'class="btn btn-primary btn-block btn-lg"'); ?></p>
+
 <?php if(empty($projects)){ ?>
 
-<p>No projects found.</p>
+<p>There are currently no projects in the system.</p>
 
 <?php }else{
 	

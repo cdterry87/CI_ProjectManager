@@ -1,8 +1,10 @@
 <?php $this->load->view('support/navigation'); ?>
 
+<p><?php echo anchor('support/form', 'New Support', 'class="btn btn-primary btn-block btn-lg"'); ?></p>
+
 <?php if(empty($support)){ ?>
 
-<p>No support issues found.</p>
+<p>There are currently no support issues in the system.</p>
 
 <?php }else{
 	

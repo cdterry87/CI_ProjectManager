@@ -1,4 +1,9 @@
-<table class="table is-striped is-narrow is-hoverable is-fullwidth datatable">
+<p><?php echo form_input('search','','class="form-control" placeholder="Search..."'); ?></p>
+<p class="align-right" id="search_num"></p>
+
+<p><i>*<b>(R)</b> - Requests that have not been approved as official projects</i></p>
+
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Project</th>
@@ -6,6 +11,7 @@
 			<th>Customer</th>
 			<th>Department(s)</th>
 			<th>Employee(s)</th>
+			<th>Tag(s)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -43,6 +49,7 @@
 			<td><?php echo anchor($link, $customers[$row['customer_id']]); ?></td>
 			<td><?php echo anchor($link, $projects_departments); ?></td>
 			<td><?php echo anchor($link, $projects_employees); ?></td>
+			<td><?php echo anchor($link, $row['project_tags']); ?></td>
 		</tr>
 		<?php
 			}

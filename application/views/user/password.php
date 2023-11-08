@@ -2,24 +2,12 @@
 
 <?php echo form_open('user/action'); ?>
 
-<div class="field">
-    <?php echo form_label('Password:','employee_password', 'class="label"'); ?>
-    <div class="control">
-        <?php echo form_password('employee_password','','class="input is-small" data-required'); ?>
-    </div>
-</div>
+<div><?php echo form_label('Password:','employee_password'); ?></div>
+<p><?php echo form_password('employee_password','','class="form-control" data-required'); ?></p>
 
-<div class="field">
-    <?php echo form_label('Password Confirm:','employee_password_confirm', 'class="label"'); ?>
-    <div class="control">
-        <?php echo form_password('employee_password_confirm','','class="input is-small" data-required'); ?>
-    </div>
-</div>
+<div><?php echo form_label('Password Confirm:','employee_password_confirm'); ?></div>
+<p><?php echo form_password('employee_password_confirm','','class="form-control" data-required'); ?></p>
 
-<div class="field is-grouped is-grouped-centered">
-    <p class="control"><?php echo form_submit('action','Update Password','class="button is-info"'); ?></p>
-    <p class="control"><?php echo anchor('/', 'Cancel', 'class="button is-warning"'); ?></p>
-</div>
-
+<p><?php echo form_submit('action','Update Password','class="btn btn-lg btn-primary btn-block"'); ?></p>
 
 <?php echo form_close(); ?>

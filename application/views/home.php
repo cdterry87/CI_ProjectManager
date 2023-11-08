@@ -1,168 +1,154 @@
-<script src="<?php echo base_url('public/chartjs/chart.min.js'); ?>"></script>
-<script src="<?php echo base_url('public/scripts/charts.js'); ?>"></script>
-
-<div class="columns is-mobile is-multiline">
-    <div class="column is-half-tablet is-one-quarter-desktop">
-        <div class="box notification is-info">
-            <div class="heading">Projects Summary</div>
-            <div class="title"><?php echo $projects_count; ?></div>
-            <div class="level is-mobile">
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Incomplete</div>
-                        <div class="title is-5"><?php echo $projects_incomplete_count; ?></div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Complete</div>
-                        <div class="title is-5"><?php echo $projects_complete_count; ?></div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Archived</div>
-                        <div class="title is-5"><?php echo $projects_archived_count; ?></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="column is-half-tablet is-one-quarter-desktop">
-        <div class="box notification is-warning has-text-dark">
-            <div class="heading">Customer Summary</div>
-            <div class="title"><?php echo $customers_count; ?></div>
-            <div class="level is-mobile">
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Prospects</div>
-                        <div class="title is-5"><?php echo $customers_prospect_count; ?></div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Pending</div>
-                        <div class="title is-5"><?php echo $customers_pending_count; ?></div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Live</div>
-                        <div class="title is-5"><?php echo $customers_live_count; ?></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="column is-half-tablet is-one-quarter-desktop">
-        <div class="box notification is-danger">
-            <div class="heading">Support Summary</div>
-            <div class="title"><?php echo $support_count; ?></div>
-            <div class="level is-mobile">
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Open</div>
-                        <div class="title is-5"><?php echo $support_open_count; ?></div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Closed</div>
-                        <div class="title is-5"><?php echo $support_closed_count; ?></div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Archived</div>
-                        <div class="title is-5"><?php echo $support_archived_count; ?></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="column is-half-tablet is-one-quarter-desktop">
-        <div class="box notification is-success has-text-dark">
-            <div class="heading">Completed (This Week)</div>
-            <div class="title"><?php echo $completed_total; ?></div>
-            <div class="level is-mobile">
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Projects</div>
-                        <div class="title is-5"><?php echo $completed_projects; ?></div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <div class="heading">Support</div>
-                        <div class="title is-5"><?php echo $completed_support; ?></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="columns is-multiline">
-    <div class="column is-half">
-        <canvas id="pieChart"></canvas>
-    </div>
-    <div class="column is-half">
-        <canvas id="lineChart"></canvas>
-    </div>
-    <div class="column is-half">
-        <div class="panel">
-            <div class="panel-heading has-background-success has-text-dark">
-                <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
-            </div>
-            <div class="panel-block">
-                <?php $this->load->view('projects/projects_user'); ?>
-            </div>
-        </div>
-    </div>
-    <div class="column is-half">
-        <div class="panel">
-            <div class="panel-heading has-background-warning has-text-dark">
-                <h2><i class="fas fa-bug"></i> My Support</h2>
-            </div>
-            <div class="panel-block">
-                <?php $this->load->view('support/support_user'); ?>
-            </div>
-        </div>
-    </div>
-    <div class="column is-half">
-        <div class="panel">
-            <div class="panel-heading has-background-info has-text-white">
-                <h2><i class="fas fa-project-diagram"></i> Incomplete Projects</h2>
-            </div>
-            <div class="panel-block">
-                <?php $this->load->view('projects/projects_incomplete'); ?>
-            </div>
-        </div>
-    </div>
-    <div class="column is-half">
-        <div class="panel">
-            <div class="panel-heading has-background-danger has-text-white">
-                <h2><i class="fas fa-bug"></i> Open Support</h2>
-            </div>
-            <div class="panel-block">
-                <?php $this->load->view('support/support_open'); ?>
-            </div>
-        </div>
-    </div>
-    <div class="column is-half">
-        <canvas id="barChart"></canvas>
-    </div>
-    <div class="column is-half">
-        <div class="panel">
-            <div class="panel-heading has-background-primary has-text-dark">
-                <h2><i class="fas fa-users"></i> My Customers</h2>
-            </div>
-            <div class="panel-block">
-                <?php $this->load->view('sales/customers/customers_user'); ?>
-            </div>
-        </div>
-    </div>
+<div id="home">
+	<table>
+		<tr>
+			<td id="sidebar">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><?php echo anchor('admin/customers', 'Customers'); ?></h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped">
+							<tbody>
+								<?php
+									if(empty($customers)){
+								?>
+								<tr>
+									<td colspan="2">No customers at this time.</td>
+								</tr>
+								<?php
+									}else{
+										foreach($customers as $row){
+											$link='admin/customers/view/'.$row['customer_id'];
+								?>
+								<tr>
+									<td><?php echo anchor($link, $row['customer_name']); ?></td>
+								</tr>
+								<?php
+										}
+									}
+								?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</td>
+			<td>
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title"><?php echo anchor('projects', 'Incomplete Projects'); ?></h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Project</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+									if(empty($projects_incomplete)){
+								?>
+								<tr>
+									<td colspan="2">No incomplete projects at this time.</td>
+								</tr>
+								<?php
+									}else{
+										foreach($projects_incomplete as $row){
+											$link='projects/view/'.$row['project_id'];
+								?>
+								<tr>
+									<td><?php echo anchor($link, $row['project_name']); ?></td>
+									<td><?php echo anchor($link, $this->format->date($row['project_date'])); ?></td>
+								</tr>
+								<?php
+										}
+									}
+								?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div class="clear"></div>
+				
+				<div class="panel panel-danger">
+					<div class="panel-heading">
+						<h3 class="panel-title"><?php echo anchor('support', 'Open Support'); ?></h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Support</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+									if(empty($support_open)){
+								?>
+								<tr>
+									<td colspan="2">No open support at this time.</td>
+								</tr>
+								<?php
+									}else{
+										foreach($support_open as $row){
+											$link='support/view/'.$row['support_id'];
+								?>
+								<tr>
+									<td><?php echo anchor($link, $row['support_name']); ?></td>
+									<td><?php echo anchor($link, $this->format->date($row['support_date'])." ".$this->format->time($row['support_time'])); ?></td>
+								</tr>
+								<?php
+										}
+									}
+								?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+					
+				<div class="clear"></div>
+				
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title"><?php echo anchor('projects/quotes', 'Recent Quotes'); ?></h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Quote</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+									if(empty($quotes)){
+								?>
+								<tr>
+									<td colspan="2">No quotes at this time.</td>
+								</tr>
+								<?php
+									}else{
+										foreach($quotes as $row){
+											$link='projects/view/'.$row['project_id'];
+								?>
+								<tr>
+									<td><?php echo anchor($link, $row['project_name']); ?></td>
+									<td><?php echo anchor($link, $this->format->date($row['project_date'])); ?></td>
+								</tr>
+								<?php
+										}
+									}
+								?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+			</td>
+		</tr>
+	</table>
 </div>

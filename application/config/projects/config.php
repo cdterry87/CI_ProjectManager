@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* --------------------------------------------------------------------------------
  * The home page (controller) the user will be redirected to.
@@ -11,11 +11,6 @@ $config['home']='home';
 $config['title']='Project Manager';
 
 /* --------------------------------------------------------------------------------
- * Home title.
- * -------------------------------------------------------------------------------- */
-$config['home_title'] = 'Dashboard';
-
-/* --------------------------------------------------------------------------------
  * Company name.
  * -------------------------------------------------------------------------------- */
-$config['company']='Copyright &copy; 2019 Chase Terry';
+$config['company']='Application Data Systems, Inc.';

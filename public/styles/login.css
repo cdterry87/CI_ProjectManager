@@ -4,7 +4,7 @@ body{padding: 25px 0; background-color: #efefef;}
 */
 
 body{padding: 25px 0;}
-#content{max-width: 320px; padding: 5px 15px; margin: 15px auto; vertical-align: center;}
+#content{max-width: 320px; padding: 5px 15px; margin: 0 auto;}
 
 input[data-required]{border-color: #ffa4a4 !important;}
 input[data-required]:focus{box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 132, 132, 0.6) !important;}

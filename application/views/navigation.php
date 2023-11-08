@@ -1,83 +1,40 @@
-<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item <?php echo ($this->current_system == "" ? 'is-active' : '') ?>" href="<?php echo base_url('/'); ?>"><i class="fas fa-tachometer-alt"></i> <?php echo (trim($this->config->item('home_title')) != '' ? $this->config->item('home_title') : 'Home'); ?></a>
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
-
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <?php if ($_SESSION['employee_admin'] == 'CHECKED') { ?>
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link"><i class="fas fa-lock"></i> Admin</a>
-                <div class="navbar-dropdown">
-                    <a href="<?php echo base_url('admin/departments'); ?>" class="navbar-item">Departments</a>
-                    <a href="<?php echo base_url('admin/employees'); ?>" class="navbar-item">Employees</a>
-                    <a href="<?php echo base_url('admin/systems'); ?>" class="navbar-item">Systems</a>
-                </div>
-            </div>
-            <?php } ?>
-
-            <?php if ($_SESSION['employee_admin'] == 'CHECKED' or $_SESSION['employee_sales'] == 'CHECKED') { ?>
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link"><i class="fas fa-coins"></i> Sales</a>
-                <div class="navbar-dropdown">
-                    <a href="<?php echo base_url('sales/customers'); ?>" class="navbar-item">Customers</a>
-                </div>
-            </div>
-            <?php } ?>
-
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link"><i class="fas fa-project-diagram"></i> Projects</a>
-                <div class="navbar-dropdown">
-                    <a href="<?php echo base_url('projects/form'); ?>" class="navbar-item">New Project</a>
-                    <hr class="navbar-divider" />
-                    <a href="<?php echo base_url('projects'); ?>" class="navbar-item">Incomplete</a>
-                    <a href="<?php echo base_url('projects/complete'); ?>" class="navbar-item">Complete</a>
-                    <a href="<?php echo base_url('projects/archive'); ?>" class="navbar-item">Archived</a>
-                    <a href="<?php echo base_url('projects/all'); ?>" class="navbar-item">All Projects</a>
-                </div>
-            </div>
-            <?php if ($_SESSION['employee_sales'] != 'CHECKED') { ?>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link"><i class="fas fa-bug"></i> Support</a>
-                    <div class="navbar-dropdown">
-                        <a href="<?php echo base_url('support/form'); ?>" class="navbar-item">New Support</a>
-                        <hr class="navbar-divider" />
-                        <a href="<?php echo base_url('support'); ?>" class="navbar-item">Incomplete</a>
-                        <a href="<?php echo base_url('support/closed'); ?>" class="navbar-item">Complete</a>
-                        <a href="<?php echo base_url('support/archive'); ?>" class="navbar-item">Archived</a>
-                        <a href="<?php echo base_url('support/all'); ?>" class="navbar-item">All Projects</a>
-                    </div>
-                </div>
-            <?php } ?>
-
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link"><i class="fas fa-paperclip"></i> Files</a>
-                <div class="navbar-dropdown">
-                    <?php if ($_SESSION['employee_admin'] == 'CHECKED') { ?>
-                    <a href="<?php echo base_url('files'); ?>" class="navbar-item">Upload/View Files</a>
-                    <hr class="navbar-divider" />
-                    <?php } ?>
-                    <a href="<?php echo base_url('files/forms'); ?>" class="navbar-item">Forms</a>
-                    <a href="<?php echo base_url('files/documentation'); ?>" class="navbar-item">Documentation</a>
-                </div>
-            </div>
-            <a href="<?php echo base_url('calendar'); ?>" class="navbar-item <?php echo ($this->current_system == "calendar" ? 'is-active' : '') ?>"><i class="fas fa-calendar"></i> Calendar</a>
-            <a href="<?php echo base_url('reports'); ?>" class="navbar-item <?php echo ($this->current_system == "reports" ? 'is-active' : '') ?>"><i class="fas fa-chart-pie"></i> Reports</a>
-        </div>
-        <div class="navbar-end">
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link"><i class="fas fa-cogs"></i> Settings</a>
-                <div class="navbar-dropdown">
-                    <a href="<?php echo base_url('user/settings'); ?>" class="navbar-item">Settings</a>
-                    <hr class="navbar-divider" />
-                    <a href="<?php echo base_url('employee/logout'); ?>" class="navbar-item">Log Out</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+<?php
+	$active=array(
+		'admin'		=> '',
+		'projects'	=> '',
+		'support'	=> '',
+	);
+	
+	//Set the current page as active.
+	$active[$this->current_system]='active';
+?>
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+		<?php
+			if($this->session->userdata('employee_admin')=="CHECKED"){
+		?>
+		<li class="dropdown <?php echo $active['admin']; ?>">
+            <a href="#" class="dropdown-toggle" aria-expanded="false" role="button" data-toggle="dropdown">Admin <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><?php echo anchor('admin/departments', 'Departments'); ?></li>
+                <li><?php echo anchor('admin/employees', 'Employees'); ?></li>
+                <li><?php echo anchor('admin/customers', 'Customers'); ?></li>
+            </ul>
+        </li>
+		<?php
+			}
+		?>
+		<li class="<?php echo $active['projects']; ?>"><?php echo anchor('projects','Projects'); ?></li>
+		<li class="<?php echo $active['support']; ?>"><?php echo anchor('support','Support'); ?></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+			<a href="#" class="dropdown-toggle" aria-expanded="false" role="button" data-toggle="dropdown"><?php echo $this->session->userdata('employee_name'); ?> <span class="caret"></span></a>
+			<ul class="dropdown-menu" role="menu">
+				<li><?php echo anchor('user/settings', 'Settings'); ?></li>
+				<li class="divider"></li>
+				<li><?php echo anchor('employee/logout', 'Sign Out'); ?></li>
+			</ul>
+		</li>
+    </ul>
+</div>

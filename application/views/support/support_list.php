@@ -1,7 +1,7 @@
-<!--<p><?php echo form_input('search','','class="form-control" placeholder="Search..."'); ?></p>
-<p class="align-right" id="search_num"></p>-->
+<p><?php echo form_input('search','','class="form-control" placeholder="Search..."'); ?></p>
+<p class="align-right" id="search_num"></p>
 
-<table class="table table-striped datatable">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Support</th>
@@ -9,6 +9,7 @@
 			<th>Customer</th>
 			<th>Department(s)</th>
 			<th>Employee(s)</th>
+			<th>Tag(s)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -41,6 +42,7 @@
 			<td><?php echo anchor($link, $customers[$row['customer_id']]); ?></td>
 			<td><?php echo anchor($link, $support_departments); ?></td>
 			<td><?php echo anchor($link, $support_employees); ?></td>
+			<td><?php echo anchor($link, $row['support_tags']); ?></td>
 		</tr>
 		<?php
 			}

@@ -16,15 +16,11 @@ class Messages extends CI_Controller {
 		if(!empty($messages)){
 			foreach($messages as $class=>$message_array){
 				if(!empty($message_array)){
-					echo '<div class="message is-'.$class.'">';
-					echo '<div class="message-body">';
-					echo '<ul>';
+					echo '<ul class="alert alert-'.$class.'">';
 					foreach($message_array as $key=>$message){
 						echo "<li>".$message."</li>";
 					}
 					echo '</ul>';
-					echo '</div>';
-					echo '</div>';
 				}
 			}
 		}

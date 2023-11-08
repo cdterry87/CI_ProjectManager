@@ -1,0 +1,9 @@
+[30-Jul-2015 13:28:19 America/Chicago] PHP Fatal error:  Call to undefined function mysqli_init() in /home/adsi/public_html/adsi/projects/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[30-Jul-2015 13:28:35 America/Chicago] PHP Fatal error:  Call to undefined function mysqli_init() in /home/adsi/public_html/adsi/projects/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[30-Jul-2015 13:33:52 America/Chicago] PHP Fatal error:  Call to a member function get_login() on a non-object in /home/adsi/public_html/adsi/projects/application/controllers/Employee.php on line 63
+[30-Jul-2015 13:34:04 America/Chicago] PHP Fatal error:  Call to a member function get_login() on a non-object in /home/adsi/public_html/adsi/projects/application/controllers/Employee.php on line 63
+[30-Jul-2015 13:35:10 America/Chicago] PHP Fatal error:  Call to a member function get_login() on a non-object in /home/adsi/public_html/adsi/projects/application/controllers/Employee.php on line 63
+[30-Jul-2015 13:35:11 America/Chicago] PHP Fatal error:  Call to a member function get_login() on a non-object in /home/adsi/public_html/adsi/projects/application/controllers/Employee.php on line 63
+[30-Jul-2015 13:35:11 America/Chicago] PHP Fatal error:  Call to a member function get_login() on a non-object in /home/adsi/public_html/adsi/projects/application/controllers/Employee.php on line 63
+[30-Jul-2015 13:35:12 America/Chicago] PHP Fatal error:  Call to a member function get_login() on a non-object in /home/adsi/public_html/adsi/projects/application/controllers/Employee.php on line 63
+[30-Jul-2015 13:37:22 America/Chicago] PHP Fatal error:  Class 'CI_DB_mysql_driver' not found in /home/adsi/public_html/adsi/projects/system/database/DB.php on line 201
